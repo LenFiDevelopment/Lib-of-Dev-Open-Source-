@@ -1,0 +1,460 @@
+// Practical developer hints and recommendations
+
+export const developerHints = {
+  mobileApps: {
+    id: 'mobile-apps',
+    category: 'Mobile Development',
+    icon: '📱',
+    color: '#8B5CF6',
+    title: 'Building Mobile Apps',
+    hints: [
+      {
+        scenario: 'Want to develop an app for iOS and Android?',
+        recommendation: 'Use Expo',
+        reason: 'Expo provides a managed workflow to build apps for both platforms with a single codebase. No need to configure Xcode or Android Studio initially.',
+        technologies: ['React Native', 'Expo', 'JavaScript/TypeScript'],
+        whenToUse: 'Perfect for startups, MVPs, and most mobile apps. Only go native if you need very specific native modules.',
+      },
+      {
+        scenario: 'Need native performance or custom native modules?',
+        recommendation: 'Use React Native CLI or Flutter',
+        reason: 'Direct access to native code when Expo limitations become an issue. Flutter is also great for high-performance apps.',
+        technologies: ['React Native CLI', 'Flutter', 'Swift/Kotlin'],
+        whenToUse: 'Apps requiring heavy custom native code, AR/VR, or specific hardware integration.',
+      },
+      {
+        scenario: 'Building for iOS only?',
+        recommendation: 'Use Swift with SwiftUI',
+        reason: 'Native iOS development provides best performance and full access to Apple ecosystem features.',
+        technologies: ['Swift', 'SwiftUI', 'Xcode'],
+        whenToUse: 'iOS-exclusive apps, apps needing latest Apple features, or when performance is critical.',
+      },
+      {
+        scenario: 'Building for Android only?',
+        recommendation: 'Use Kotlin with Jetpack Compose',
+        reason: 'Modern Android development with declarative UI and seamless Android integration.',
+        technologies: ['Kotlin', 'Jetpack Compose', 'Android Studio'],
+        whenToUse: 'Android-exclusive apps, apps deeply integrated with Google services.',
+      },
+    ],
+  },
+
+  webDevelopment: {
+    id: 'web-development',
+    category: 'Web Development',
+    icon: '🌐',
+    color: '#3B82F6',
+    title: 'Building Web Applications',
+    hints: [
+      {
+        scenario: 'Building a modern web application?',
+        recommendation: 'Use React with Next.js',
+        reason: 'Next.js provides server-side rendering, routing, and optimization out of the box. Industry standard for production apps.',
+        technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
+        whenToUse: 'Most web applications - dashboards, SaaS products, marketing sites, e-commerce.',
+      },
+      {
+        scenario: 'Need a simple static website?',
+        recommendation: 'Use HTML/CSS with Tailwind or plain JavaScript',
+        reason: 'No need to overcomplicate. Static sites are fast, secure, and easy to host.',
+        technologies: ['HTML', 'CSS', 'Tailwind CSS', 'Vanilla JS'],
+        whenToUse: 'Landing pages, portfolios, documentation sites, blogs.',
+      },
+      {
+        scenario: 'Building a highly interactive UI?',
+        recommendation: 'Use React with a component library',
+        reason: 'Leverage pre-built, accessible components to build faster. shadcn/ui, Radix, or Material-UI are excellent choices.',
+        technologies: ['React', 'shadcn/ui', 'Radix UI', 'TypeScript'],
+        whenToUse: 'Complex dashboards, admin panels, data-heavy applications.',
+      },
+      {
+        scenario: 'Need real-time features (chat, live updates)?',
+        recommendation: 'Use Next.js with WebSockets or Supabase',
+        reason: 'WebSockets for custom solutions, Supabase for faster development with real-time subscriptions.',
+        technologies: ['Next.js', 'WebSockets', 'Supabase', 'Socket.io'],
+        whenToUse: 'Chat apps, collaborative tools, live dashboards, notifications.',
+      },
+    ],
+  },
+
+  backend: {
+    id: 'backend',
+    category: 'Backend Development',
+    icon: '⚙️',
+    color: '#10B981',
+    title: 'Building Backend Services',
+    hints: [
+      {
+        scenario: 'Need a backend for your web/mobile app?',
+        recommendation: 'Use Node.js with Express or Fastify',
+        reason: 'JavaScript everywhere - share code between frontend and backend. Large ecosystem and great performance.',
+        technologies: ['Node.js', 'Express', 'PostgreSQL', 'Prisma'],
+        whenToUse: 'REST APIs, microservices, real-time apps with the same language as frontend.',
+      },
+      {
+        scenario: 'Want serverless functions instead of a full backend?',
+        recommendation: 'Use Vercel Functions or AWS Lambda',
+        reason: 'No server management, automatic scaling, pay only for what you use. Perfect for modern architectures.',
+        technologies: ['Vercel Functions', 'AWS Lambda', 'Cloudflare Workers'],
+        whenToUse: 'API endpoints, webhooks, scheduled tasks, event-driven functions.',
+      },
+      {
+        scenario: 'Need a backend with minimal code?',
+        recommendation: 'Use Firebase or Supabase',
+        reason: 'Backend as a Service - get auth, database, storage, and real-time features without building from scratch.',
+        technologies: ['Firebase', 'Supabase', 'Appwrite'],
+        whenToUse: 'MVPs, startups, apps needing quick development, real-time features.',
+      },
+      {
+        scenario: 'Building high-performance APIs?',
+        recommendation: 'Use Go or Rust',
+        reason: 'Compiled languages offer superior performance and lower resource usage. Great for scalable systems.',
+        technologies: ['Go', 'Rust', 'Axum', 'Gin'],
+        whenToUse: 'High-traffic APIs, microservices, system tools, performance-critical services.',
+      },
+    ],
+  },
+
+  deployment: {
+    id: 'deployment',
+    category: 'Deployment & Hosting',
+    icon: '🚀',
+    color: '#F59E0B',
+    title: 'Deploying Your Applications',
+    hints: [
+      {
+        scenario: 'Deploying a Next.js or React app?',
+        recommendation: 'Use Vercel',
+        reason: 'Zero-config deployment, automatic preview URLs, edge functions, and optimized for Next.js.',
+        technologies: ['Vercel', 'Next.js', 'React'],
+        whenToUse: 'Web applications, especially Next.js apps. Free tier is generous.',
+      },
+      {
+        scenario: 'Deploying a static site?',
+        recommendation: 'Use Netlify or Cloudflare Pages',
+        reason: 'Free hosting for static sites with automatic deployments from Git. Great for JAMstack.',
+        technologies: ['Netlify', 'Cloudflare Pages', 'GitHub Pages'],
+        whenToUse: 'Static sites, documentation, portfolios, landing pages.',
+      },
+      {
+        scenario: 'Need a global CDN for your site?',
+        recommendation: 'Use Cloudflare',
+        reason: 'Free CDN with DDoS protection, caching, and edge computing. Makes your site faster worldwide.',
+        technologies: ['Cloudflare', 'Cloudflare Workers', 'R2 Storage'],
+        whenToUse: 'Any website needing global performance, security, or edge computing.',
+      },
+      {
+        scenario: 'Deploying a mobile app?',
+        recommendation: 'Use EAS (Expo Application Services)',
+        reason: 'Simplified build process for iOS and Android. Handles certificates and provisioning.',
+        technologies: ['Expo', 'EAS Build', 'EAS Submit'],
+        whenToUse: 'Expo apps going to App Store or Google Play.',
+      },
+      {
+        scenario: 'Need to containerize your application?',
+        recommendation: 'Use Docker',
+        reason: 'Package your app with all dependencies. Consistent environments from dev to production.',
+        technologies: ['Docker', 'Docker Compose', 'Kubernetes'],
+        whenToUse: 'Complex apps, microservices, ensuring consistent deployment environments.',
+      },
+    ],
+  },
+
+  database: {
+    id: 'database',
+    category: 'Database & Storage',
+    icon: '💾',
+    color: '#EC4899',
+    title: 'Choosing Your Database',
+    hints: [
+      {
+        scenario: 'Need a relational database?',
+        recommendation: 'Use PostgreSQL',
+        reason: 'Most powerful open-source relational database. Supports JSON, full-text search, and advanced features.',
+        technologies: ['PostgreSQL', 'Prisma', 'TypeORM'],
+        whenToUse: 'Complex queries, relationships between data, transactions, most production apps.',
+      },
+      {
+        scenario: 'Need a simple database for small projects?',
+        recommendation: 'Use SQLite',
+        reason: 'Serverless, zero-configuration, perfect for embedded use or small applications.',
+        technologies: ['SQLite', 'Better-SQLite3'],
+        whenToUse: 'Mobile apps, desktop apps, small websites, prototypes.',
+      },
+      {
+        scenario: 'Building a real-time app?',
+        recommendation: 'Use Supabase or Firebase',
+        reason: 'Built-in real-time subscriptions, authentication, and storage. PostgreSQL-backed (Supabase).',
+        technologies: ['Supabase', 'Firebase', 'PostgreSQL'],
+        whenToUse: 'Chat apps, collaborative tools, live dashboards.',
+      },
+      {
+        scenario: 'Need flexible schema for varied data?',
+        recommendation: 'Use MongoDB',
+        reason: 'Document database - store JSON-like documents. Great for rapid development and flexible schemas.',
+        technologies: ['MongoDB', 'Mongoose'],
+        whenToUse: 'Content management, catalogs, user profiles with varying attributes.',
+      },
+      {
+        scenario: 'Need super fast caching?',
+        recommendation: 'Use Redis',
+        reason: 'In-memory data store - extremely fast. Perfect for caching, sessions, and pub/sub.',
+        technologies: ['Redis', 'Upstash'],
+        whenToUse: 'Caching, session storage, real-time analytics, queues.',
+      },
+    ],
+  },
+
+  stateManagement: {
+    id: 'state-management',
+    category: 'State Management',
+    icon: '🔄',
+    color: '#6366F1',
+    title: 'Managing Application State',
+    hints: [
+      {
+        scenario: 'Need simple state in React?',
+        recommendation: 'Use React Hooks (useState, useContext)',
+        reason: 'Built-in, no extra dependencies. Perfect for most applications.',
+        technologies: ['React Hooks', 'Context API'],
+        whenToUse: 'Small to medium apps, local component state, simple global state.',
+      },
+      {
+        scenario: 'Need complex state management?',
+        recommendation: 'Use Zustand or Redux Toolkit',
+        reason: 'Zustand is simpler and modern. Redux Toolkit if you need the ecosystem and DevTools.',
+        technologies: ['Zustand', 'Redux Toolkit', 'Jotai'],
+        whenToUse: 'Large apps, complex state logic, time-travel debugging.',
+      },
+      {
+        scenario: 'Managing server state (API data)?',
+        recommendation: 'Use TanStack Query (React Query)',
+        reason: 'Purpose-built for server state - caching, refetching, mutations, and more.',
+        technologies: ['TanStack Query', 'SWR'],
+        whenToUse: 'Apps fetching data from APIs. Don\'t mix server state with client state.',
+      },
+    ],
+  },
+
+  styling: {
+    id: 'styling',
+    category: 'Styling & Design',
+    icon: '🎨',
+    color: '#EC4899',
+    title: 'Styling Your Application',
+    hints: [
+      {
+        scenario: 'Want rapid UI development with utility classes?',
+        recommendation: 'Use Tailwind CSS',
+        reason: 'Utility-first CSS framework. Build faster without leaving your HTML/JSX.',
+        technologies: ['Tailwind CSS', 'PostCSS'],
+        whenToUse: 'Most modern web projects. Pairs perfectly with component libraries like shadcn/ui.',
+      },
+      {
+        scenario: 'Need pre-built accessible components?',
+        recommendation: 'Use shadcn/ui with Radix UI',
+        reason: 'Copy-paste components that are accessible, customizable, and follow best practices.',
+        technologies: ['shadcn/ui', 'Radix UI', 'Tailwind CSS'],
+        whenToUse: 'Building dashboards, admin panels, or any app needing polished UI quickly.',
+      },
+      {
+        scenario: 'Building a mobile app and need styled components?',
+        recommendation: 'Use NativeBase or React Native Paper',
+        reason: 'Complete component libraries for React Native with theming support.',
+        technologies: ['NativeBase', 'React Native Paper'],
+        whenToUse: 'React Native apps needing consistent, professional UI components.',
+      },
+      {
+        scenario: 'Want CSS-in-JS?',
+        recommendation: 'Use Styled Components or Emotion',
+        reason: 'Write CSS in JavaScript with full TypeScript support and theming.',
+        technologies: ['Styled Components', 'Emotion'],
+        whenToUse: 'React apps where you prefer CSS-in-JS over utility classes.',
+      },
+    ],
+  },
+
+  authentication: {
+    id: 'authentication',
+    category: 'Authentication',
+    icon: '🔐',
+    color: '#EF4444',
+    title: 'Implementing Authentication',
+    hints: [
+      {
+        scenario: 'Need authentication quickly?',
+        recommendation: 'Use Clerk or Auth0',
+        reason: 'Complete auth solution with UI components. Just drop in and configure.',
+        technologies: ['Clerk', 'Auth0', 'Firebase Auth'],
+        whenToUse: 'Most apps. Don\'t build auth from scratch unless you have specific needs.',
+      },
+      {
+        scenario: 'Want more control and self-hosted auth?',
+        recommendation: 'Use NextAuth.js (Auth.js)',
+        reason: 'Open-source, flexible, works with any database. Many built-in providers.',
+        technologies: ['NextAuth.js', 'Prisma', 'PostgreSQL'],
+        whenToUse: 'Next.js apps where you want control over auth logic and data.',
+      },
+      {
+        scenario: 'Using Firebase or Supabase?',
+        recommendation: 'Use their built-in authentication',
+        reason: 'Integrated with their backend services. Simple setup with email, social logins.',
+        technologies: ['Firebase Auth', 'Supabase Auth'],
+        whenToUse: 'Apps already using Firebase/Supabase as backend.',
+      },
+    ],
+  },
+
+  testing: {
+    id: 'testing',
+    category: 'Testing',
+    icon: '🧪',
+    color: '#14B8A6',
+    title: 'Testing Your Application',
+    hints: [
+      {
+        scenario: 'Testing React components?',
+        recommendation: 'Use Vitest with React Testing Library',
+        reason: 'Vitest is faster than Jest and compatible. Testing Library promotes best practices.',
+        technologies: ['Vitest', 'React Testing Library'],
+        whenToUse: 'All React applications. Essential for production apps.',
+      },
+      {
+        scenario: 'Need end-to-end testing?',
+        recommendation: 'Use Playwright',
+        reason: 'Modern, fast, and reliable. Better than Cypress for most use cases.',
+        technologies: ['Playwright', 'Cypress'],
+        whenToUse: 'Testing user flows, critical paths, before major releases.',
+      },
+      {
+        scenario: 'Testing APIs?',
+        recommendation: 'Use Supertest with Vitest',
+        reason: 'Simple HTTP assertions for Node.js. Great for API integration tests.',
+        technologies: ['Supertest', 'Vitest', 'MSW'],
+        whenToUse: 'Backend APIs, REST endpoints, middleware testing.',
+      },
+    ],
+  },
+};
+
+// Quick tips by scenario
+export const quickTips = [
+  {
+    id: 'tip-1',
+    icon: '📱',
+    title: 'Mobile: iOS + Android?',
+    answer: 'Use Expo → Fast, easy, single codebase',
+    category: 'Mobile',
+  },
+  {
+    id: 'tip-2',
+    icon: '🌐',
+    title: 'Modern web app?',
+    answer: 'Use Next.js → Full-stack React framework',
+    category: 'Web',
+  },
+  {
+    id: 'tip-3',
+    icon: '🚀',
+    title: 'Deploy Next.js app?',
+    answer: 'Use Vercel → Zero config, fast deploys',
+    category: 'Deployment',
+  },
+  {
+    id: 'tip-4',
+    icon: '💾',
+    title: 'Need a database?',
+    answer: 'Use PostgreSQL → Powerful, reliable, free',
+    category: 'Database',
+  },
+  {
+    id: 'tip-5',
+    icon: '🔐',
+    title: 'Add authentication?',
+    answer: 'Use Clerk or NextAuth → Don\'t build it yourself',
+    category: 'Auth',
+  },
+  {
+    id: 'tip-6',
+    icon: '🎨',
+    title: 'Style components?',
+    answer: 'Use Tailwind + shadcn/ui → Fast, accessible',
+    category: 'Styling',
+  },
+  {
+    id: 'tip-7',
+    icon: '⚡',
+    title: 'Serverless functions?',
+    answer: 'Use Vercel Functions → Easy, scalable',
+    category: 'Backend',
+  },
+  {
+    id: 'tip-8',
+    icon: '🔄',
+    title: 'API data caching?',
+    answer: 'Use TanStack Query → Smart caching, refetching',
+    category: 'State',
+  },
+  {
+    id: 'tip-9',
+    icon: '☁️',
+    title: 'Need a CDN?',
+    answer: 'Use Cloudflare → Free, global, fast',
+    category: 'Performance',
+  },
+  {
+    id: 'tip-10',
+    icon: '📦',
+    title: 'Backend as a Service?',
+    answer: 'Use Supabase → PostgreSQL + Auth + Storage',
+    category: 'Backend',
+  },
+  {
+    id: 'tip-11',
+    icon: '🧪',
+    title: 'Test components?',
+    answer: 'Use Vitest + Testing Library → Fast, reliable',
+    category: 'Testing',
+  },
+  {
+    id: 'tip-12',
+    icon: '🐳',
+    title: 'Containerize app?',
+    answer: 'Use Docker → Consistent environments',
+    category: 'DevOps',
+  },
+];
+
+// Decision tree helper
+export const decisionTrees = {
+  choosingStack: {
+    title: 'Choosing Your Tech Stack',
+    question: 'What are you building?',
+    options: [
+      {
+        choice: 'Mobile app for iOS & Android',
+        recommendation: 'Expo + React Native',
+        details: 'Single codebase, faster development, great DX',
+        nextSteps: ['Choose state management (Zustand)', 'Add navigation (React Navigation)', 'Choose UI library (NativeBase)'],
+      },
+      {
+        choice: 'Web application (SaaS, dashboard)',
+        recommendation: 'Next.js + TypeScript + Tailwind',
+        details: 'Industry standard, great performance, SEO-friendly',
+        nextSteps: ['Add database (PostgreSQL + Prisma)', 'Add auth (Clerk or NextAuth)', 'Add UI (shadcn/ui)'],
+      },
+      {
+        choice: 'Static website (landing, portfolio)',
+        recommendation: 'Next.js or Astro',
+        details: 'Fast, simple, easy to deploy',
+        nextSteps: ['Choose styling (Tailwind)', 'Deploy (Vercel or Netlify)', 'Add CMS if needed (Contentful)'],
+      },
+      {
+        choice: 'Backend API',
+        recommendation: 'Node.js + Express or Go',
+        details: 'Node for JS ecosystem, Go for performance',
+        nextSteps: ['Choose database', 'Add authentication', 'Add validation (Zod)'],
+      },
+    ],
+  },
+};

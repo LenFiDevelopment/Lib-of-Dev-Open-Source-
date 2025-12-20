@@ -11,6 +11,7 @@ import {
 import { getAllLanguages } from '../data/languagesData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { LanguageCard } from '../components/Card';
+import { quickTips } from '../data/developerHintsData';
 
 export default function HomeScreen({ navigation }) {
   const languages = getAllLanguages();
@@ -107,6 +108,13 @@ export default function HomeScreen({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Hints')}
+            >
+              <Text style={styles.quickAccessIcon}>💡</Text>
+              <Text style={styles.quickAccessText}>Hints</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Favorites')}
             >
               <Text style={styles.quickAccessIcon}>⭐</Text>
@@ -120,6 +128,42 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.quickAccessText}>Settings</Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+        {/* Quick Tips Section */}
+        <View style={styles.quickTipsContainer}>
+          <Text style={styles.sectionTitle}>💡 Quick Tips</Text>
+          <Text style={styles.sectionSubtitle}>
+            Instant answers to common development questions
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.tipsScroll}
+          >
+            {quickTips.slice(0, 6).map((tip) => (
+              <TouchableOpacity
+                key={tip.id}
+                style={styles.tipCard}
+                onPress={() => navigation.navigate('Hints')}
+              >
+                <Text style={styles.tipIcon}>{tip.icon}</Text>
+                <Text style={styles.tipTitle}>{tip.title}</Text>
+                <Text style={styles.tipAnswer}>{tip.answer}</Text>
+                <View style={styles.tipBadge}>
+                  <Text style={styles.tipBadgeText}>{tip.category}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity
+              style={[styles.tipCard, styles.viewAllCard]}
+              onPress={() => navigation.navigate('Hints')}
+            >
+              <Text style={styles.viewAllIcon}>👉</Text>
+              <Text style={styles.viewAllText}>View All Hints</Text>
+              <Text style={styles.viewAllSubtext}>50+ scenarios covered</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
 
         {/* Languages List */}
@@ -394,5 +438,73 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textSecondary,
     lineHeight: 20,
+  },
+  quickTipsContainer: {
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  tipsScroll: {
+    marginTop: spacing.sm,
+  },
+  tipCard: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.md,
+    marginRight: spacing.sm,
+    width: 180,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.small,
+  },
+  tipIcon: {
+    fontSize: 28,
+    marginBottom: spacing.xs,
+  },
+  tipTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  tipAnswer: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: spacing.sm,
+    lineHeight: 20,
+  },
+  tipBadge: {
+    backgroundColor: colors.primary + '20',
+    borderRadius: borderRadius.sm,
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 4,
+    alignSelf: 'flex-start',
+  },
+  tipBadgeText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: colors.primary,
+  },
+  viewAllCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.primary + '15',
+    borderColor: colors.primary,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+  },
+  viewAllIcon: {
+    fontSize: 32,
+    marginBottom: spacing.xs,
+  },
+  viewAllText: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: colors.primary,
+    marginBottom: 4,
+  },
+  viewAllSubtext: {
+    fontSize: 12,
+    color: colors.textSecondary,
   },
 });

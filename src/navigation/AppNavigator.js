@@ -15,6 +15,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import PlatformsScreen from '../screens/PlatformsScreen';
 import UIFrameworksScreen from '../screens/UIFrameworksScreen';
 import LearningScreen from '../screens/LearningScreen';
+import HintsScreen from '../screens/HintsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,6 +84,11 @@ function BrowseStack() {
         name="Learning" 
         component={LearningScreen}
         options={{ title: '📚 Learning Resources' }}
+      />
+      <Stack.Screen 
+        name="Hints" 
+        component={HintsScreen}
+        options={{ title: '💡 Developer Hints' }}
       />
     </Stack.Navigator>
   );

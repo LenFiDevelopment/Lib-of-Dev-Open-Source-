@@ -1,15 +1,16 @@
 # Lib of Dev (Open Source) 📚
 
-A comprehensive mobile developer reference library built with React Native and Expo. Features a modern **dark mode design** with 13 programming languages, deployment platform guides, design patterns, and enhanced search functionality.
+A comprehensive mobile developer reference library built with React Native and Expo. Features a modern **dark mode design** with 13 programming languages, deployment platform guides, design patterns, **developer hints**, and enhanced search functionality.
 
 ## 🎯 Purpose
 
-**Lib of Dev** is your go-to mobile companion for software development. Access syntax references, code examples, deployment guides, and design patterns - all offline, all in dark mode.
+**Lib of Dev** is your go-to mobile companion for software development. Access syntax references, code examples, deployment guides, design patterns, and **practical developer hints** - all offline, all in dark mode.
 
 ### ✨ Key Features
 
 - **🌑 Dark Mode Design** - Beautiful dark theme throughout the app
 - **13 Programming Languages** - JavaScript, TypeScript, Python, Java, C, C#, Go, Rust, Swift, Kotlin, Ruby, PHP, SQL
+- **💡 Developer Hints** - 50+ practical scenarios with instant recommendations (NEW!)
 - **🚀 Platform Guides** - Expo, Vercel, Cloudflare, Netlify, Docker, Firebase
 - **🎨 Design Patterns** - Common patterns with multi-language examples
 - **🔍 Enhanced Search** - Search languages, patterns, and platforms with filters
@@ -82,6 +83,26 @@ Learn about deployment and development platforms:
 - **Firebase** - Backend as a Service
 
 Each guide includes features, commands, code examples, and documentation links.
+
+### 💡 Developer Hints - NEW!
+Get instant recommendations for common development scenarios:
+
+**8 Categories with 50+ Practical Hints:**
+- **Mobile Apps** - "Want iOS & Android? Use Expo"
+- **Web Development** - "Building modern web app? Use Next.js"
+- **Backend** - "Need serverless? Use Vercel Functions"
+- **Deployment** - "Deploy Next.js? Use Vercel"
+- **Database** - "Need relational DB? Use PostgreSQL"
+- **State Management** - "Complex state? Use Zustand"
+- **Styling** - "Rapid UI? Use Tailwind + shadcn/ui"
+- **Authentication** - "Quick auth? Use Clerk or Auth0"
+
+Each hint includes:
+- **Scenario** - The problem you're facing
+- **Recommendation** - What to use
+- **Reason** - Why it's the right choice
+- **Technologies** - What you'll need
+- **When to use** - Specific use cases
 
 ### 🎨 Design Patterns & UI Libraries
 - **Patterns**: Singleton, Observer, Factory
