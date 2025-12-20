@@ -13,6 +13,7 @@ import SearchScreen from '../screens/SearchScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import PlatformsScreen from '../screens/PlatformsScreen';
+import UIFrameworksScreen from '../screens/UIFrameworksScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -71,6 +72,11 @@ function BrowseStack() {
         name="Platforms" 
         component={PlatformsScreen}
         options={{ title: '🚀 Platforms & Tools' }}
+      />
+      <Stack.Screen 
+        name="UIFrameworks" 
+        component={UIFrameworksScreen}
+        options={{ title: '🎨 UI Frameworks' }}
       />
     </Stack.Navigator>
   );

@@ -48,7 +48,7 @@ export default function HomeScreen({ navigation }) {
             Your comprehensive developer reference library
           </Text>
           <Text style={styles.description}>
-            13 languages • 100+ examples • Design patterns • Deployment platforms
+            13 languages • 100+ examples • shadcn/ui • Design patterns • Platforms
           </Text>
         </View>
 
@@ -83,6 +83,13 @@ export default function HomeScreen({ navigation }) {
             >
               <Text style={styles.quickAccessIcon}>🔍</Text>
               <Text style={styles.quickAccessText}>Search All</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('UIFrameworks')}
+            >
+              <Text style={styles.quickAccessIcon}>🎨</Text>
+              <Text style={styles.quickAccessText}>UI Design</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
@@ -171,9 +178,18 @@ export default function HomeScreen({ navigation }) {
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🎨</Text>
               <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>shadcn/ui & Design Systems</Text>
+                <Text style={styles.featureDescription}>
+                  Learn modern UI frameworks like shadcn/ui, Tailwind CSS, and Radix UI
+                </Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <Text style={styles.featureIcon}>💡</Text>
+              <View style={styles.featureContent}>
                 <Text style={styles.featureTitle}>Design Patterns</Text>
                 <Text style={styles.featureDescription}>
-                  Common patterns and best practices
+                  Common patterns and best practices for clean code
                 </Text>
               </View>
             </View>
