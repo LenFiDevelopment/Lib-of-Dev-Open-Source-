@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }) {
             Your comprehensive developer reference library
           </Text>
           <Text style={styles.description}>
-            13 languages • 100+ examples • shadcn/ui • Design patterns • Platforms
+            13 languages • AI/ML • IoT/Hardware • E-Commerce • Linux • 80+ Hints • shadcn/ui
           </Text>
         </View>
 
@@ -112,6 +112,20 @@ export default function HomeScreen({ navigation }) {
             >
               <Text style={styles.quickAccessIcon}>💡</Text>
               <Text style={styles.quickAccessText}>Hints</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('SpecializedTopics')}
+            >
+              <Text style={styles.quickAccessIcon}>🔌</Text>
+              <Text style={styles.quickAccessText}>IoT & More</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Resources')}
+            >
+              <Text style={styles.quickAccessIcon}>🔗</Text>
+              <Text style={styles.quickAccessText}>Links</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}

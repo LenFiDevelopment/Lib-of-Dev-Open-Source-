@@ -16,6 +16,8 @@ import PlatformsScreen from '../screens/PlatformsScreen';
 import UIFrameworksScreen from '../screens/UIFrameworksScreen';
 import LearningScreen from '../screens/LearningScreen';
 import HintsScreen from '../screens/HintsScreen';
+import SpecializedTopicsScreen from '../screens/SpecializedTopicsScreen';
+import ResourcesScreen from '../screens/ResourcesScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -89,6 +91,16 @@ function BrowseStack() {
         name="Hints" 
         component={HintsScreen}
         options={{ title: '💡 Developer Hints' }}
+      />
+      <Stack.Screen 
+        name="SpecializedTopics" 
+        component={SpecializedTopicsScreen}
+        options={{ title: '🔌 Specialized Topics' }}
+      />
+      <Stack.Screen 
+        name="Resources" 
+        component={ResourcesScreen}
+        options={{ title: '🔗 Official Links' }}
       />
     </Stack.Navigator>
   );
