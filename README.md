@@ -8,7 +8,7 @@ A comprehensive mobile reference library for developers, built with React Native
 
 ### Key Features
 
-- **Multi-Language Support**: Currently includes JavaScript, TypeScript, Python, Java, C, C#, Go, Rust, Swift, and Kotlin
+- **Multi-Language Support**: Currently includes JavaScript, TypeScript, Python, Java, C, C#, Go, Rust, Swift, Kotlin, Ruby, PHP, and SQL
 - **Comprehensive References**: Syntax, functions, commands, and real-world examples
 - **Search Functionality**: Quickly find what you need across all languages
 - **Code Examples**: Copy-paste ready code snippets with explanations
@@ -130,6 +130,30 @@ npm start
 - Coroutines
 - Lambdas and Scope Functions
 - Interoperability with Java
+
+#### Ruby 💎
+- Dynamic Typing
+- Blocks, Procs, and Lambdas
+- Modules and Mixins
+- Metaprogramming
+- Rails Conventions
+- Gems and Bundler
+
+#### PHP 🐘
+- Variables and Type Hints
+- Arrays and Strings
+- Object-Oriented Features
+- Traits for Code Reuse
+- Modern PHP (7.4+, 8.0+)
+- Web Development Patterns
+
+#### SQL 🗄️
+- SELECT, INSERT, UPDATE, DELETE
+- JOINs (INNER, LEFT, RIGHT, FULL)
+- Subqueries and CTEs
+- Window Functions
+- Aggregate Functions
+- Database Design
 
 ## 🏗️ Project Structure
 

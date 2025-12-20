@@ -2544,6 +2544,1057 @@ fun main() = runBlocking {
         ]
       }
     }
+  },
+  
+  ruby: {
+    id: 'ruby',
+    name: 'Ruby',
+    icon: '💎',
+    color: '#CC342D',
+    description: 'Dynamic, object-oriented programming language',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Types',
+            code: `# Variables (no declaration needed)
+name = "John"
+age = 30
+active = true
+
+# Constants (uppercase)
+PI = 3.14159
+
+# Symbols (immutable strings)
+status = :active
+
+# String interpolation
+message = "Hello, #{name}!"
+
+# Multiple assignment
+x, y, z = 1, 2, 3
+
+# Global variable
+$global = "accessible everywhere"
+
+# Instance variable
+@instance = "belongs to object"
+
+# Class variable
+@@class = "shared by all instances"`,
+            description: 'Ruby variable types',
+            usage: 'Ruby has dynamic typing with duck typing'
+          },
+          {
+            title: 'Methods',
+            code: `# Basic method
+def greet(name)
+  "Hello, #{name}!"
+end
+
+# Default parameters
+def greet(name = "User")
+  "Hello, #{name}!"
+end
+
+# Keyword arguments
+def create_user(name:, age:, city: "Unknown")
+  { name: name, age: age, city: city }
+end
+
+# Splat operator
+def sum(*numbers)
+  numbers.sum
+end
+
+# Blocks
+def with_block
+  yield if block_given?
+end
+
+with_block { puts "In block" }
+
+# Method with question mark (predicate)
+def active?
+  @status == :active
+end
+
+# Method with exclamation (mutating)
+def activate!
+  @status = :active
+end`,
+            description: 'Ruby method definitions',
+            usage: 'Methods return last expression automatically'
+          },
+          {
+            title: 'Control Flow',
+            code: `# If/elsif/else
+if age > 18
+  puts "Adult"
+elsif age > 13
+  puts "Teen"
+else
+  puts "Child"
+end
+
+# Unless (opposite of if)
+unless logged_in
+  redirect_to_login
+end
+
+# Modifier form
+puts "Welcome" if logged_in
+puts "Please login" unless logged_in
+
+# Case/when
+case status
+when :active
+  "User is active"
+when :inactive
+  "User is inactive"
+else
+  "Unknown status"
+end
+
+# Ternary operator
+message = age >= 18 ? "Adult" : "Minor"
+
+# Loop
+5.times { |i| puts i }
+
+# Each
+[1, 2, 3].each { |n| puts n }
+
+# While
+while x < 10
+  x += 1
+end
+
+# Until (opposite of while)
+until x == 10
+  x += 1
+end`,
+            description: 'Ruby control structures',
+            usage: 'Ruby has flexible control flow options'
+          }
+        ]
+      },
+      classes: {
+        name: 'Classes & Modules',
+        items: [
+          {
+            title: 'Classes',
+            code: `class Person
+  # Class variable
+  @@count = 0
+  
+  # Attribute readers/writers
+  attr_reader :name
+  attr_writer :age
+  attr_accessor :email  # Both reader and writer
+  
+  # Initialize (constructor)
+  def initialize(name, age)
+    @name = name
+    @age = age
+    @@count += 1
+  end
+  
+  # Instance method
+  def greet
+    "Hello, I'm #{@name}"
+  end
+  
+  # Class method
+  def self.count
+    @@count
+  end
+  
+  # Private methods
+  private
+  
+  def secret_method
+    "Secret"
+  end
+end
+
+# Create instance
+person = Person.new("John", 30)
+
+# Inheritance
+class Student < Person
+  def initialize(name, age, student_id)
+    super(name, age)
+    @student_id = student_id
+  end
+end`,
+            description: 'Ruby class definitions',
+            usage: 'Ruby is fully object-oriented'
+          },
+          {
+            title: 'Modules & Mixins',
+            code: `# Module as namespace
+module MathHelper
+  PI = 3.14159
+  
+  def self.circle_area(radius)
+    PI * radius ** 2
+  end
+end
+
+# Module as mixin
+module Greetable
+  def greet
+    "Hello from #{self.class.name}"
+  end
+end
+
+class Person
+  include Greetable  # Instance methods
+end
+
+class User
+  extend Greetable   # Class methods
+end
+
+person = Person.new
+person.greet  # Instance method
+
+User.greet    # Class method
+
+# Module with multiple methods
+module Comparable
+  def ==(other)
+    # comparison logic
+  end
+  
+  def <(other)
+    # comparison logic
+  end
+end`,
+            description: 'Modules for namespacing and mixins',
+            usage: 'Use modules to share functionality'
+          }
+        ]
+      },
+      collections: {
+        name: 'Arrays & Hashes',
+        items: [
+          {
+            title: 'Arrays',
+            code: `# Create array
+numbers = [1, 2, 3, 4, 5]
+mixed = [1, "two", 3.0, :four]
+
+# Access elements
+first = numbers[0]
+last = numbers[-1]
+slice = numbers[1..3]  # [2, 3, 4]
+
+# Array methods
+numbers << 6           # Append
+numbers.push(7)        # Append
+numbers.pop            # Remove last
+numbers.unshift(0)     # Prepend
+numbers.shift          # Remove first
+
+# Iteration
+numbers.each { |n| puts n }
+doubled = numbers.map { |n| n * 2 }
+evens = numbers.select { |n| n.even? }
+sum = numbers.reduce(0) { |acc, n| acc + n }
+sum = numbers.sum  # Shorthand
+
+# Checking
+numbers.include?(3)    # true
+numbers.empty?         # false
+numbers.length         # 5
+
+# Ranges
+range = 1..5           # Inclusive
+range = 1...5          # Exclusive
+array = (1..5).to_a    # [1, 2, 3, 4, 5]`,
+            description: 'Ruby array operations',
+            usage: 'Arrays are flexible and powerful'
+          },
+          {
+            title: 'Hashes',
+            code: `# Create hash
+person = {
+  name: "John",
+  age: 30,
+  city: "NYC"
+}
+
+# Old syntax
+person = {
+  :name => "John",
+  :age => 30
+}
+
+# Access
+name = person[:name]
+
+# Modify
+person[:age] = 31
+person[:email] = "john@example.com"
+
+# Hash methods
+person.keys           # [:name, :age, :city]
+person.values         # ["John", 30, "NYC"]
+person.has_key?(:name)  # true
+person.delete(:city)
+
+# Iteration
+person.each { |key, value| puts "#{key}: #{value}" }
+person.each_key { |key| puts key }
+person.each_value { |value| puts value }
+
+# Transform
+uppercased = person.transform_keys { |k| k.to_s.upcase }
+doubled_ages = person.transform_values { |v| v.is_a?(Integer) ? v * 2 : v }`,
+            description: 'Ruby hash (dictionary) operations',
+            usage: 'Hashes store key-value pairs'
+          }
+        ]
+      },
+      blocks: {
+        name: 'Blocks & Procs',
+        items: [
+          {
+            title: 'Blocks & Yield',
+            code: `# Method with block
+def with_timing
+  start_time = Time.now
+  yield
+  end_time = Time.now
+  puts "Execution time: #{end_time - start_time}"
+end
+
+with_timing do
+  sleep(1)
+  puts "Task completed"
+end
+
+# Block parameters
+def repeat(times)
+  times.times { |i| yield(i) }
+end
+
+repeat(3) { |i| puts "Iteration #{i}" }
+
+# Block as parameter
+def process(array, &block)
+  array.map(&block)
+end
+
+doubled = process([1, 2, 3]) { |n| n * 2 }`,
+            description: 'Ruby blocks and yield',
+            usage: 'Blocks are fundamental to Ruby'
+          },
+          {
+            title: 'Procs & Lambdas',
+            code: `# Proc
+my_proc = Proc.new { |x| x * 2 }
+my_proc.call(5)  # 10
+
+# Lambda
+my_lambda = lambda { |x| x * 2 }
+my_lambda = ->(x) { x * 2 }  # Shorthand
+my_lambda.call(5)  # 10
+
+# Differences:
+# 1. Lambdas check argument count, procs don't
+# 2. Return in lambda returns from lambda,
+#    return in proc returns from enclosing method
+
+# Symbol to proc
+numbers = [1, 2, 3]
+doubled = numbers.map(&:to_s)  # ["1", "2", "3"]
+
+# Method as proc
+def double(x)
+  x * 2
+end
+
+doubler = method(:double).to_proc
+[1, 2, 3].map(&doubler)  # [2, 4, 6]`,
+            description: 'Procs and lambdas',
+            usage: 'Procs and lambdas are objects that encapsulate code'
+          }
+        ]
+      }
+    }
+  },
+  
+  php: {
+    id: 'php',
+    name: 'PHP',
+    icon: '🐘',
+    color: '#777BB4',
+    description: 'Server-side scripting language',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Types',
+            code: `<?php
+// Variables start with $
+$name = "John";
+$age = 30;
+$height = 1.75;
+$active = true;
+
+// Variable variables
+$var = "name";
+$$var = "John";  // $name = "John"
+
+// Constants
+define("PI", 3.14159);
+const MAX = 100;
+
+// Type declarations (PHP 7+)
+function greet(string $name): string {
+    return "Hello, $name!";
+}
+
+// Type juggling
+$num = "42";
+$result = $num + 8;  // 50 (automatic conversion)
+
+// Null coalescing
+$username = $_GET['user'] ?? 'Guest';
+
+// Spaceship operator (PHP 7+)
+$compare = $a <=> $b;  // -1, 0, or 1
+?>`,
+            description: 'PHP variable declarations',
+            usage: 'PHP has dynamic typing with type hints'
+          },
+          {
+            title: 'Functions',
+            code: `<?php
+// Basic function
+function greet($name) {
+    return "Hello, $name!";
+}
+
+// Default parameters
+function greet($name = "User") {
+    return "Hello, $name!";
+}
+
+// Type declarations
+function add(int $a, int $b): int {
+    return $a + $b;
+}
+
+// Variable arguments
+function sum(...$numbers) {
+    return array_sum($numbers);
+}
+
+// Anonymous function
+$greet = function($name) {
+    return "Hello, $name!";
+};
+
+// Arrow function (PHP 7.4+)
+$double = fn($x) => $x * 2;
+
+// Closure with use
+$multiplier = 2;
+$multiply = function($x) use ($multiplier) {
+    return $x * $multiplier;
+};
+?>`,
+            description: 'PHP function definitions',
+            usage: 'Functions are first-class citizens in PHP'
+          },
+          {
+            title: 'Control Flow',
+            code: `<?php
+// If/elseif/else
+if ($age > 18) {
+    echo "Adult";
+} elseif ($age > 13) {
+    echo "Teen";
+} else {
+    echo "Child";
+}
+
+// Ternary operator
+$message = $age >= 18 ? "Adult" : "Minor";
+
+// Switch
+switch ($status) {
+    case "active":
+        echo "Active";
+        break;
+    case "inactive":
+        echo "Inactive";
+        break;
+    default:
+        echo "Unknown";
+}
+
+// For loop
+for ($i = 0; $i < 10; $i++) {
+    echo $i;
+}
+
+// Foreach
+foreach ($array as $value) {
+    echo $value;
+}
+
+foreach ($array as $key => $value) {
+    echo "$key: $value";
+}
+
+// While
+while ($x < 10) {
+    $x++;
+}
+
+// Do-while
+do {
+    $x++;
+} while ($x < 10);
+?>`,
+            description: 'PHP control structures',
+            usage: 'PHP has C-style control flow'
+          }
+        ]
+      },
+      arrays: {
+        name: 'Arrays & Strings',
+        items: [
+          {
+            title: 'Arrays',
+            code: `<?php
+// Indexed array
+$fruits = ["apple", "banana", "orange"];
+$fruits = array("apple", "banana", "orange");
+
+// Associative array
+$person = [
+    "name" => "John",
+    "age" => 30,
+    "city" => "NYC"
+];
+
+// Multidimensional array
+$matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+];
+
+// Array functions
+array_push($fruits, "grape");
+array_pop($fruits);
+array_shift($fruits);
+array_unshift($fruits, "mango");
+
+// Array iteration
+foreach ($fruits as $fruit) {
+    echo $fruit;
+}
+
+// Array manipulation
+$doubled = array_map(fn($x) => $x * 2, $numbers);
+$evens = array_filter($numbers, fn($x) => $x % 2 == 0);
+$sum = array_reduce($numbers, fn($acc, $x) => $acc + $x, 0);
+
+// Checking
+in_array("apple", $fruits);
+array_key_exists("name", $person);
+count($fruits);
+?>`,
+            description: 'PHP array operations',
+            usage: 'PHP arrays are versatile and powerful'
+          },
+          {
+            title: 'String Operations',
+            code: `<?php
+// String creation
+$name = "John";
+$greeting = 'Hello';
+
+// String interpolation (double quotes only)
+$message = "Hello, $name!";
+$message = "Hello, {$person['name']}!";
+
+// Concatenation
+$full = $first . " " . $last;
+
+// String functions
+strlen($str);              // Length
+strtoupper($str);         // Uppercase
+strtolower($str);         // Lowercase
+ucfirst($str);            // Capitalize first
+trim($str);               // Remove whitespace
+str_replace("old", "new", $str);
+
+// Substring
+substr($str, 0, 5);       // First 5 chars
+substr($str, -3);         // Last 3 chars
+
+// String splitting
+$parts = explode(" ", $str);
+$joined = implode(", ", $array);
+
+// String checking
+str_starts_with($str, "Hello");  // PHP 8+
+str_ends_with($str, "world");    // PHP 8+
+str_contains($str, "middle");    // PHP 8+
+?>`,
+            description: 'PHP string manipulation',
+            usage: 'PHP has rich string handling functions'
+          }
+        ]
+      },
+      oop: {
+        name: 'Object-Oriented PHP',
+        items: [
+          {
+            title: 'Classes',
+            code: `<?php
+class Person {
+    // Properties
+    private string $name;
+    protected int $age;
+    public string $email;
+    
+    // Constructor
+    public function __construct(string $name, int $age) {
+        $this->name = $name;
+        $this->age = $age;
+    }
+    
+    // Methods
+    public function greet(): string {
+        return "Hello, I'm {$this->name}";
+    }
+    
+    // Getter
+    public function getName(): string {
+        return $this->name;
+    }
+    
+    // Setter
+    public function setName(string $name): void {
+        $this->name = $name;
+    }
+    
+    // Static method
+    public static function species(): string {
+        return "Homo sapiens";
+    }
+}
+
+// Inheritance
+class Student extends Person {
+    private string $studentId;
+    
+    public function __construct(string $name, int $age, string $studentId) {
+        parent::__construct($name, $age);
+        $this->studentId = $studentId;
+    }
+}
+?>`,
+            description: 'PHP class definitions',
+            usage: 'PHP supports full object-oriented programming'
+          },
+          {
+            title: 'Interfaces & Traits',
+            code: `<?php
+// Interface
+interface Drawable {
+    public function draw(): void;
+}
+
+class Circle implements Drawable {
+    public function draw(): void {
+        echo "Drawing circle";
+    }
+}
+
+// Trait (code reuse)
+trait Timestampable {
+    protected $createdAt;
+    protected $updatedAt;
+    
+    public function setTimestamps(): void {
+        $this->createdAt = time();
+        $this->updatedAt = time();
+    }
+}
+
+class Post {
+    use Timestampable;
+    
+    private string $title;
+    private string $content;
+}
+
+// Abstract class
+abstract class Animal {
+    abstract public function makeSound(): void;
+    
+    public function sleep(): void {
+        echo "Sleeping...";
+    }
+}
+
+class Dog extends Animal {
+    public function makeSound(): void {
+        echo "Woof!";
+    }
+}
+?>`,
+            description: 'PHP interfaces and traits',
+            usage: 'Use traits for horizontal code reuse'
+          }
+        ]
+      }
+    }
+  },
+  
+  sql: {
+    id: 'sql',
+    name: 'SQL',
+    icon: '🗄️',
+    color: '#00758F',
+    description: 'Standard language for managing databases',
+    categories: {
+      basics: {
+        name: 'Basic Queries',
+        items: [
+          {
+            title: 'SELECT Statements',
+            code: `-- Select all columns
+SELECT * FROM users;
+
+-- Select specific columns
+SELECT name, email FROM users;
+
+-- Select with alias
+SELECT name AS user_name, email AS user_email
+FROM users;
+
+-- Select distinct values
+SELECT DISTINCT city FROM users;
+
+-- Select with limit
+SELECT * FROM users LIMIT 10;
+
+-- Select with offset
+SELECT * FROM users LIMIT 10 OFFSET 20;
+
+-- Calculated columns
+SELECT 
+    name,
+    age,
+    age * 365 AS age_in_days
+FROM users;`,
+            description: 'Basic SELECT queries',
+            usage: 'SELECT retrieves data from database tables'
+          },
+          {
+            title: 'WHERE Clause',
+            code: `-- Simple condition
+SELECT * FROM users WHERE age > 18;
+
+-- Multiple conditions (AND)
+SELECT * FROM users 
+WHERE age > 18 AND city = 'NYC';
+
+-- Multiple conditions (OR)
+SELECT * FROM users 
+WHERE city = 'NYC' OR city = 'LA';
+
+-- IN operator
+SELECT * FROM users 
+WHERE city IN ('NYC', 'LA', 'Chicago');
+
+-- BETWEEN operator
+SELECT * FROM users 
+WHERE age BETWEEN 18 AND 65;
+
+-- LIKE operator (pattern matching)
+SELECT * FROM users WHERE name LIKE 'John%';
+SELECT * FROM users WHERE email LIKE '%@gmail.com';
+
+-- IS NULL / IS NOT NULL
+SELECT * FROM users WHERE phone IS NULL;
+SELECT * FROM users WHERE phone IS NOT NULL;
+
+-- NOT operator
+SELECT * FROM users WHERE NOT city = 'NYC';`,
+            description: 'Filtering results with WHERE',
+            usage: 'WHERE clause filters rows based on conditions'
+          },
+          {
+            title: 'ORDER BY & GROUP BY',
+            code: `-- ORDER BY (ascending)
+SELECT * FROM users ORDER BY age;
+
+-- ORDER BY (descending)
+SELECT * FROM users ORDER BY age DESC;
+
+-- Multiple columns
+SELECT * FROM users 
+ORDER BY city, age DESC;
+
+-- GROUP BY
+SELECT city, COUNT(*) as user_count
+FROM users
+GROUP BY city;
+
+-- GROUP BY with HAVING
+SELECT city, COUNT(*) as user_count
+FROM users
+GROUP BY city
+HAVING COUNT(*) > 10;
+
+-- Aggregate functions
+SELECT 
+    COUNT(*) as total_users,
+    AVG(age) as average_age,
+    MIN(age) as youngest,
+    MAX(age) as oldest,
+    SUM(salary) as total_salary
+FROM users;`,
+            description: 'Sorting and grouping results',
+            usage: 'ORDER BY sorts results, GROUP BY aggregates data'
+          }
+        ]
+      },
+      joins: {
+        name: 'JOINS',
+        items: [
+          {
+            title: 'JOIN Types',
+            code: `-- INNER JOIN (matching rows from both tables)
+SELECT users.name, orders.order_date
+FROM users
+INNER JOIN orders ON users.id = orders.user_id;
+
+-- LEFT JOIN (all from left, matching from right)
+SELECT users.name, orders.order_date
+FROM users
+LEFT JOIN orders ON users.id = orders.user_id;
+
+-- RIGHT JOIN (all from right, matching from left)
+SELECT users.name, orders.order_date
+FROM users
+RIGHT JOIN orders ON users.id = orders.user_id;
+
+-- FULL OUTER JOIN (all rows from both)
+SELECT users.name, orders.order_date
+FROM users
+FULL OUTER JOIN orders ON users.id = orders.user_id;
+
+-- Multiple joins
+SELECT 
+    users.name,
+    orders.order_date,
+    products.product_name
+FROM users
+INNER JOIN orders ON users.id = orders.user_id
+INNER JOIN order_items ON orders.id = order_items.order_id
+INNER JOIN products ON order_items.product_id = products.id;`,
+            description: 'Different types of table joins',
+            usage: 'JOINs combine rows from multiple tables'
+          }
+        ]
+      },
+      dml: {
+        name: 'Data Manipulation',
+        items: [
+          {
+            title: 'INSERT, UPDATE, DELETE',
+            code: `-- INSERT single row
+INSERT INTO users (name, email, age)
+VALUES ('John Doe', 'john@example.com', 30);
+
+-- INSERT multiple rows
+INSERT INTO users (name, email, age)
+VALUES 
+    ('John', 'john@example.com', 30),
+    ('Jane', 'jane@example.com', 25),
+    ('Bob', 'bob@example.com', 35);
+
+-- INSERT from SELECT
+INSERT INTO archived_users
+SELECT * FROM users WHERE last_login < '2020-01-01';
+
+-- UPDATE
+UPDATE users 
+SET age = 31, city = 'NYC'
+WHERE id = 1;
+
+-- UPDATE with calculation
+UPDATE products
+SET price = price * 1.1
+WHERE category = 'Electronics';
+
+-- DELETE
+DELETE FROM users WHERE id = 1;
+
+-- DELETE with condition
+DELETE FROM users 
+WHERE last_login < '2020-01-01';
+
+-- TRUNCATE (delete all rows, faster)
+TRUNCATE TABLE temp_data;`,
+            description: 'Inserting, updating, and deleting data',
+            usage: 'DML commands modify data in tables'
+          }
+        ]
+      },
+      ddl: {
+        name: 'Data Definition',
+        items: [
+          {
+            title: 'CREATE & ALTER',
+            code: `-- CREATE TABLE
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    age INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CREATE TABLE with foreign key
+CREATE TABLE orders (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    order_date DATE,
+    total DECIMAL(10, 2),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- ALTER TABLE (add column)
+ALTER TABLE users 
+ADD COLUMN phone VARCHAR(20);
+
+-- ALTER TABLE (modify column)
+ALTER TABLE users 
+MODIFY COLUMN age INT NOT NULL;
+
+-- ALTER TABLE (drop column)
+ALTER TABLE users 
+DROP COLUMN phone;
+
+-- CREATE INDEX
+CREATE INDEX idx_email ON users(email);
+CREATE INDEX idx_name_age ON users(name, age);
+
+-- DROP TABLE
+DROP TABLE IF EXISTS temp_table;`,
+            description: 'Creating and modifying table structure',
+            usage: 'DDL commands define database schema'
+          }
+        ]
+      },
+      advanced: {
+        name: 'Advanced Queries',
+        items: [
+          {
+            title: 'Subqueries & CTEs',
+            code: `-- Subquery in WHERE
+SELECT name FROM users
+WHERE age > (SELECT AVG(age) FROM users);
+
+-- Subquery in SELECT
+SELECT 
+    name,
+    (SELECT COUNT(*) FROM orders WHERE user_id = users.id) as order_count
+FROM users;
+
+-- Subquery in FROM
+SELECT avg_age_by_city.city, avg_age_by_city.avg_age
+FROM (
+    SELECT city, AVG(age) as avg_age
+    FROM users
+    GROUP BY city
+) as avg_age_by_city
+WHERE avg_age_by_city.avg_age > 30;
+
+-- CTE (Common Table Expression)
+WITH high_spenders AS (
+    SELECT user_id, SUM(total) as total_spent
+    FROM orders
+    GROUP BY user_id
+    HAVING SUM(total) > 1000
+)
+SELECT users.name, high_spenders.total_spent
+FROM users
+INNER JOIN high_spenders ON users.id = high_spenders.user_id;
+
+-- Recursive CTE
+WITH RECURSIVE numbers AS (
+    SELECT 1 as n
+    UNION ALL
+    SELECT n + 1 FROM numbers WHERE n < 10
+)
+SELECT * FROM numbers;`,
+            description: 'Subqueries and Common Table Expressions',
+            usage: 'Break complex queries into manageable parts'
+          },
+          {
+            title: 'Window Functions',
+            code: `-- ROW_NUMBER
+SELECT 
+    name,
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) as rank
+FROM employees;
+
+-- RANK and DENSE_RANK
+SELECT 
+    name,
+    department,
+    salary,
+    RANK() OVER (PARTITION BY department ORDER BY salary DESC) as dept_rank
+FROM employees;
+
+-- Running total
+SELECT 
+    order_date,
+    total,
+    SUM(total) OVER (ORDER BY order_date) as running_total
+FROM orders;
+
+-- Moving average
+SELECT 
+    date,
+    value,
+    AVG(value) OVER (
+        ORDER BY date
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ) as moving_avg_3
+FROM metrics;
+
+-- LAG and LEAD
+SELECT 
+    date,
+    value,
+    LAG(value, 1) OVER (ORDER BY date) as previous_value,
+    LEAD(value, 1) OVER (ORDER BY date) as next_value
+FROM metrics;`,
+            description: 'Window functions for advanced analytics',
+            usage: 'Perform calculations across row sets'
+          }
+        ]
+      }
+    }
   }
 };
 
