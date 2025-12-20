@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Alert,
-  Clipboard,
 } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import { getLanguageById } from '../data/languagesData';
 
 export default function CodeDetailScreen({ route }) {
@@ -25,6 +25,15 @@ export default function CodeDetailScreen({ route }) {
   }
 
   const category = language.categories[categoryId];
+  
+  if (!category.items || !category.items[itemIndex]) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.errorText}>Item not found</Text>
+      </SafeAreaView>
+    );
+  }
+  
   const item = category.items[itemIndex];
 
   const copyToClipboard = () => {

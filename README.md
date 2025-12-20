@@ -181,7 +181,7 @@ Lib-of-Dev-Open-Source-/
 - **React Native**: Cross-platform mobile development
 - **Expo**: Development platform and tools
 - **React Navigation**: Navigation library
-- **React Syntax Highlighter**: Code syntax highlighting
+- **@react-native-clipboard/clipboard**: Clipboard functionality
 
 ## 📝 Contributing
 
