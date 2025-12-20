@@ -8,7 +8,7 @@ A comprehensive mobile reference library for developers, built with React Native
 
 ### Key Features
 
-- **Multi-Language Support**: Currently includes JavaScript, Python, Java, C, and C#
+- **Multi-Language Support**: Currently includes JavaScript, TypeScript, Python, Java, C, C#, Go, Rust, Swift, and Kotlin
 - **Comprehensive References**: Syntax, functions, commands, and real-world examples
 - **Search Functionality**: Quickly find what you need across all languages
 - **Code Examples**: Copy-paste ready code snippets with explanations
@@ -60,6 +60,13 @@ npm start
 - Promises and Async/Await
 - Modern ES6+ features
 
+#### TypeScript 🔷
+- Type Annotations and Inference
+- Interfaces and Type Aliases
+- Generics and Utility Types
+- Typed Functions and Classes
+- Advanced Type Features
+
 #### Python 🐍
 - Variables and Type Hints
 - Data Structures (Lists, Tuples, Dicts, Sets)
@@ -91,6 +98,38 @@ npm start
 - Async/Await
 - Collections
 - Records (C# 9+)
+
+#### Go 🐹
+- Variables and Functions
+- Structs and Methods
+- Interfaces
+- Goroutines and Channels
+- Concurrency Patterns
+- Error Handling
+
+#### Rust 🦀
+- Ownership and Borrowing
+- Structs and Enums
+- Pattern Matching
+- Error Handling (Result/Option)
+- Memory Safety
+- Lifetimes
+
+#### Swift 🦅
+- Variables, Constants, and Optionals
+- Functions and Closures
+- Classes and Structs
+- Collections (Arrays, Dictionaries, Sets)
+- Protocol-Oriented Programming
+- Extension Functions
+
+#### Kotlin 🅺
+- Null Safety
+- Data Classes
+- Extension Functions
+- Coroutines
+- Lambdas and Scope Functions
+- Interoperability with Java
 
 ## 🏗️ Project Structure
 
