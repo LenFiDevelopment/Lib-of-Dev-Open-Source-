@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Linking,
   Switch,
+  Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as StoreReview from 'expo-store-review';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 const GITHUB_URL = 'https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-';
@@ -85,6 +87,41 @@ export default function SettingsScreen() {
 
   const openGitHub = () => {
     Linking.openURL(GITHUB_URL);
+  };
+
+  const handleRateApp = async () => {
+    try {
+      const isAvailable = await StoreReview.isAvailableAsync();
+      
+      if (isAvailable) {
+        // Request in-app review (native prompt)
+        await StoreReview.requestReview();
+      } else {
+        // Fallback to opening store URL
+        Alert.alert(
+          'Rate Our App',
+          'Would you like to rate us in the App Store?',
+          [
+            { text: 'Cancel', style: 'cancel' },
+            {
+              text: 'Rate Now',
+              onPress: async () => {
+                const storeUrl = await StoreReview.storeUrl();
+                if (storeUrl) {
+                  Linking.openURL(storeUrl);
+                }
+              },
+            },
+          ]
+        );
+      }
+    } catch (error) {
+      console.log('Error requesting review:', error);
+      Alert.alert(
+        'Thanks for your interest!',
+        'Store rating is not available at the moment. Please try again later.'
+      );
+    }
   };
 
   return (
@@ -185,6 +222,19 @@ export default function SettingsScreen() {
             </View>
             <Text style={styles.arrow}>›</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity style={styles.linkCard} onPress={handleRateApp}>
+            <View style={styles.linkIcon}>
+              <Text style={styles.linkIconText}>⭐</Text>
+            </View>
+            <View style={styles.linkContent}>
+              <Text style={styles.linkTitle}>Rate This App</Text>
+              <Text style={styles.linkDescription}>
+                Love the app? Leave us a rating!
+              </Text>
+            </View>
+            <Text style={styles.arrow}>›</Text>
+          </TouchableOpacity>
         </View>
 
         {/* About Section */}
@@ -192,10 +242,10 @@ export default function SettingsScreen() {
           <Text style={styles.sectionTitle}>ℹ️ About</Text>
           <View style={styles.aboutCard}>
             <Text style={styles.aboutText}>
-              Lib of Dev (Open Source) v1.0.0
+              Lib of Dev (Open Source) v2.0.0
             </Text>
             <Text style={styles.aboutDescription}>
-              A comprehensive developer reference library with 13 programming languages
+              A comprehensive developer reference library with 13 programming languages, AI/ML, IoT, E-Commerce, 80+ hints, and 70+ official resource links
             </Text>
           </View>
         </View>

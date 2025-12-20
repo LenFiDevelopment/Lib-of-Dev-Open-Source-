@@ -1,6 +1,6 @@
 {
   "name": "lib-of-dev-open-source",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
@@ -16,6 +16,7 @@
     "@react-navigation/stack": "^7.6.13",
     "expo": "~54.0.30",
     "expo-status-bar": "~3.0.9",
+    "expo-store-review": "^9.0.9",
     "react": "19.1.0",
     "react-native": "0.81.5",
     "react-native-safe-area-context": "^5.6.2",
