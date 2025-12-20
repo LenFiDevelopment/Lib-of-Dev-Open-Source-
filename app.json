@@ -2,24 +2,28 @@
   "expo": {
     "name": "Lib of Dev (Open Source)",
     "slug": "lib-of-dev",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0A0E1A"
     },
+    "description": "Comprehensive developer reference library with 13 languages, AI/ML, IoT, E-Commerce, 80+ hints, and official resources",
+    "githubUrl": "https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.lenfi.libofdev"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#0A0E1A"
       },
+      "package": "com.lenfi.libofdev",
       "edgeToEdgeEnabled": true
     },
     "web": {
