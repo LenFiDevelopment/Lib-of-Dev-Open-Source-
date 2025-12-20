@@ -1,20 +1,22 @@
 # Lib of Dev (Open Source) 📚
 
-A comprehensive mobile reference library for developers, built with React Native and Expo. This app provides quick access to programming language syntax, functions, commands, and best practices for multiple programming languages.
+A comprehensive mobile developer reference library built with React Native and Expo. Features a modern **dark mode design** with 13 programming languages, deployment platform guides, design patterns, and enhanced search functionality.
 
 ## 🎯 Purpose
 
-**Lib of Dev** is designed to be your go-to mobile companion for software development. Whether you're learning a new language, need a quick syntax reference, or want to see implementation examples, this app has you covered.
+**Lib of Dev** is your go-to mobile companion for software development. Access syntax references, code examples, deployment guides, and design patterns - all offline, all in dark mode.
 
-### Key Features
+### ✨ Key Features
 
-- **Multi-Language Support**: Currently includes JavaScript, TypeScript, Python, Java, C, C#, Go, Rust, Swift, Kotlin, Ruby, PHP, and SQL
-- **Comprehensive References**: Syntax, functions, commands, and real-world examples
-- **Search Functionality**: Quickly find what you need across all languages
-- **Code Examples**: Copy-paste ready code snippets with explanations
-- **Implementation Guides**: Learn not just what to use, but how to use it
-- **Favorites**: Save frequently used references for quick access
-- **Clean UI**: Modern, intuitive interface with syntax-highlighted code
+- **🌑 Dark Mode Design** - Beautiful dark theme throughout the app
+- **13 Programming Languages** - JavaScript, TypeScript, Python, Java, C, C#, Go, Rust, Swift, Kotlin, Ruby, PHP, SQL
+- **🚀 Platform Guides** - Expo, Vercel, Cloudflare, Netlify, Docker, Firebase
+- **🎨 Design Patterns** - Common patterns with multi-language examples
+- **🔍 Enhanced Search** - Search languages, patterns, and platforms with filters
+- **⚙️ User Profile** - Customize interests and favorite languages
+- **📋 Copy-Ready Code** - All examples ready to use
+- **💾 Fully Offline** - No internet required
+- **⭐ Favorites System** - Save frequently used references
 
 ## 🚀 Getting Started
 
@@ -22,7 +24,7 @@ A comprehensive mobile reference library for developers, built with React Native
 
 - Node.js (v14 or higher)
 - npm or yarn
-- Expo CLI (optional, but recommended)
+- Expo CLI (optional)
 
 ### Installation
 
@@ -43,14 +45,52 @@ npm start
 ```
 
 4. Run on your device:
-   - Scan the QR code with Expo Go app (iOS/Android)
-   - Press `a` to open on Android emulator
-   - Press `i` to open on iOS simulator (macOS only)
-   - Press `w` to open in web browser
+   - Scan QR code with Expo Go app (iOS/Android)
+   - Press `a` for Android emulator
+   - Press `i` for iOS simulator (macOS only)
+   - Press `w` for web browser
 
-## 📱 App Structure
+## 📱 App Features
 
-### Languages Covered
+### 🌑 Modern Dark Mode Design
+- Professional dark color scheme
+- High contrast for readability
+- Consistent UI components
+- Beautiful code blocks with syntax colors
+
+### 🔍 Enhanced Search
+- Search across all content types
+- Filter by: Languages, Design Patterns, Platforms
+- Real-time results as you type
+- Type badges for easy identification
+- Search hints and suggestions
+
+### ⚙️ User Profile & Settings
+- Select your interests (Web, Mobile, Backend, Frontend, Database, DevOps)
+- Choose favorite programming languages
+- Persistent storage of preferences
+- Direct links to GitHub and resources
+- About section with app info
+
+### 🚀 Platform & Tools Guides
+Learn about deployment and development platforms:
+- **Expo** - Mobile development framework
+- **Vercel** - Web hosting & serverless
+- **Cloudflare** - CDN & edge computing
+- **Netlify** - JAMstack deployment
+- **Docker** - Containerization
+- **Firebase** - Backend as a Service
+
+Each guide includes features, commands, code examples, and documentation links.
+
+### 🎨 Design Patterns & UI Libraries
+- **Patterns**: Singleton, Observer, Factory
+- **UI Libraries**: React Native Paper, NativeBase, React Native Elements
+- **Charts**: Recharts examples
+- **Animation**: Framer Motion
+- Code examples in multiple languages
+
+## 📚 Language Coverage
 
 #### JavaScript 🟨
 - Variables and Data Types
@@ -178,10 +218,12 @@ Lib-of-Dev-Open-Source-/
 
 ## 🛠️ Technologies Used
 
-- **React Native**: Cross-platform mobile development
-- **Expo**: Development platform and tools
-- **React Navigation**: Navigation library
-- **@react-native-clipboard/clipboard**: Clipboard functionality
+- **React Native** - Cross-platform mobile development
+- **Expo** - Development platform and tools
+- **React Navigation** - Navigation with dark theme
+- **@react-native-clipboard/clipboard** - Clipboard functionality
+- **@react-native-async-storage/async-storage** - User preferences storage
+- **Custom Dark Theme** - Professional design system
 
 ## 📝 Contributing
 
