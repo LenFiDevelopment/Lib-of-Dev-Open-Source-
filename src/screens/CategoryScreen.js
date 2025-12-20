@@ -7,16 +7,18 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getLanguageById } from '../data/languagesData';
 
 export default function CategoryScreen({ route, navigation }) {
+  const { t } = useTranslation();
   const { languageId, categoryId, languageName } = route.params;
   const language = getLanguageById(languageId);
 
   if (!language || !language.categories[categoryId]) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Category not found</Text>
+        <Text style={styles.errorText}>{t('common.notFound')}</Text>
       </SafeAreaView>
     );
   }

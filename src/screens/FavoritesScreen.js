@@ -5,18 +5,21 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { colors } from '../constants/theme';
 
 export default function FavoritesScreen() {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Favorites</Text>
+        <Text style={styles.headerTitle}>{t('favorites.title')}</Text>
       </View>
       <View style={styles.emptyState}>
         <Text style={styles.emptyIcon}>⭐</Text>
-        <Text style={styles.emptyTitle}>No Favorites Yet</Text>
+        <Text style={styles.emptyTitle}>{t('favorites.empty')}</Text>
         <Text style={styles.emptyDescription}>
-          Star code examples while browsing to save them here for quick access
+          {t('favorites.emptyDescription')}
         </Text>
       </View>
     </SafeAreaView>
@@ -26,18 +29,18 @@ export default function FavoritesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.background,
   },
   header: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.backgroundElevated,
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.border,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000000',
+    color: colors.text,
   },
   emptyState: {
     flex: 1,

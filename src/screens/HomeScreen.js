@@ -8,12 +8,14 @@ import {
   SafeAreaView,
   TextInput,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getAllLanguages } from '../data/languagesData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { LanguageCard } from '../components/Card';
 import { quickTips } from '../data/developerHintsData';
 
 export default function HomeScreen({ navigation }) {
+  const { t } = useTranslation();
   const languages = getAllLanguages();
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLanguages, setFilteredLanguages] = useState(languages);
@@ -44,12 +46,12 @@ export default function HomeScreen({ navigation }) {
       <ScrollView style={styles.scrollView}>
         {/* Hero Section */}
         <View style={styles.header}>
-          <Text style={styles.title}>💻 Lib of Dev</Text>
+          <Text style={styles.title}>💻 {t('home.title')}</Text>
           <Text style={styles.subtitle}>
-            Your comprehensive developer reference library
+            {t('home.subtitle')}
           </Text>
           <Text style={styles.description}>
-            13 languages • AI/ML • IoT/Hardware • E-Commerce • Linux • 80+ Hints • shadcn/ui
+            {t('home.description')}
           </Text>
         </View>
 
@@ -59,7 +61,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.searchIcon}>🔍</Text>
             <TextInput
               style={styles.searchInput}
-              placeholder="Search languages, topics, or features..."
+              placeholder={t('home.searchPlaceholder')}
               placeholderTextColor={colors.textMuted}
               value={searchQuery}
               onChangeText={handleSearch}
@@ -76,79 +78,79 @@ export default function HomeScreen({ navigation }) {
 
         {/* Quick Access Cards */}
         <View style={styles.quickAccessContainer}>
-          <Text style={styles.sectionTitle}>⚡ Quick Access</Text>
+          <Text style={styles.sectionTitle}>⚡ {t('home.quickAccess')}</Text>
           <View style={styles.quickAccessGrid}>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Search')}
             >
               <Text style={styles.quickAccessIcon}>🔍</Text>
-              <Text style={styles.quickAccessText}>Search</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.search')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Learning')}
             >
               <Text style={styles.quickAccessIcon}>🎓</Text>
-              <Text style={styles.quickAccessText}>Learn</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.learn')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('UIFrameworks')}
             >
               <Text style={styles.quickAccessIcon}>🎨</Text>
-              <Text style={styles.quickAccessText}>UI Design</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.uiDesign')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Platforms')}
             >
               <Text style={styles.quickAccessIcon}>🚀</Text>
-              <Text style={styles.quickAccessText}>Platforms</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.platforms')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Hints')}
             >
               <Text style={styles.quickAccessIcon}>💡</Text>
-              <Text style={styles.quickAccessText}>Hints</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.hints')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('SpecializedTopics')}
             >
               <Text style={styles.quickAccessIcon}>🔌</Text>
-              <Text style={styles.quickAccessText}>IoT & More</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.iotMore')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Resources')}
             >
               <Text style={styles.quickAccessIcon}>🔗</Text>
-              <Text style={styles.quickAccessText}>Links</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.links')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Favorites')}
             >
               <Text style={styles.quickAccessIcon}>⭐</Text>
-              <Text style={styles.quickAccessText}>Favorites</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.favorites')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Settings')}
             >
               <Text style={styles.quickAccessIcon}>⚙️</Text>
-              <Text style={styles.quickAccessText}>Settings</Text>
+              <Text style={styles.quickAccessText}>{t('quickAccess.settings')}</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         {/* Quick Tips Section */}
         <View style={styles.quickTipsContainer}>
-          <Text style={styles.sectionTitle}>💡 Quick Tips</Text>
+          <Text style={styles.sectionTitle}>💡 {t('home.quickTips')}</Text>
           <Text style={styles.sectionSubtitle}>
-            Instant answers to common development questions
+            {t('home.quickTipsSubtitle')}
           </Text>
           <ScrollView
             horizontal
@@ -174,8 +176,8 @@ export default function HomeScreen({ navigation }) {
               onPress={() => navigation.navigate('Hints')}
             >
               <Text style={styles.viewAllIcon}>👉</Text>
-              <Text style={styles.viewAllText}>View All Hints</Text>
-              <Text style={styles.viewAllSubtext}>50+ scenarios covered</Text>
+              <Text style={styles.viewAllText}>{t('home.viewAllHints')}</Text>
+              <Text style={styles.viewAllSubtext}>50+ {t('home.scenariosCovered')}</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -183,11 +185,11 @@ export default function HomeScreen({ navigation }) {
         {/* Languages List */}
         <View style={styles.languagesContainer}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>📚 Programming Languages</Text>
-            <Text style={styles.sectionCount}>{filteredLanguages.length} languages</Text>
+            <Text style={styles.sectionTitle}>📚 {t('home.languages')}</Text>
+            <Text style={styles.sectionCount}>{filteredLanguages.length} {t('home.languagesCount')}</Text>
           </View>
           <Text style={styles.sectionSubtitle}>
-            Choose a language to explore syntax, functions, and examples
+            {t('home.languagesSubtitle')}
           </Text>
 
           <View style={styles.languagesList}>

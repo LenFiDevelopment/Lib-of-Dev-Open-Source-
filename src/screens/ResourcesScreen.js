@@ -10,10 +10,12 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { colors, spacing, typography, borderRadius, shadows } from '../constants/theme';
 import { resourceLinks, allLinks, featuredLinks } from '../data/resourceLinksData';
 
 export default function ResourcesScreen() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -23,10 +25,10 @@ export default function ResourcesScreen() {
       if (supported) {
         await Linking.openURL(url);
       } else {
-        Alert.alert('Error', `Cannot open ${name}`);
+        Alert.alert(t('resources.error'), t('resources.cannotOpen', { name }));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to open link');
+      Alert.alert(t('resources.error'), t('resources.failedToOpen'));
     }
   };
 
@@ -58,7 +60,7 @@ export default function ResourcesScreen() {
     >
       {link.featured && (
         <View style={styles.featuredBadge}>
-          <Text style={styles.featuredText}>⭐ Featured</Text>
+          <Text style={styles.featuredText}>⭐ {t('resources.featured')}</Text>
         </View>
       )}
       <View style={styles.linkHeader}>
@@ -80,7 +82,7 @@ export default function ResourcesScreen() {
 
   const renderCategoryButton = (categoryKey) => {
     const category = categoryKey === 'all' 
-      ? { title: 'All Resources', icon: '🌐' }
+      ? { title: t('resources.allResources'), icon: '🌐' }
       : resourceLinks[categoryKey];
     
     const isSelected = selectedCategory === categoryKey;
@@ -108,9 +110,9 @@ export default function ResourcesScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Official Resources</Text>
+        <Text style={styles.title}>{t('resources.title')}</Text>
         <Text style={styles.subtitle}>
-          Direct links to documentation and official websites
+          {t('resources.subtitle')}
         </Text>
       </View>
 
@@ -118,7 +120,7 @@ export default function ResourcesScreen() {
         <Text style={styles.searchIcon}>🔍</Text>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search resources..."
+          placeholder={t('resources.searchPlaceholder')}
           placeholderTextColor={colors.textSecondary}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -149,7 +151,7 @@ export default function ResourcesScreen() {
       >
         {!searchQuery && selectedCategory === 'all' && featuredLinks.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>⭐ Featured Resources</Text>
+            <Text style={styles.sectionTitle}>⭐ {t('resources.featuredResources')}</Text>
             {featuredLinks.map((link, index) => renderLinkCard(link, index))}
           </View>
         )}
@@ -157,7 +159,7 @@ export default function ResourcesScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>
             {selectedCategory === 'all' 
-              ? `All Resources (${filteredLinks().length})` 
+              ? `${t('resources.allResources')} (${filteredLinks().length})` 
               : resourceLinks[selectedCategory]?.title}
           </Text>
           {filteredLinks().length > 0 ? (
@@ -165,9 +167,9 @@ export default function ResourcesScreen() {
           ) : (
             <View style={styles.emptyState}>
               <Text style={styles.emptyIcon}>🔍</Text>
-              <Text style={styles.emptyText}>No resources found</Text>
+              <Text style={styles.emptyText}>{t('resources.noResourcesFound')}</Text>
               <Text style={styles.emptySubtext}>
-                Try adjusting your search or category
+                {t('resources.adjustSearch')}
               </Text>
             </View>
           )}

@@ -8,10 +8,12 @@ import {
   SafeAreaView,
   Linking,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getAllUIFrameworks } from '../data/uiFrameworksData';
 import { colors, spacing, borderRadius, shadows, typography } from '../constants/theme';
 
 export default function UIFrameworksScreen({ navigation }) {
+  const { t } = useTranslation();
   const frameworks = getAllUIFrameworks();
 
   const openLink = (url) => {
@@ -22,9 +24,9 @@ export default function UIFrameworksScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>🎨 UI Frameworks & Design Systems</Text>
+          <Text style={styles.headerTitle}>🎨 {t('uiFrameworks.title')}</Text>
           <Text style={styles.headerSubtitle}>
-            Modern component libraries and design systems for beautiful UIs
+            {t('uiFrameworks.subtitle')}
           </Text>
         </View>
 
@@ -33,7 +35,7 @@ export default function UIFrameworksScreen({ navigation }) {
           {frameworks.filter(f => f.id === 'shadcn').map((framework) => (
             <View key={framework.id} style={styles.featuredCard}>
               <View style={styles.featuredBadge}>
-                <Text style={styles.featuredBadgeText}>⭐ FEATURED</Text>
+                <Text style={styles.featuredBadgeText}>⭐ {t('uiFrameworks.featured')}</Text>
               </View>
               <View style={styles.frameworkHeader}>
                 <View style={[styles.iconContainer, { backgroundColor: framework.color + '10' }]}>
@@ -51,7 +53,7 @@ export default function UIFrameworksScreen({ navigation }) {
 
               {framework.features && (
                 <View style={styles.featuresContainer}>
-                  <Text style={styles.sectionTitle}>Key Features:</Text>
+                  <Text style={styles.sectionTitle}>{t('uiFrameworks.keyFeatures')}</Text>
                   {framework.features.slice(0, 4).map((feature, index) => (
                     <View key={index} style={styles.featureItem}>
                       <Text style={styles.featureBullet}>•</Text>
@@ -63,7 +65,7 @@ export default function UIFrameworksScreen({ navigation }) {
 
               {framework.designPrinciples && (
                 <View style={styles.principlesContainer}>
-                  <Text style={styles.sectionTitle}>Design Principles:</Text>
+                  <Text style={styles.sectionTitle}>{t('uiFrameworks.designPrinciples')}</Text>
                   <View style={styles.principlesGrid}>
                     {framework.designPrinciples.map((principle, index) => (
                       <View key={index} style={styles.principleCard}>
@@ -78,7 +80,7 @@ export default function UIFrameworksScreen({ navigation }) {
 
               {framework.components && (
                 <View style={styles.componentsContainer}>
-                  <Text style={styles.sectionTitle}>Available Components:</Text>
+                  <Text style={styles.sectionTitle}>{t('uiFrameworks.availableComponents')}</Text>
                   <View style={styles.componentTags}>
                     {framework.components.slice(0, 6).map((component, index) => (
                       <View key={index} style={styles.componentTag}>
@@ -95,20 +97,20 @@ export default function UIFrameworksScreen({ navigation }) {
                     style={[styles.linkButton, styles.primaryButton]}
                     onPress={() => openLink(framework.links.website)}
                   >
-                    <Text style={styles.primaryButtonText}>🌐 Visit Website</Text>
+                    <Text style={styles.primaryButtonText}>🌐 {t('uiFrameworks.visitWebsite')}</Text>
                   </TouchableOpacity>
                   <View style={styles.linkRow}>
                     <TouchableOpacity
                       style={styles.secondaryButton}
                       onPress={() => openLink(framework.links.docs)}
                     >
-                      <Text style={styles.secondaryButtonText}>📚 Docs</Text>
+                      <Text style={styles.secondaryButtonText}>📚 {t('uiFrameworks.docs')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.secondaryButton}
                       onPress={() => openLink(framework.links.github)}
                     >
-                      <Text style={styles.secondaryButtonText}>🐙 GitHub</Text>
+                      <Text style={styles.secondaryButtonText}>🐙 {t('uiFrameworks.github')}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -117,7 +119,7 @@ export default function UIFrameworksScreen({ navigation }) {
           ))}
 
           {/* Other frameworks */}
-          <Text style={styles.categoryTitle}>Other UI Frameworks</Text>
+          <Text style={styles.categoryTitle}>{t('uiFrameworks.otherFrameworks')}</Text>
           {frameworks.filter(f => f.id !== 'shadcn').map((framework) => (
             <TouchableOpacity
               key={framework.id}
@@ -175,17 +177,17 @@ export default function UIFrameworksScreen({ navigation }) {
         </View>
 
         <View style={styles.infoSection}>
-          <Text style={styles.infoTitle}>💡 Why Use UI Frameworks?</Text>
+          <Text style={styles.infoTitle}>💡 {t('uiFrameworks.whyUseTitle')}</Text>
           <Text style={styles.infoText}>
-            Modern UI frameworks help you build consistent, accessible, and beautiful interfaces faster.
+            {t('uiFrameworks.whyUseDescription')}
           </Text>
           <View style={styles.benefitsList}>
-            <Text style={styles.benefitItem}>• Pre-built, tested components</Text>
-            <Text style={styles.benefitItem}>• Accessibility built-in (WAI-ARIA)</Text>
-            <Text style={styles.benefitItem}>• Consistent design language</Text>
-            <Text style={styles.benefitItem}>• Dark mode support</Text>
-            <Text style={styles.benefitItem}>• TypeScript support</Text>
-            <Text style={styles.benefitItem}>• Active community & documentation</Text>
+            <Text style={styles.benefitItem}>• {t('uiFrameworks.benefit1')}</Text>
+            <Text style={styles.benefitItem}>• {t('uiFrameworks.benefit2')}</Text>
+            <Text style={styles.benefitItem}>• {t('uiFrameworks.benefit3')}</Text>
+            <Text style={styles.benefitItem}>• {t('uiFrameworks.benefit4')}</Text>
+            <Text style={styles.benefitItem}>• {t('uiFrameworks.benefit5')}</Text>
+            <Text style={styles.benefitItem}>• {t('uiFrameworks.benefit6')}</Text>
           </View>
         </View>
       </ScrollView>

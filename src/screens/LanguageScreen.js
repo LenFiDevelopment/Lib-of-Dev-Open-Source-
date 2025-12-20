@@ -7,16 +7,18 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getLanguageById } from '../data/languagesData';
 
 export default function LanguageScreen({ route, navigation }) {
+  const { t } = useTranslation();
   const { languageId } = route.params;
   const language = getLanguageById(languageId);
 
   if (!language) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Language not found</Text>
+        <Text style={styles.errorText}>{t('common.notFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -33,9 +35,9 @@ export default function LanguageScreen({ route, navigation }) {
         </View>
 
         <View style={styles.categoriesContainer}>
-          <Text style={styles.sectionTitle}>Categories</Text>
+          <Text style={styles.sectionTitle}>{t('categories.title')}</Text>
           <Text style={styles.sectionSubtitle}>
-            Explore different aspects of {language.name}
+            {t('categories.exploreLanguage', { language: language.name })}
           </Text>
 
           <View style={styles.categoriesList}>
@@ -55,7 +57,7 @@ export default function LanguageScreen({ route, navigation }) {
                 <View style={styles.categoryContent}>
                   <Text style={styles.categoryName}>{category.name}</Text>
                   <Text style={styles.categoryCount}>
-                    {category.items.length} items
+                    {t('categories.itemsCount', { count: category.items.length })}
                   </Text>
                 </View>
                 <Text style={styles.categoryArrow}>›</Text>

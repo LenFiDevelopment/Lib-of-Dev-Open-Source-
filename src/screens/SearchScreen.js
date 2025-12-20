@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getAllLanguages } from '../data/languagesData';
 import { getAllDesignPatterns } from '../data/designPatternsData';
 import { getAllPlatforms } from '../data/platformsData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function SearchScreen({ navigation }) {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [filter, setFilter] = useState('all'); // all, languages, patterns, platforms
@@ -184,7 +186,7 @@ export default function SearchScreen({ navigation }) {
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search languages, patterns, platforms..."
+            placeholder={t('search.placeholder')}
             placeholderTextColor={colors.textMuted}
             value={searchQuery}
             onChangeText={handleSearch}
@@ -205,7 +207,7 @@ export default function SearchScreen({ navigation }) {
             onPress={() => { setFilter('all'); handleSearch(searchQuery); }}
           >
             <Text style={[styles.filterButtonText, filter === 'all' && styles.filterButtonTextActive]}>
-              All
+              {t('search.filterAll')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -213,7 +215,7 @@ export default function SearchScreen({ navigation }) {
             onPress={() => { setFilter('languages'); handleSearch(searchQuery); }}
           >
             <Text style={[styles.filterButtonText, filter === 'languages' && styles.filterButtonTextActive]}>
-              📚 Languages
+              📚 {t('search.filterLanguages')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -221,7 +223,7 @@ export default function SearchScreen({ navigation }) {
             onPress={() => { setFilter('patterns'); handleSearch(searchQuery); }}
           >
             <Text style={[styles.filterButtonText, filter === 'patterns' && styles.filterButtonTextActive]}>
-              🎨 Patterns
+              🎨 {t('search.filterPatterns')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -229,7 +231,7 @@ export default function SearchScreen({ navigation }) {
             onPress={() => { setFilter('platforms'); handleSearch(searchQuery); }}
           >
             <Text style={[styles.filterButtonText, filter === 'platforms' && styles.filterButtonTextActive]}>
-              🚀 Platforms
+              🚀 {t('search.filterPlatforms')}
             </Text>
           </TouchableOpacity>
         </ScrollView>
@@ -239,13 +241,13 @@ export default function SearchScreen({ navigation }) {
         {searchQuery.trim().length === 0 && (
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>🔍</Text>
-            <Text style={styles.emptyTitle}>Search Everything</Text>
+            <Text style={styles.emptyTitle}>{t('search.emptyTitle')}</Text>
             <Text style={styles.emptyDescription}>
-              Search across programming languages, design patterns, and deployment platforms
+              {t('search.emptyDescription')}
             </Text>
             <View style={styles.hintsList}>
-              <Text style={styles.hintText}>💡 Try: "async", "database", "docker"</Text>
-              <Text style={styles.hintText}>💡 Try: "singleton", "api", "cloud"</Text>
+              <Text style={styles.hintText}>{t('search.hint1')}</Text>
+              <Text style={styles.hintText}>{t('search.hint2')}</Text>
             </View>
           </View>
         )}
@@ -253,9 +255,9 @@ export default function SearchScreen({ navigation }) {
         {searchQuery.trim().length > 0 && searchResults.length === 0 && (
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>😕</Text>
-            <Text style={styles.emptyTitle}>No Results Found</Text>
+            <Text style={styles.emptyTitle}>{t('search.noResults')}</Text>
             <Text style={styles.emptyDescription}>
-              Try different keywords or check your filter
+              {t('search.noResultsDescription')}
             </Text>
           </View>
         )}
@@ -263,7 +265,7 @@ export default function SearchScreen({ navigation }) {
         {searchResults.length > 0 && (
           <View style={styles.resultsContainer}>
             <Text style={styles.resultsCount}>
-              {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found
+              {t('search.resultsCount', { count: searchResults.length })}
             </Text>
             {searchResults.map((result, index) => renderResult(result, index))}
           </View>

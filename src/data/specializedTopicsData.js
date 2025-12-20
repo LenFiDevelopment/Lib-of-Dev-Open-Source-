@@ -809,6 +809,443 @@ qmrestore /var/lib/vz/dump/vzdump-qemu-100-*.vma.gz 100
       },
     },
   },
+
+  devops: {
+    id: 'devops',
+    name: 'DevOps & CI/CD',
+    icon: '🔄',
+    color: '#2563EB',
+    description: 'DevOps practices, CI/CD pipelines, and automation tools',
+    categories: {
+      docker: {
+        name: 'Docker',
+        items: [
+          {
+            title: 'Dockerfile Basics',
+            code: `# Multi-stage build for Node.js app
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+FROM node:18-alpine
+WORKDIR /app
+COPY --from=builder /app/node_modules ./node_modules
+COPY . .
+EXPOSE 3000
+CMD ["node", "index.js"]`,
+            description: 'Create efficient Docker images with multi-stage builds',
+            usage: 'Reduces image size and improves security by separating build and runtime.',
+            technologies: ['Docker', 'Containers', 'Node.js'],
+          },
+          {
+            title: 'Docker Compose',
+            code: `version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://db:5432/myapp
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=secret
+
+volumes:
+  postgres_data:`,
+            description: 'Define and run multi-container Docker applications',
+            usage: 'Perfect for local development environments with multiple services.',
+            technologies: ['Docker Compose', 'PostgreSQL', 'Orchestration'],
+          },
+        ],
+      },
+      kubernetes: {
+        name: 'Kubernetes',
+        items: [
+          {
+            title: 'Deployment YAML',
+            code: `apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: app
+        image: myapp:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"`,
+            description: 'Deploy containerized applications to Kubernetes',
+            usage: 'Scales applications automatically, ensures high availability.',
+            technologies: ['Kubernetes', 'Orchestration', 'Scaling'],
+          },
+        ],
+      },
+      githubActions: {
+        name: 'GitHub Actions',
+        items: [
+          {
+            title: 'CI/CD Pipeline',
+            code: `name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests
+      run: npm test
+    
+    - name: Build
+      run: npm run build
+    
+    - name: Deploy to production
+      if: github.ref == 'refs/heads/main'
+      run: npm run deploy
+      env:
+        DEPLOY_KEY: \${{ secrets.DEPLOY_KEY }}`,
+            description: 'Automate testing, building, and deployment workflows',
+            usage: 'Runs on every push/PR, ensures code quality before merge.',
+            technologies: ['GitHub Actions', 'CI/CD', 'Automation'],
+          },
+        ],
+      },
+    },
+  },
+
+  cloud: {
+    id: 'cloud',
+    name: 'Cloud Platforms',
+    icon: '☁️',
+    color: '#0EA5E9',
+    description: 'AWS, Azure, Google Cloud services and cloud-native development',
+    categories: {
+      aws: {
+        name: 'AWS',
+        items: [
+          {
+            title: 'S3 File Upload',
+            code: `import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+const s3Client = new S3Client({ region: 'us-east-1' });
+
+async function uploadFile(file, bucketName) {
+  const command = new PutObjectCommand({
+    Bucket: bucketName,
+    Key: file.name,
+    Body: file,
+    ContentType: file.type,
+  });
+  
+  try {
+    const response = await s3Client.send(command);
+    console.log('Upload successful:', response);
+    return response;
+  } catch (error) {
+    console.error('Upload failed:', error);
+    throw error;
+  }
+}`,
+            description: 'Upload files to AWS S3 using SDK v3',
+            usage: 'Store and retrieve any amount of data from anywhere on the web.',
+            technologies: ['AWS', 'S3', 'Cloud Storage'],
+          },
+          {
+            title: 'Lambda Function',
+            code: `export const handler = async (event) => {
+  console.log('Event:', JSON.stringify(event, null, 2));
+  
+  try {
+    const body = JSON.parse(event.body);
+    
+    // Process data
+    const result = {
+      message: 'Success',
+      data: body,
+      timestamp: new Date().toISOString(),
+    };
+    
+    return {
+      statusCode: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(result),
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+    };
+  }
+};`,
+            description: 'Serverless function that runs on AWS Lambda',
+            usage: 'No server management, pay only for compute time, auto-scaling.',
+            technologies: ['AWS Lambda', 'Serverless', 'Node.js'],
+          },
+        ],
+      },
+    },
+  },
+
+  blockchain: {
+    id: 'blockchain',
+    name: 'Blockchain & Web3',
+    icon: '🔗',
+    color: '#8B5CF6',
+    description: 'Smart contracts, cryptocurrency, and decentralized applications',
+    categories: {
+      solidity: {
+        name: 'Solidity Smart Contracts',
+        items: [
+          {
+            title: 'Simple ERC20 Token',
+            code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract MyToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("MyToken", "MTK") {
+        _mint(msg.sender, initialSupply);
+    }
+    
+    function mint(address to, uint256 amount) public {
+        _mint(to, amount);
+    }
+}`,
+            description: 'Create a basic ERC20 token on Ethereum',
+            usage: 'Foundation for creating cryptocurrencies and utility tokens.',
+            technologies: ['Solidity', 'Ethereum', 'ERC20'],
+          },
+          {
+            title: 'NFT Contract',
+            code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
+contract MyNFT is ERC721 {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+    
+    constructor() ERC721("MyNFT", "MNFT") {}
+    
+    function mintNFT(address recipient, string memory tokenURI)
+        public returns (uint256)
+    {
+        _tokenIds.increment();
+        uint256 newItemId = _tokenIds.current();
+        _mint(recipient, newItemId);
+        _setTokenURI(newItemId, tokenURI);
+        
+        return newItemId;
+    }
+}`,
+            description: 'Create non-fungible tokens (NFTs) on Ethereum',
+            usage: 'Digital collectibles, art, gaming items, and unique assets.',
+            technologies: ['Solidity', 'NFT', 'ERC721'],
+          },
+        ],
+      },
+    },
+  },
+
+  security: {
+    id: 'security',
+    name: 'Security & Encryption',
+    icon: '🔒',
+    color: '#DC2626',
+    description: 'Application security, encryption, and secure coding practices',
+    categories: {
+      authentication: {
+        name: 'Authentication',
+        items: [
+          {
+            title: 'JWT Authentication',
+            code: `const jwt = require('jsonwebtoken');
+
+// Generate token
+function generateToken(userId) {
+  return jwt.sign(
+    { userId },
+    process.env.JWT_SECRET,
+    { expiresIn: '24h' }
+  );
+}
+
+// Verify token middleware
+function authenticateToken(req, res, next) {
+  const token = req.headers['authorization']?.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+  
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ error: 'Invalid token' });
+    }
+    req.userId = decoded.userId;
+    next();
+  });
+}`,
+            description: 'Implement JWT-based authentication',
+            usage: 'Stateless authentication, perfect for APIs and microservices.',
+            technologies: ['JWT', 'Authentication', 'Node.js'],
+          },
+        ],
+      },
+      encryption: {
+        name: 'Encryption',
+        items: [
+          {
+            title: 'AES Encryption',
+            code: `const crypto = require('crypto');
+
+function encrypt(text, password) {
+  const algorithm = 'aes-256-cbc';
+  const key = crypto.scryptSync(password, 'salt', 32);
+  const iv = crypto.randomBytes(16);
+  
+  const cipher = crypto.createCipheriv(algorithm, key, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  return {
+    iv: iv.toString('hex'),
+    encrypted: encrypted
+  };
+}
+
+function decrypt(encrypted, password, iv) {
+  const algorithm = 'aes-256-cbc';
+  const key = crypto.scryptSync(password, 'salt', 32);
+  
+  const decipher = crypto.createDecipheriv(
+    algorithm,
+    key,
+    Buffer.from(iv, 'hex')
+  );
+  
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  
+  return decrypted;
+}`,
+            description: 'Encrypt and decrypt sensitive data using AES-256',
+            usage: 'Protect sensitive information like passwords, API keys, personal data.',
+            technologies: ['AES', 'Encryption', 'Node.js', 'Crypto'],
+          },
+        ],
+      },
+    },
+  },
+
+  testing: {
+    id: 'testing',
+    name: 'Testing & QA',
+    icon: '🧪',
+    color: '#10B981',
+    description: 'Unit testing, integration testing, and test automation',
+    categories: {
+      jest: {
+        name: 'Jest Testing',
+        items: [
+          {
+            title: 'Unit Test Example',
+            code: `// math.js
+export function add(a, b) {
+  return a + b;
+}
+
+// math.test.js
+import { add } from './math';
+
+describe('Math functions', () => {
+  test('adds two numbers correctly', () => {
+    expect(add(2, 3)).toBe(5);
+  });
+  
+  test('handles negative numbers', () => {
+    expect(add(-1, -1)).toBe(-2);
+  });
+  
+  test('handles zero', () => {
+    expect(add(0, 5)).toBe(5);
+  });
+});`,
+            description: 'Write unit tests with Jest framework',
+            usage: 'Ensure code works correctly, catch bugs early in development.',
+            technologies: ['Jest', 'Testing', 'JavaScript'],
+          },
+        ],
+      },
+      reactTesting: {
+        name: 'React Testing Library',
+        items: [
+          {
+            title: 'Component Test',
+            code: `import { render, screen, fireEvent } from '@testing-library/react';
+import Counter from './Counter';
+
+test('increments counter on button click', () => {
+  render(<Counter />);
+  
+  const button = screen.getByRole('button', { name: /increment/i });
+  const count = screen.getByText(/count: 0/i);
+  
+  expect(count).toBeInTheDocument();
+  
+  fireEvent.click(button);
+  
+  expect(screen.getByText(/count: 1/i)).toBeInTheDocument();
+});`,
+            description: 'Test React components with user interactions',
+            usage: 'Verify components render and behave correctly from user perspective.',
+            technologies: ['React Testing Library', 'Jest', 'React'],
+          },
+        ],
+      },
+    },
+  },
 };
 
 // Export individual topic categories for easier access
@@ -817,3 +1254,8 @@ export const homeAssistantTopics = specializedTopics.homeAssistant;
 export const ecommerceTopics = specializedTopics.ecommerce;
 export const linuxTopics = specializedTopics.linux;
 export const proxmoxTopics = specializedTopics.proxmox;
+export const devopsTopics = specializedTopics.devops;
+export const cloudTopics = specializedTopics.cloud;
+export const blockchainTopics = specializedTopics.blockchain;
+export const securityTopics = specializedTopics.security;
+export const testingTopics = specializedTopics.testing;

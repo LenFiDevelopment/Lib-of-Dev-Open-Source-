@@ -7,19 +7,21 @@ import {
   StyleSheet,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { developerHints, quickTips } from '../data/developerHintsData';
 
 export default function HintsScreen({ navigation }) {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const categories = Object.values(developerHints);
 
   const renderQuickTips = () => (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>⚡ Quick Tips</Text>
+      <Text style={styles.sectionTitle}>⚡ {t('hints.quickTips')}</Text>
       <Text style={styles.sectionSubtitle}>
-        Common scenarios and instant recommendations
+        {t('hints.quickTipsDescription')}
       </Text>
       <ScrollView
         horizontal
@@ -42,7 +44,7 @@ export default function HintsScreen({ navigation }) {
 
   const renderCategories = () => (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>📚 Browse by Category</Text>
+      <Text style={styles.sectionTitle}>📚 {t('hints.browseByCategory')}</Text>
       <View style={styles.categoriesGrid}>
         {categories.map((category) => (
           <TouchableOpacity
@@ -56,7 +58,7 @@ export default function HintsScreen({ navigation }) {
             <Text style={styles.categoryIcon}>{category.icon}</Text>
             <Text style={styles.categoryTitle}>{category.title}</Text>
             <Text style={styles.categoryHintCount}>
-              {category.hints.length} hints
+              {t('hints.hintsCount', { count: category.hints.length })}
             </Text>
           </TouchableOpacity>
         ))}
@@ -73,7 +75,7 @@ export default function HintsScreen({ navigation }) {
           style={styles.backButton}
           onPress={() => setSelectedCategory(null)}
         >
-          <Text style={styles.backButtonText}>← Back to Categories</Text>
+          <Text style={styles.backButtonText}>← {t('hints.backToCategories')}</Text>
         </TouchableOpacity>
 
         <View style={styles.detailHeader}>
@@ -128,9 +130,9 @@ export default function HintsScreen({ navigation }) {
       ) : (
         <ScrollView style={styles.scrollView}>
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>💡 Developer Hints</Text>
+            <Text style={styles.headerTitle}>💡 {t('hints.title')}</Text>
             <Text style={styles.headerSubtitle}>
-              Practical recommendations for common scenarios
+              {t('hints.subtitle')}
             </Text>
           </View>
 
@@ -139,7 +141,7 @@ export default function HintsScreen({ navigation }) {
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>
-              These hints are based on industry best practices and modern development standards.
+              {t('hints.footer')}
             </Text>
           </View>
         </ScrollView>

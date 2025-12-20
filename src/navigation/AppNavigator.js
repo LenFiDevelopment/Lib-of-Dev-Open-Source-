@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useTranslation } from 'react-i18next';
 import { colors } from '../constants/theme';
 
 // Import screens
@@ -50,57 +51,58 @@ const screenOptions = {
 
 // Main stack for Browse tab
 function BrowseStack() {
+  const { t } = useTranslation();
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen 
         name="Home" 
         component={HomeScreen}
-        options={{ title: 'Lib of Dev 💻' }}
+        options={{ title: `💻 ${t('home.title')}` }}
       />
       <Stack.Screen 
         name="Language" 
         component={LanguageScreen}
-        options={({ route }) => ({ title: route.params?.languageName || 'Language' })}
+        options={({ route }) => ({ title: route.params?.languageName || t('languages.javascript') })}
       />
       <Stack.Screen 
         name="Category" 
         component={CategoryScreen}
-        options={({ route }) => ({ title: route.params?.categoryName || 'Category' })}
+        options={({ route }) => ({ title: route.params?.categoryName || t('categories.basics') })}
       />
       <Stack.Screen 
         name="CodeDetail" 
         component={CodeDetailScreen}
-        options={{ title: 'Code Reference' }}
+        options={{ title: t('codeDetail.example') }}
       />
       <Stack.Screen 
         name="Platforms" 
         component={PlatformsScreen}
-        options={{ title: '🚀 Platforms & Tools' }}
+        options={{ title: `🚀 ${t('platforms.title')}` }}
       />
       <Stack.Screen 
         name="UIFrameworks" 
         component={UIFrameworksScreen}
-        options={{ title: '🎨 UI Frameworks' }}
+        options={{ title: `🎨 ${t('uiFrameworks.title')}` }}
       />
       <Stack.Screen 
         name="Learning" 
         component={LearningScreen}
-        options={{ title: '📚 Learning Resources' }}
+        options={{ title: `📚 ${t('learning.title')}` }}
       />
       <Stack.Screen 
         name="Hints" 
         component={HintsScreen}
-        options={{ title: '💡 Developer Hints' }}
+        options={{ title: `💡 ${t('hints.title')}` }}
       />
       <Stack.Screen 
         name="SpecializedTopics" 
         component={SpecializedTopicsScreen}
-        options={{ title: '🔌 Specialized Topics' }}
+        options={{ title: `🔌 ${t('specializedTopics.title')}` }}
       />
       <Stack.Screen 
         name="Resources" 
         component={ResourcesScreen}
-        options={{ title: '🔗 Official Links' }}
+        options={{ title: `🔗 ${t('resources.title')}` }}
       />
     </Stack.Navigator>
   );
@@ -108,6 +110,7 @@ function BrowseStack() {
 
 // Main Tab Navigator
 function TabNavigator() {
+  const { t } = useTranslation();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -125,7 +128,7 @@ function TabNavigator() {
         name="Browse" 
         component={BrowseStack}
         options={{
-          tabBarLabel: 'Browse',
+          tabBarLabel: t('navigation.home'),
           tabBarIcon: ({ color }) => '📚',
         }}
       />
@@ -133,10 +136,10 @@ function TabNavigator() {
         name="Search" 
         component={SearchScreen}
         options={{
-          tabBarLabel: 'Search',
+          tabBarLabel: t('navigation.search'),
           tabBarIcon: ({ color }) => '🔍',
           headerShown: true,
-          headerTitle: '🔍 Search',
+          headerTitle: `🔍 ${t('search.title')}`,
           headerStyle: {
             backgroundColor: colors.backgroundElevated,
             borderBottomColor: colors.border,
@@ -148,10 +151,10 @@ function TabNavigator() {
         name="Favorites" 
         component={FavoritesScreen}
         options={{
-          tabBarLabel: 'Favorites',
+          tabBarLabel: t('navigation.favorites'),
           tabBarIcon: ({ color }) => '⭐',
           headerShown: true,
-          headerTitle: '⭐ Favorites',
+          headerTitle: `⭐ ${t('favorites.title')}`,
           headerStyle: {
             backgroundColor: colors.backgroundElevated,
             borderBottomColor: colors.border,
@@ -163,10 +166,10 @@ function TabNavigator() {
         name="Settings" 
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: t('navigation.settings'),
           tabBarIcon: ({ color }) => '⚙️',
           headerShown: true,
-          headerTitle: '⚙️ Settings',
+          headerTitle: `⚙️ ${t('settings.title')}`,
           headerStyle: {
             backgroundColor: colors.backgroundElevated,
             borderBottomColor: colors.border,

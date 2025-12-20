@@ -8,10 +8,12 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { getLanguageById } from '../data/languagesData';
 
 export default function CodeDetailScreen({ route }) {
+  const { t } = useTranslation();
   const { languageId, categoryId, itemIndex, languageName } = route.params;
   const language = getLanguageById(languageId);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -19,7 +21,7 @@ export default function CodeDetailScreen({ route }) {
   if (!language || !language.categories[categoryId]) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Item not found</Text>
+        <Text style={styles.errorText}>{t('common.notFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -29,7 +31,7 @@ export default function CodeDetailScreen({ route }) {
   if (!category.items || !category.items[itemIndex]) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.errorText}>Item not found</Text>
+        <Text style={styles.errorText}>{t('common.notFound')}</Text>
       </SafeAreaView>
     );
   }
@@ -38,14 +40,14 @@ export default function CodeDetailScreen({ route }) {
 
   const copyToClipboard = () => {
     Clipboard.setString(item.code);
-    Alert.alert('Copied!', 'Code copied to clipboard');
+    Alert.alert(t('codeDetail.copied'), t('codeDetail.copiedMessage'));
   };
 
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     Alert.alert(
-      isFavorite ? 'Removed from favorites' : 'Added to favorites',
-      isFavorite ? 'Item removed from your favorites' : 'Item added to your favorites'
+      isFavorite ? t('codeDetail.removedFromFavorites') : t('codeDetail.addedToFavorites'),
+      isFavorite ? t('codeDetail.removedMessage') : t('codeDetail.addedMessage')
     );
   };
 
@@ -74,12 +76,12 @@ export default function CodeDetailScreen({ route }) {
 
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Code Example</Text>
+            <Text style={styles.sectionTitle}>{t('codeDetail.codeExample')}</Text>
             <TouchableOpacity
               style={styles.copyButton}
               onPress={copyToClipboard}
             >
-              <Text style={styles.copyButtonText}>📋 Copy</Text>
+              <Text style={styles.copyButtonText}>📋 {t('codeDetail.copy')}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.codeBlock}>
@@ -90,31 +92,31 @@ export default function CodeDetailScreen({ route }) {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Usage</Text>
+          <Text style={styles.sectionTitle}>{t('codeDetail.usage')}</Text>
           <View style={styles.usageBox}>
             <Text style={styles.usageText}>{item.usage}</Text>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Key Points</Text>
+          <Text style={styles.sectionTitle}>{t('codeDetail.keyPoints')}</Text>
           <View style={styles.keyPointsBox}>
             <View style={styles.keyPoint}>
               <Text style={styles.keyPointBullet}>•</Text>
               <Text style={styles.keyPointText}>
-                Copy the code example to use in your project
+                {t('codeDetail.keyPoint1')}
               </Text>
             </View>
             <View style={styles.keyPoint}>
               <Text style={styles.keyPointBullet}>•</Text>
               <Text style={styles.keyPointText}>
-                Modify as needed for your specific use case
+                {t('codeDetail.keyPoint2')}
               </Text>
             </View>
             <View style={styles.keyPoint}>
               <Text style={styles.keyPointBullet}>•</Text>
               <Text style={styles.keyPointText}>
-                Check official documentation for detailed information
+                {t('codeDetail.keyPoint3')}
               </Text>
             </View>
           </View>

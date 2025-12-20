@@ -9,14 +9,24 @@ import {
   Linking,
   Switch,
   Alert,
+  Modal,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as StoreReview from 'expo-store-review';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 const GITHUB_URL = 'https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-';
+const LANGUAGE_STORAGE_KEY = '@app_language';
+
+const LANGUAGES = [
+  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch' },
+];
 
 export default function SettingsScreen() {
+  const { t, i18n } = useTranslation();
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [interests, setInterests] = useState({
     web: false,
     mobile: false,
@@ -99,12 +109,12 @@ export default function SettingsScreen() {
       } else {
         // Fallback to opening store URL
         Alert.alert(
-          'Rate Our App',
-          'Would you like to rate us in the App Store?',
+          t('settings.rateApp'),
+          t('settings.rateAppMessage'),
           [
-            { text: 'Cancel', style: 'cancel' },
+            { text: t('common.cancel'), style: 'cancel' },
             {
-              text: 'Rate Now',
+              text: t('settings.rateNow'),
               onPress: async () => {
                 const storeUrl = await StoreReview.storeUrl();
                 if (storeUrl) {
@@ -118,8 +128,8 @@ export default function SettingsScreen() {
     } catch (error) {
       // Error requesting review - show fallback message
       Alert.alert(
-        'Thanks for your interest!',
-        'Store rating is not available at the moment. Please try again later.'
+        t('settings.thanksForInterest'),
+        t('settings.ratingNotAvailable')
       );
     }
   };
@@ -128,17 +138,17 @@ export default function SettingsScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>⚙️ Settings & Profile</Text>
+          <Text style={styles.headerTitle}>⚙️ {t('settings.headerTitle')}</Text>
           <Text style={styles.headerSubtitle}>
-            Customize your learning experience
+            {t('settings.headerSubtitle')}
           </Text>
         </View>
 
         {/* Interests Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🎯 Your Interests</Text>
+          <Text style={styles.sectionTitle}>🎯 {t('settings.yourInterests')}</Text>
           <Text style={styles.sectionDescription}>
-            Select topics you want to focus on
+            {t('settings.selectTopics')}
           </Text>
           <View style={styles.optionsContainer}>
             {Object.keys(interests).map((key) => (
@@ -164,9 +174,9 @@ export default function SettingsScreen() {
 
         {/* Languages Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💻 Favorite Languages</Text>
+          <Text style={styles.sectionTitle}>💻 {t('settings.favoriteLanguages')}</Text>
           <Text style={styles.sectionDescription}>
-            Choose languages you're learning or working with
+            {t('settings.chooseLanguages')}
           </Text>
           <View style={styles.optionsContainer}>
             {Object.keys(selectedLanguages).map((key) => (
@@ -192,16 +202,16 @@ export default function SettingsScreen() {
 
         {/* Links Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>🔗 Links & Resources</Text>
+          <Text style={styles.sectionTitle}>🔗 {t('settings.linksResources')}</Text>
           
           <TouchableOpacity style={styles.linkCard} onPress={openGitHub}>
             <View style={styles.linkIcon}>
               <Text style={styles.linkIconText}>🐙</Text>
             </View>
             <View style={styles.linkContent}>
-              <Text style={styles.linkTitle}>GitHub Project</Text>
+              <Text style={styles.linkTitle}>{t('settings.githubProject')}</Text>
               <Text style={styles.linkDescription}>
-                View source code and contribute
+                {t('settings.viewSourceCode')}
               </Text>
             </View>
             <Text style={styles.arrow}>›</Text>
@@ -215,9 +225,9 @@ export default function SettingsScreen() {
               <Text style={styles.linkIconText}>📱</Text>
             </View>
             <View style={styles.linkContent}>
-              <Text style={styles.linkTitle}>Expo</Text>
+              <Text style={styles.linkTitle}>{t('settings.expo')}</Text>
               <Text style={styles.linkDescription}>
-                Learn about Expo framework
+                {t('settings.learnExpo')}
               </Text>
             </View>
             <Text style={styles.arrow}>›</Text>
@@ -228,9 +238,9 @@ export default function SettingsScreen() {
               <Text style={styles.linkIconText}>⭐</Text>
             </View>
             <View style={styles.linkContent}>
-              <Text style={styles.linkTitle}>Rate This App</Text>
+              <Text style={styles.linkTitle}>{t('settings.rateThisApp')}</Text>
               <Text style={styles.linkDescription}>
-                Love the app? Leave us a rating!
+                {t('settings.loveApp')}
               </Text>
             </View>
             <Text style={styles.arrow}>›</Text>
@@ -239,13 +249,13 @@ export default function SettingsScreen() {
 
         {/* About Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>ℹ️ About</Text>
+          <Text style={styles.sectionTitle}>ℹ️ {t('settings.aboutSection')}</Text>
           <View style={styles.aboutCard}>
             <Text style={styles.aboutText}>
-              Lib of Dev (Open Source) v2.0.0
+              {t('settings.appVersion')}
             </Text>
             <Text style={styles.aboutDescription}>
-              Your comprehensive developer companion covering programming languages, AI/ML, IoT/Hardware, E-Commerce, and more
+              {t('settings.appDescription')}
             </Text>
           </View>
         </View>

@@ -8,10 +8,12 @@ import {
   SafeAreaView,
   Linking,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getAllPlatforms } from '../data/platformsData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function PlatformsScreen({ navigation }) {
+  const { t } = useTranslation();
   const platforms = getAllPlatforms();
 
   const openLink = (url) => {
@@ -22,9 +24,9 @@ export default function PlatformsScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Platforms & Tools 🚀</Text>
+          <Text style={styles.headerTitle}>🚀 {t('platforms.title')}</Text>
           <Text style={styles.headerSubtitle}>
-            Learn about deployment platforms, hosting services, and development tools
+            {t('platforms.subtitle')}
           </Text>
         </View>
 
@@ -69,7 +71,7 @@ export default function PlatformsScreen({ navigation }) {
                       openLink(platform.links.website);
                     }}
                   >
-                    <Text style={styles.linkButtonText}>🌐 Website</Text>
+                    <Text style={styles.linkButtonText}>🌐 {t('platforms.website')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.linkButton}
@@ -78,7 +80,7 @@ export default function PlatformsScreen({ navigation }) {
                       openLink(platform.links.docs);
                     }}
                   >
-                    <Text style={styles.linkButtonText}>📚 Docs</Text>
+                    <Text style={styles.linkButtonText}>📚 {t('platforms.docs')}</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -87,15 +89,15 @@ export default function PlatformsScreen({ navigation }) {
         </View>
 
         <View style={styles.infoSection}>
-          <Text style={styles.infoTitle}>💡 Why Learn About Platforms?</Text>
+          <Text style={styles.infoTitle}>💡 {t('platforms.whyLearn')}</Text>
           <Text style={styles.infoText}>
-            Understanding deployment platforms and development tools helps you:
+            {t('platforms.whyLearnDescription')}
           </Text>
           <View style={styles.benefitsList}>
-            <Text style={styles.benefitItem}>• Deploy applications efficiently</Text>
-            <Text style={styles.benefitItem}>• Choose the right tools for your project</Text>
-            <Text style={styles.benefitItem}>• Scale your applications globally</Text>
-            <Text style={styles.benefitItem}>• Improve development workflow</Text>
+            <Text style={styles.benefitItem}>• {t('platforms.benefit1')}</Text>
+            <Text style={styles.benefitItem}>• {t('platforms.benefit2')}</Text>
+            <Text style={styles.benefitItem}>• {t('platforms.benefit3')}</Text>
+            <Text style={styles.benefitItem}>• {t('platforms.benefit4')}</Text>
           </View>
         </View>
       </ScrollView>

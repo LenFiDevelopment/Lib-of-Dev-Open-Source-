@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { colors, spacing, typography, borderRadius, shadows } from '../constants/theme';
 import { specializedTopics } from '../data/specializedTopicsData';
 
 export default function SpecializedTopicsScreen({ navigation }) {
+  const { t } = useTranslation();
   const topics = Object.values(specializedTopics);
 
   const renderTopicCard = (topic) => (
@@ -27,7 +29,7 @@ export default function SpecializedTopicsScreen({ navigation }) {
         <Text style={styles.topicDescription}>{topic.description}</Text>
         <View style={styles.categoryCount}>
           <Text style={styles.categoryCountText}>
-            {Object.keys(topic.categories).length} Categories
+            {t('specializedTopics.categoriesCount', { count: Object.keys(topic.categories).length })}
           </Text>
         </View>
       </View>
@@ -39,9 +41,9 @@ export default function SpecializedTopicsScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
-          <Text style={styles.title}>Specialized Topics</Text>
+          <Text style={styles.title}>{t('specializedTopics.title')}</Text>
           <Text style={styles.subtitle}>
-            IoT, E-Commerce, Linux, Home Automation & More
+            {t('specializedTopics.subtitle')}
           </Text>
         </View>
 
@@ -50,13 +52,9 @@ export default function SpecializedTopicsScreen({ navigation }) {
         </View>
 
         <View style={styles.infoCard}>
-          <Text style={styles.infoTitle}>🚀 New Topics Added!</Text>
+          <Text style={styles.infoTitle}>🚀 {t('specializedTopics.newTopics')}</Text>
           <Text style={styles.infoText}>
-            • IoT with ESP32, Raspberry Pi, Arduino{'\n'}
-            • Home Assistant automation{'\n'}
-            • Shopify & E-Commerce{'\n'}
-            • Linux system administration{'\n'}
-            • Proxmox virtualization
+            {t('specializedTopics.newTopicsList')}
           </Text>
         </View>
       </ScrollView>

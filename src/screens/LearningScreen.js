@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { getAllLearningPaths, getBestPractices, getDeveloperTools, getCareerAdvice } from '../data/learningResourcesData';
 import { colors, spacing, borderRadius, shadows, typography } from '../constants/theme';
 
 export default function LearningScreen() {
+  const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState('paths'); // paths, practices, tools, career
   
   const learningPaths = getAllLearningPaths();
@@ -21,7 +23,7 @@ export default function LearningScreen() {
   const renderPaths = () => (
     <View style={styles.content}>
       <Text style={styles.description}>
-        Structured learning paths to master different areas of development
+        {t('learning.pathsDescription')}
       </Text>
       {learningPaths.map((path) => (
         <View key={path.id} style={styles.pathCard}>
@@ -62,7 +64,7 @@ export default function LearningScreen() {
 
           {path.resources && (
             <View style={styles.resourcesContainer}>
-              <Text style={styles.resourcesTitle}>📚 Recommended Resources:</Text>
+              <Text style={styles.resourcesTitle}>📚 {t('learning.recommendedResources')}</Text>
               <View style={styles.resourceTags}>
                 {path.resources.map((resource, index) => (
                   <View key={index} style={styles.resourceTag}>
@@ -80,7 +82,7 @@ export default function LearningScreen() {
   const renderPractices = () => (
     <View style={styles.content}>
       <Text style={styles.description}>
-        Best practices to write better, more maintainable code
+        {t('learning.practicesDescription')}
       </Text>
       {Object.values(bestPractices).map((category, index) => (
         <View key={index} style={styles.practiceCard}>
@@ -111,7 +113,7 @@ export default function LearningScreen() {
   const renderTools = () => (
     <View style={styles.content}>
       <Text style={styles.description}>
-        Essential tools every developer should know
+        {t('learning.toolsDescription')}
       </Text>
       {Object.values(developerTools).map((tool, index) => (
         <View key={index} style={styles.toolCard}>
@@ -152,7 +154,7 @@ export default function LearningScreen() {
 
           {tool.commonCommands && (
             <View style={styles.commandsContainer}>
-              <Text style={styles.subsectionTitle}>Common Commands:</Text>
+              <Text style={styles.subsectionTitle}>{t('learning.commonCommands')}</Text>
               {tool.commonCommands.map((cmd, cmdIndex) => (
                 <View key={cmdIndex} style={styles.commandItem}>
                   <View style={styles.commandCode}>
@@ -166,7 +168,7 @@ export default function LearningScreen() {
 
           {tool.features && (
             <View style={styles.featuresContainer}>
-              <Text style={styles.subsectionTitle}>Features:</Text>
+              <Text style={styles.subsectionTitle}>{t('learning.features')}</Text>
               <View style={styles.featuresList}>
                 {tool.features.map((feature, featureIndex) => (
                   <View key={featureIndex} style={styles.featureTag}>
@@ -184,14 +186,14 @@ export default function LearningScreen() {
   const renderCareer = () => (
     <View style={styles.content}>
       <Text style={styles.description}>
-        Career progression guide for developers
+        {t('learning.careerDescription')}
       </Text>
       {Object.values(careerAdvice).map((level, index) => (
         <View key={index} style={styles.careerCard}>
           <Text style={styles.careerTitle}>{level.title}</Text>
           
           <View style={styles.careerSection}>
-            <Text style={styles.careerSectionTitle}>🎯 Focus Areas:</Text>
+            <Text style={styles.careerSectionTitle}>🎯 {t('learning.focusAreas')}</Text>
             {level.focus.map((item, itemIndex) => (
               <View key={itemIndex} style={styles.careerItem}>
                 <Text style={styles.careerBullet}>•</Text>
@@ -201,7 +203,7 @@ export default function LearningScreen() {
           </View>
 
           <View style={styles.careerSection}>
-            <Text style={styles.careerSectionTitle}>💼 Key Skills:</Text>
+            <Text style={styles.careerSectionTitle}>💼 {t('learning.keySkills')}</Text>
             <View style={styles.skillTags}>
               {level.skills.map((skill, skillIndex) => (
                 <View key={skillIndex} style={styles.skillTag}>
@@ -218,9 +220,9 @@ export default function LearningScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>📚 Learning Resources</Text>
+        <Text style={styles.headerTitle}>📚 {t('learning.title')}</Text>
         <Text style={styles.headerSubtitle}>
-          Structured guides, best practices, and career advice
+          {t('learning.subtitle')}
         </Text>
       </View>
 
@@ -231,7 +233,7 @@ export default function LearningScreen() {
           onPress={() => setSelectedTab('paths')}
         >
           <Text style={[styles.tabText, selectedTab === 'paths' && styles.tabTextActive]}>
-            🎓 Learning Paths
+            🎓 {t('learning.learningPathsTab')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -239,7 +241,7 @@ export default function LearningScreen() {
           onPress={() => setSelectedTab('practices')}
         >
           <Text style={[styles.tabText, selectedTab === 'practices' && styles.tabTextActive]}>
-            ✨ Best Practices
+            ✨ {t('learning.bestPracticesTab')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -247,7 +249,7 @@ export default function LearningScreen() {
           onPress={() => setSelectedTab('tools')}
         >
           <Text style={[styles.tabText, selectedTab === 'tools' && styles.tabTextActive]}>
-            🛠️ Developer Tools
+            🛠️ {t('learning.toolsTab')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -255,7 +257,7 @@ export default function LearningScreen() {
           onPress={() => setSelectedTab('career')}
         >
           <Text style={[styles.tabText, selectedTab === 'career' && styles.tabTextActive]}>
-            💼 Career Guide
+            🚀 {t('learning.careerTab')}
           </Text>
         </TouchableOpacity>
       </ScrollView>
