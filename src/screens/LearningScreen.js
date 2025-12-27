@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   tabTextActive: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   scrollView: {
     flex: 1,

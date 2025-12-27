@@ -74,6 +74,7 @@ export const colors = {
   popoverForeground: '#FAFAFA',
   card: '#18181B',
   cardForeground: '#FAFAFA',
+  buttonText: '#FFFFFF',        // Text on colored buttons
   
   // Alpha variants for overlays and backgrounds
   primaryAlpha: 'rgba(108, 92, 231, 0.2)',

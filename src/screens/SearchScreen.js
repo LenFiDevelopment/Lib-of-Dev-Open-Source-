@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   filterButtonTextActive: {
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   scrollView: {
     flex: 1,

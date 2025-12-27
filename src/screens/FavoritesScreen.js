@@ -55,12 +55,12 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000000',
+    color: colors.text,
     marginBottom: 8,
   },
   emptyDescription: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     textAlign: 'center',
     lineHeight: 24,
   },

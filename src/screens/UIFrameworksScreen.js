@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   featuredBadgeText: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: colors.buttonText,
     letterSpacing: 0.5,
   },
   frameworkCard: {
@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
   primaryButtonText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: colors.buttonText,
   },
   linkRow: {
     flexDirection: 'row',
