@@ -5,10 +5,11 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getLanguageById } from '../data/languagesData';
+import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function CategoryScreen({ route, navigation }) {
   const { t } = useTranslation();
@@ -72,71 +73,69 @@ export default function CategoryScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    padding: 16,
-    backgroundColor: '#FFFFFF',
+    padding: spacing.md,
+    backgroundColor: colors.backgroundElevated,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.border,
   },
   breadcrumb: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textMuted,
   },
   itemsContainer: {
-    padding: 16,
-    gap: 12,
+    padding: spacing.md,
+    gap: spacing.md,
   },
   itemCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.small,
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: spacing.xs,
   },
   itemTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#000000',
+    color: colors.text,
   },
   itemArrow: {
     fontSize: 24,
-    color: '#C7C7CC',
+    color: colors.textMuted,
     fontWeight: '300',
   },
   itemDescription: {
     fontSize: 14,
-    color: '#8E8E93',
-    marginBottom: 12,
+    color: colors.textSecondary,
+    marginBottom: spacing.sm,
   },
   codePreview: {
-    backgroundColor: '#F2F2F7',
-    borderRadius: 8,
-    padding: 12,
+    backgroundColor: colors.codeBackground,
+    borderRadius: borderRadius.md,
+    padding: spacing.sm,
     borderLeftWidth: 3,
-    borderLeftColor: '#007AFF',
+    borderLeftColor: colors.primary,
   },
   codePreviewText: {
     fontFamily: 'monospace',
     fontSize: 12,
-    color: '#000000',
+    color: colors.codeText,
   },
   errorText: {
     fontSize: 18,
-    color: '#FF3B30',
+    color: colors.error,
     textAlign: 'center',
     marginTop: 40,
   },

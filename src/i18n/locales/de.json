@@ -46,7 +46,8 @@
     "platforms": "Plattformen",
     "hints": "Tipps",
     "iotMore": "IoT & Mehr",
-    "links": "Links"
+    "links": "Links",
+    "askAI": "KI Fragen"
   },
   "search": {
     "title": "Suche",
@@ -120,7 +121,15 @@
     "loveApp": "Gefällt Ihnen die App? Hinterlassen Sie uns eine Bewertung!",
     "aboutSection": "Über",
     "appVersion": "Lib of Dev (Open Source) v2.0.0",
-    "appDescription": "Ihr umfassender Entwicklerbegleiter für Programmiersprachen, KI/ML, IoT/Hardware, E-Commerce und mehr"
+    "appDescription": "Ihr umfassender Entwicklerbegleiter für Programmiersprachen, KI/ML, IoT/Hardware, E-Commerce und mehr",
+    "groqApiKey": "Groq API-Schlüssel",
+    "apiKeySet": "API-Schlüssel konfiguriert ✓",
+    "apiKeyNotSet": "Kein API-Schlüssel konfiguriert",
+    "groqApiKeyDescription": "Gib deinen kostenlosen Groq API-Schlüssel ein, um den KI-Chat zu aktivieren. Hole dir deinen Schlüssel von console.groq.com/keys",
+    "getApiKey": "Kostenlosen API-Schlüssel holen",
+    "enterApiKey": "Gib deinen Groq API-Schlüssel ein",
+    "apiKeySaved": "API-Schlüssel erfolgreich gespeichert!",
+    "apiKeySaveError": "Fehler beim Speichern des API-Schlüssels"
   },
   "languages": {
     "javascript": "JavaScript",
@@ -352,5 +361,23 @@
     "links": "Links",
     "favorites": "Favoriten",
     "settings": "Einstellungen"
+  },
+  "askAI": {
+    "title": "KI Fragen",
+    "subtitle": "Powered by Groq - Kostenlos & Schnell",
+    "placeholder": "Frage alles über Programmierung...",
+    "you": "Du",
+    "ai": "KI-Assistent",
+    "emptyTitle": "Frag mich alles",
+    "emptyDescription": "Ich bin hier, um bei Programmierfragen, Code-Erklärungen, Debugging und mehr zu helfen!",
+    "examples": "Probiere diese Beispiele:",
+    "clearChat": "Chat löschen",
+    "clearChatConfirm": "Bist du sicher, dass du den gesamten Chat-Verlauf löschen möchtest?",
+    "clear": "Löschen",
+    "copiedToClipboard": "In Zwischenablage kopiert",
+    "noApiKey": "Kein API-Schlüssel",
+    "noApiKeyMessage": "Bitte setze deinen Groq API-Schlüssel in den Einstellungen, um den KI-Chat zu nutzen.",
+    "goToSettings": "Zu Einstellungen",
+    "errorMessage": "Antwort konnte nicht abgerufen werden. Bitte überprüfe deinen API-Schlüssel und versuche es erneut."
   }
 }

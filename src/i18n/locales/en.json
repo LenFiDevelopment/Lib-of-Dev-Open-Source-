@@ -46,7 +46,8 @@
     "platforms": "Platforms",
     "hints": "Hints",
     "iotMore": "IoT & More",
-    "links": "Links"
+    "links": "Links",
+    "askAI": "Ask AI"
   },
   "search": {
     "title": "Search",
@@ -120,7 +121,15 @@
     "appVersion": "Lib of Dev (Open Source) v2.0.0",
     "appDescription": "Your comprehensive developer companion covering programming languages, AI/ML, IoT/Hardware, E-Commerce, and more",
     "languageChanged": "Language changed successfully",
-    "restartRequired": "Please restart the app to apply changes"
+    "restartRequired": "Please restart the app to apply changes",
+    "groqApiKey": "Groq API Key",
+    "apiKeySet": "API key is configured ✓",
+    "apiKeyNotSet": "No API key configured",
+    "groqApiKeyDescription": "Enter your free Groq API key to enable AI chat. Get your key from console.groq.com/keys",
+    "getApiKey": "Get Free API Key",
+    "enterApiKey": "Enter your Groq API key",
+    "apiKeySaved": "API key saved successfully!",
+    "apiKeySaveError": "Failed to save API key"
   },
   "languages": {
     "javascript": "JavaScript",
@@ -355,5 +364,23 @@
     "links": "Links",
     "favorites": "Favorites",
     "settings": "Settings"
+  },
+  "askAI": {
+    "title": "Ask AI",
+    "subtitle": "Powered by Groq - Free & Fast",
+    "placeholder": "Ask anything about programming...",
+    "you": "You",
+    "ai": "AI Assistant",
+    "emptyTitle": "Ask Me Anything",
+    "emptyDescription": "I'm here to help with programming questions, code explanations, debugging, and more!",
+    "examples": "Try these examples:",
+    "clearChat": "Clear Chat",
+    "clearChatConfirm": "Are you sure you want to clear the entire chat history?",
+    "clear": "Clear",
+    "copiedToClipboard": "Copied to clipboard",
+    "noApiKey": "No API Key",
+    "noApiKeyMessage": "Please set your Groq API key in Settings to use AI chat.",
+    "goToSettings": "Go to Settings",
+    "errorMessage": "Failed to get response. Please check your API key and try again."
   }
 }

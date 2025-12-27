@@ -5,8 +5,8 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getAllLearningPaths, getBestPractices, getDeveloperTools, getCareerAdvice } from '../data/learningResourcesData';
 import { colors, spacing, borderRadius, shadows, typography } from '../constants/theme';

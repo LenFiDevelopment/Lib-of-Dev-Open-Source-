@@ -5,9 +5,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
   Linking,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getAllUIFrameworks } from '../data/uiFrameworksData';
 import { colors, spacing, borderRadius, shadows, typography } from '../constants/theme';

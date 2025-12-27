@@ -5,10 +5,11 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getLanguageById } from '../data/languagesData';
+import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function LanguageScreen({ route, navigation }) {
   const { t } = useTranslation();
@@ -73,60 +74,57 @@ export default function LanguageScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    padding: 24,
+    padding: spacing.lg,
     alignItems: 'center',
   },
   headerIcon: {
     fontSize: 60,
-    marginBottom: 12,
+    marginBottom: spacing.sm,
   },
   headerTitle: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#FFFFFF',
-    marginBottom: 8,
+    color: colors.text,
+    marginBottom: spacing.xs,
   },
   headerDescription: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: colors.textSecondary,
     textAlign: 'center',
-    opacity: 0.9,
   },
   categoriesContainer: {
-    padding: 16,
+    padding: spacing.md,
   },
   sectionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000000',
-    marginBottom: 8,
+    color: colors.text,
+    marginBottom: spacing.xs,
   },
   sectionSubtitle: {
     fontSize: 14,
-    color: '#8E8E93',
-    marginBottom: 16,
+    color: colors.textSecondary,
+    marginBottom: spacing.md,
   },
   categoriesList: {
-    gap: 12,
+    gap: spacing.md,
   },
   categoryCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.small,
   },
   categoryContent: {
     flex: 1,
@@ -134,21 +132,21 @@ const styles = StyleSheet.create({
   categoryName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#000000',
+    color: colors.text,
     marginBottom: 4,
   },
   categoryCount: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textMuted,
   },
   categoryArrow: {
     fontSize: 24,
-    color: '#C7C7CC',
+    color: colors.textMuted,
     fontWeight: '300',
   },
   errorText: {
     fontSize: 18,
-    color: '#FF3B30',
+    color: colors.error,
     textAlign: 'center',
     marginTop: 40,
   },

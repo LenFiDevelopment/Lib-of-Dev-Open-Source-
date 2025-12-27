@@ -5,12 +5,13 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  SafeAreaView,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import * as Clipboard from 'expo-clipboard';
 import { getLanguageById } from '../data/languagesData';
+import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function CodeDetailScreen({ route }) {
   const { t } = useTranslation();
@@ -129,119 +130,123 @@ export default function CodeDetailScreen({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
   header: {
-    backgroundColor: '#FFFFFF',
-    padding: 16,
+    backgroundColor: colors.backgroundElevated,
+    padding: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.border,
   },
   headerTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 12,
+    marginBottom: spacing.sm,
   },
   breadcrumb: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textMuted,
     marginBottom: 4,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000000',
+    color: colors.text,
   },
   favoriteButton: {
-    padding: 8,
+    padding: spacing.xs,
   },
   favoriteIcon: {
     fontSize: 28,
   },
   description: {
     fontSize: 16,
-    color: '#000000',
+    color: colors.textSecondary,
     lineHeight: 24,
   },
   section: {
-    padding: 16,
+    padding: spacing.md,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: spacing.sm,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#000000',
-    marginBottom: 12,
+    color: colors.text,
+    marginBottom: spacing.sm,
   },
   copyButton: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 8,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.md,
   },
   copyButtonText: {
-    color: '#FFFFFF',
+    color: colors.text,
     fontSize: 14,
     fontWeight: '600',
   },
   codeBlock: {
-    backgroundColor: '#1E1E1E',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: colors.codeBackground,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
     borderLeftWidth: 4,
-    borderLeftColor: '#007AFF',
+    borderLeftColor: colors.primary,
   },
   codeText: {
     fontFamily: 'monospace',
     fontSize: 14,
-    color: '#D4D4D4',
+    color: colors.codeText,
     lineHeight: 20,
   },
   usageBox: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
     borderLeftWidth: 4,
-    borderLeftColor: '#34C759',
+    borderLeftColor: colors.success,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   usageText: {
     fontSize: 16,
-    color: '#000000',
+    color: colors.text,
     lineHeight: 24,
   },
   keyPointsBox: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   keyPoint: {
     flexDirection: 'row',
-    marginBottom: 12,
+    marginBottom: spacing.sm,
   },
   keyPointBullet: {
     fontSize: 20,
-    color: '#007AFF',
-    marginRight: 12,
+    color: colors.primary,
+    marginRight: spacing.sm,
     marginTop: -2,
   },
   keyPointText: {
     flex: 1,
     fontSize: 16,
-    color: '#000000',
+    color: colors.text,
     lineHeight: 24,
   },
   errorText: {
     fontSize: 18,
-    color: '#FF3B30',
+    color: colors.error,
     textAlign: 'center',
     marginTop: 40,
   },

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { colors } from '../constants/theme';
 
@@ -19,6 +20,7 @@ import LearningScreen from '../screens/LearningScreen';
 import HintsScreen from '../screens/HintsScreen';
 import SpecializedTopicsScreen from '../screens/SpecializedTopicsScreen';
 import ResourcesScreen from '../screens/ResourcesScreen';
+import AskAIScreen from '../screens/AskAIScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -148,6 +150,15 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen 
+        name="AskAI" 
+        component={AskAIScreen}
+        options={{
+          tabBarLabel: t('navigation.askAI'),
+          tabBarIcon: ({ color }) => '🤖',
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen 
         name="Favorites" 
         component={FavoritesScreen}
         options={{
@@ -184,8 +195,10 @@ function TabNavigator() {
 // Root Navigator
 export default function AppNavigator() {
   return (
-    <NavigationContainer theme={CustomDarkTheme}>
-      <TabNavigator />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer theme={CustomDarkTheme}>
+        <TabNavigator />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
