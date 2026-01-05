@@ -36,6 +36,34 @@ export default function LanguageScreen({ route, navigation }) {
         </View>
 
         <View style={styles.categoriesContainer}>
+          {/* Quick Actions */}
+          <View style={styles.quickActions}>
+            <TouchableOpacity
+              style={[styles.quickActionButton, { backgroundColor: '#4CAF50' }]}
+              onPress={() =>
+                navigation.navigate('Tutorials', {
+                  languageId,
+                  languageName: language.name,
+                })
+              }
+            >
+              <Text style={styles.quickActionIcon}>📚</Text>
+              <Text style={styles.quickActionText}>Tutorials</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.quickActionButton, { backgroundColor: '#F44336' }]}
+              onPress={() =>
+                navigation.navigate('ErrorSolutions', {
+                  languageId,
+                  languageName: language.name,
+                })
+              }
+            >
+              <Text style={styles.quickActionIcon}>⚠️</Text>
+              <Text style={styles.quickActionText}>Solve Errors</Text>
+            </TouchableOpacity>
+          </View>
+
           <Text style={styles.sectionTitle}>{t('categories.title')}</Text>
           <Text style={styles.sectionSubtitle}>
             {t('categories.exploreLanguage', { language: language.name })}
@@ -100,6 +128,27 @@ const styles = StyleSheet.create({
   },
   categoriesContainer: {
     padding: spacing.md,
+  },
+  quickActions: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    marginBottom: spacing.lg,
+  },
+  quickActionButton: {
+    flex: 1,
+    padding: spacing.md,
+    borderRadius: borderRadius.lg,
+    alignItems: 'center',
+    ...shadows.medium,
+  },
+  quickActionIcon: {
+    fontSize: 32,
+    marginBottom: spacing.xs,
+  },
+  quickActionText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   sectionTitle: {
     fontSize: 24,

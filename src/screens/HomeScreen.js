@@ -147,6 +147,13 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.quickAccessIcon}>⚙️</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.settings')}</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Tools')}
+            >
+              <Text style={styles.quickAccessIcon}>🛠️</Text>
+              <Text style={styles.quickAccessText}>Dev Tools</Text>
+            </TouchableOpacity>
           </View>
         </View>
 

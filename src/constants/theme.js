@@ -235,7 +235,7 @@ export const zIndex = {
   tooltip: 1070,
 };
 
-export default {
+export const theme = {
   colors,
   spacing,
   typography,
@@ -244,3 +244,5 @@ export default {
   animations,
   zIndex,
 };
+
+export default theme;

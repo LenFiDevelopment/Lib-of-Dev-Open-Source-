@@ -22,6 +22,11 @@ import HintsScreen from '../screens/HintsScreen';
 import SpecializedTopicsScreen from '../screens/SpecializedTopicsScreen';
 import ResourcesScreen from '../screens/ResourcesScreen';
 import AskAIScreen from '../screens/AskAIScreen';
+import TutorialsScreen from '../screens/TutorialsScreen';
+import TutorialDetailScreen from '../screens/TutorialDetailScreen';
+import ErrorSolutionsScreen from '../screens/ErrorSolutionsScreen';
+import ToolsScreen from '../screens/ToolsScreen';
+import ToolDetailScreen from '../screens/ToolDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -106,6 +111,31 @@ function BrowseStack() {
         name="Resources" 
         component={ResourcesScreen}
         options={{ title: `🔗 ${t('resources.title')}` }}
+      />
+      <Stack.Screen 
+        name="Tutorials" 
+        component={TutorialsScreen}
+        options={({ route }) => ({ title: `📚 ${route.params?.languageName || 'Tutorials'}` })}
+      />
+      <Stack.Screen 
+        name="TutorialDetail" 
+        component={TutorialDetailScreen}
+        options={{ title: '📖 Tutorial' }}
+      />
+      <Stack.Screen 
+        name="ErrorSolutions" 
+        component={ErrorSolutionsScreen}
+        options={({ route }) => ({ title: `⚠️ ${route.params?.languageName || 'Error'} - Solutions` })}
+      />
+      <Stack.Screen 
+        name="Tools" 
+        component={ToolsScreen}
+        options={{ title: '🛠️ Developer Tools' }}
+      />
+      <Stack.Screen 
+        name="ToolDetail" 
+        component={ToolDetailScreen}
+        options={{ title: 'Tool Details' }}
       />
     </Stack.Navigator>
   );
