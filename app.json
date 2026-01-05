@@ -15,7 +15,10 @@
     "githubUrl": "https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.lenfi.libofdev"
+      "bundleIdentifier": "com.lenfi.libofdev",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-5526801232554836~6275754332"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -23,14 +26,14 @@
         "backgroundColor": "#0A0E1A"
       },
       "package": "com.lenfi.libofdev",
-      "minSdkVersion": 24,
-      "targetSdkVersion": 36,
-      "compileSdkVersion": 36,
       "permissions": [
         "INTERNET",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
-      ]
+      ],
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-5526801232554836~6275754332"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -41,14 +44,7 @@
       }
     },
     "plugins": [
-      "expo-asset",
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-5526801232554836~6275754332",
-          "iosAppId": "ca-app-pub-5526801232554836~6275754332"
-        }
-      ]
+      "expo-asset"
     ]
   }
 }
