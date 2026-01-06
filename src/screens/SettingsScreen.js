@@ -247,6 +247,38 @@ export default function SettingsScreen() {
 
           <TouchableOpacity 
             style={styles.linkCard} 
+            onPress={() => Linking.openURL('https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-/discussions')}
+          >
+            <View style={styles.linkIcon}>
+              <Text style={styles.linkIconText}>💬</Text>
+            </View>
+            <View style={styles.linkContent}>
+              <Text style={styles.linkTitle}>GitHub Discussions</Text>
+              <Text style={styles.linkDescription}>
+                Join the community conversation
+              </Text>
+            </View>
+            <Text style={styles.arrow}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.linkCard} 
+            onPress={() => Linking.openURL('https://www.instagram.com/lenfi_development')}
+          >
+            <View style={styles.linkIcon}>
+              <Text style={styles.linkIconText}>📸</Text>
+            </View>
+            <View style={styles.linkContent}>
+              <Text style={styles.linkTitle}>Instagram</Text>
+              <Text style={styles.linkDescription}>
+                @lenfi_development
+              </Text>
+            </View>
+            <Text style={styles.arrow}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.linkCard} 
             onPress={() => Linking.openURL('https://expo.dev')}
           >
             <View style={styles.linkIcon}>

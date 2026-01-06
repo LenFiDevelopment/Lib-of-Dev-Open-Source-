@@ -1,32 +1,46 @@
 # Lib of Dev (Open Source) 💻🚀
 
-> **The Ultimate Developer Companion App** - Your comprehensive offline-first mobile reference library with 30,000+ lines of curated content
+> **The Ultimate Developer Companion App** - Your comprehensive offline-first mobile reference library with 50,000+ lines of curated content
 
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![React Native](https://img.shields.io/badge/React%20Native-0.74-61DAFB.svg)](https://reactnative.dev/)
-[![Expo](https://img.shields.io/badge/Expo-51.0-000020.svg)](https://expo.dev/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.81-61DAFB.svg)](https://reactnative.dev/)
+[![Expo](https://img.shields.io/badge/Expo-54.0-000020.svg)](https://expo.dev/)
 
-A massive, production-ready React Native/Expo mobile app serving as an **offline-first developer learning platform** with **shadcn/ui-inspired design**. Features 13 programming languages, AI/ML guides, IoT/Hardware tutorials, E-Commerce, Linux administration, 80+ developer hints, and 70+ official resource links.
+A massive, production-ready React Native/Expo mobile app serving as an **offline-first developer learning platform** with **shadcn/ui-inspired design**. Features 13 programming languages, **AI Chat Assistant with Groq**, comprehensive tutorials, IT certifications, developer tools, error solutions database, IoT/Hardware guides, 115+ developer hints, and 70+ official resource links. Now with **full internationalization support (EN/DE)**.
 
 ---
 
 ## 🌟 What Makes This Special
 
+- **🤖 AI Chat Assistant** - Integrated Groq API for instant coding help and answers
+- **🌐 Multilingual Support** - Full i18n with English and German (more coming)
 - **🌑 Beautiful Dark Mode** - shadcn/ui-inspired professional design throughout
-- **📚 30,000+ Lines of Content** - Meticulously curated for developers
-- **🤖 AI & Machine Learning** - Ollama, OpenAI, LangChain guides
+- **📚 50,000+ Lines of Content** - Meticulously curated for developers
+- **🎓 IT Certifications** - 30+ professional certifications from Cisco, AWS, Google, Microsoft
+- **🛠️ Developer Tools** - 25+ tools (IDEs, Cloud Platforms, DevOps tools) with guides
+- **📖 Interactive Tutorials** - 100+ hours of structured learning content
+- **🐛 Error Solutions** - 200+ common errors with detailed solutions
+- **🎨 Component Showcase** - Interactive UI component library with live examples
 - **🔌 IoT & Hardware** - ESP32, Raspberry Pi, Arduino with 70+ real code examples
-- **🛒 E-Commerce** - Shopify, Stripe, PayPal integration with marketing analytics
-- **🐧 Linux & DevOps** - System administration, Docker, security with 40+ practical examples
+- **🛒 E-Commerce** - Shopify, Stripe, PayPal integration guides
+- **🐧 Linux & DevOps** - System administration, Docker, security
 - **💡 115+ Developer Hints** - Instant answers to "What should I use?"
 - **🔗 70+ Official Links** - Direct access to documentation and resources
-- **100% Offline** - All content bundled, no internet required*
+- **📱 AdMob Integrated** - Monetization ready
 - **⭐ Production Ready** - Zero vulnerabilities, properly tested
 
 ---
 
 ## 📊 Content Overview
+
+### 🤖 **AI Chat Assistant**
+- **Groq API Integration** - Fast, AI-powered coding assistant
+- **Multiple Response Modes** - Short, Normal, Detailed answers
+- **Context-Aware** - Understands your development questions
+- **Code Generation** - Get instant code snippets and explanations
+- **Chat History** - Persistent conversation storage
+- **BYOK (Bring Your Own Key)** - Use your own Groq API key
 
 ### 💻 **Programming Languages** (13)
 Each with 100+ code examples, explanations, and best practices:
@@ -36,6 +50,91 @@ Each with 100+ code examples, explanations, and best practices:
 - **Systems**: C, Rust, Go
 - **General Purpose**: Python, Java, C#, Ruby
 - **Database**: SQL
+
+### 📖 **Interactive Tutorials**
+Comprehensive learning content for all languages:
+
+- **100+ Hours of Content** - Structured learning paths
+- **Hands-On Exercises** - Practice what you learn
+- **Real-World Projects** - Build actual applications
+- **Progressive Difficulty** - Beginner to Advanced
+- **Code Solutions** - Complete working examples
+- **Best Practices** - Industry-standard approaches
+
+### 🎓 **IT Certifications** (30+)
+Free and paid professional certifications:
+
+- **Networking & Security** - Cisco (CCNA, Cybersecurity), CompTIA
+- **Cloud Platforms** - AWS (Solutions Architect, Developer), Azure (Fundamentals, Administrator), Google Cloud
+- **Web Development** - freeCodeCamp, Google (Web Fundamentals, Mobile Web), The Odin Project
+- **Data & Analytics** - Google (Data Analytics), IBM (Data Science), Microsoft (Power BI)
+- **Programming** - Oracle (Java), Microsoft (C#, .NET), Python Institute
+- **DevOps & Containers** - Kubernetes (CKA, CKAD), Docker, Linux Foundation
+- **Databases** - MongoDB, Oracle, Microsoft (SQL Server)
+- **Security** - ISC2 (CISSP, CC), ISACA (CISM), CEH
+- **Project Management** - PMI, Scrum.org
+- **Soft Skills** - LinkedIn Learning paths
+
+Each certification includes:
+- Provider information and official links
+- Difficulty level (Beginner/Intermediate/Advanced)
+- Estimated duration
+- Free or paid status with pricing
+- Key topics covered
+- Available languages
+
+### 🛠️ **Developer Tools** (25+)
+Comprehensive tool guides:
+
+- **IDEs & Editors** - VS Code, IntelliJ IDEA, Visual Studio, Sublime Text, Vim/Neovim
+- **Cloud Platforms** - AWS, Google Cloud, Azure, DigitalOcean, Linode, Hetzner
+- **Containerization** - Docker, Kubernetes, Podman
+- **CI/CD** - GitHub Actions, GitLab CI, Jenkins, CircleCI
+- **Version Control** - Git, GitHub, GitLab, Bitbucket
+- **API Testing** - Postman, Insomnia, Thunder Client
+- **Databases** - PostgreSQL, MySQL, MongoDB, Redis
+- **Monitoring** - Grafana, Prometheus, Datadog, New Relic
+- **Design Tools** - Figma, Adobe XD, Sketch
+- **Communication** - Slack, Discord, Microsoft Teams
+
+Each tool includes:
+- Features and capabilities
+- Use cases and best practices
+- Getting started guides
+- Tips and tricks
+- Pricing information
+- Platform support
+
+### 🐛 **Error Solutions** (200+)
+Comprehensive error database:
+
+- **JavaScript/TypeScript** - 50+ common errors
+- **Python** - Runtime, syntax, import errors
+- **React/React Native** - Component, hook, navigation errors
+- **Node.js** - Module, async, API errors
+- **Database** - SQL, MongoDB connection/query errors
+- **Git** - Merge conflicts, reset, branch errors
+- **Docker** - Container, network, volume errors
+- **CSS/Styling** - Layout, responsive design issues
+
+Each error includes:
+- Error message examples
+- Root causes
+- Step-by-step solutions
+- Prevention tips
+- Related errors
+
+### 🎨 **Component Showcase**
+Interactive UI component library:
+
+- **Basic Components** - Buttons, Cards, Badges, Alerts
+- **Form Controls** - Inputs, Textareas, Selects, Checkboxes, Radio Buttons
+- **Advanced Components** - Modals, Tabs, Accordions, Tooltips
+- **Complex Components** - Data Tables, Charts, Calendars
+- **Field Components** - Complete form field system with validation
+- **Live Examples** - See components in action
+- **Code Snippets** - Copy-paste ready code
+- **Customization** - Learn how to modify and extend
 
 ### 🤖 **AI & Machine Learning**
 - **Ollama** - Run LLMs locally (LLaMA 2, Mistral, Code Llama)
@@ -159,11 +258,28 @@ Direct links to official documentation:
 
 ## ✨ Key Features
 
+### 🤖 **AI-Powered Assistant**
+- Integrated Groq API for instant help
+- Multiple response modes (Short, Normal, Detailed)
+- Persistent chat history
+- Copy code snippets
+- Context-aware responses
+- BYOK (Bring Your Own Key) support
+
+### 🌐 **Internationalization (i18n)**
+- Full multi-language support
+- English and German included
+- Easy language switching
+- Persistent language preference
+- Expandable to more languages
+- Professional translations
+
 ### 🌑 **Dark Mode Design**
 - Professional shadcn/ui-inspired theme
 - High contrast for readability
 - Semantic color system
 - Modern UI components
+- Consistent design language
 
 ### 🔍 **Enhanced Search System**
 - Multi-type search (Languages, Patterns, Platforms, Frameworks)
@@ -172,23 +288,37 @@ Direct links to official documentation:
 - Real-time filtering
 - Search hints and suggestions
 
+### 📱 **AdMob Integration**
+- Banner ads strategically placed
+- Non-intrusive ad experience
+- Monetization ready
+- Configurable ad units
+- Production-ready implementation
+
 ### ⚙️ **User Profile & Settings**
 - Offline profile with interests
 - Favorite languages selection
 - Persistent storage with AsyncStorage
-- GitHub project link
+- API key management
+- Language preferences
+- GitHub & Instagram links
 - Resource links to Expo and platforms
 
-### 🎯 **9 Quick Access Cards**
-1. 🔍 **Search** - Find anything instantly
-2. 🎓 **Learn** - Structured learning paths
-3. 🎨 **UI Design** - shadcn/ui & frameworks
-4. 🚀 **Platforms** - Deployment guides
-5. 💡 **Hints** - Developer recommendations
-6. 🔌 **IoT & More** - Specialized topics
-7. 🔗 **Links** - Official resources
-8. ⭐ **Favorites** - Saved references
-9. ⚙️ **Settings** - Personalization
+### 🎯 **Quick Access Features**
+1. 🎓 **Learn** - Structured learning paths & tutorials
+2. 🎨 **Components** - Interactive UI component showcase
+3. 🖼️ **UI Frameworks** - shadcn/ui & modern frameworks
+4. 🚀 **Platforms** - Deployment guides & hosting
+5. 💡 **Hints** - 115+ developer recommendations
+6. 🛠️ **Tools** - 25+ developer tools & services
+7. 🔌 **IoT & Specialized** - Hardware, E-commerce, Linux
+8. 🔗 **Resources** - 70+ official links
+9. 🎓 **Certifications** - 30+ IT certifications
+10. 🐛 **Error Solutions** - 200+ error fixes
+11. 📖 **Tutorials** - 100+ hours of content
+12. 🤖 **Ask AI** - Groq-powered chat assistant
+13. ⭐ **Favorites** - Saved references
+14. ⚙️ **Settings** - Personalization & language
 
 
     *You can use the main parts of this App without internet. for a couple of features you will need a working network connection.
@@ -274,34 +404,70 @@ Lib-of-Dev-Open-Source-/
 ├── src/
 │   ├── components/                 # Reusable components
 │   │   ├── Button.js              # Button with variants
-│   │   └── Card.js                # Card components
+│   │   ├── Card.js                # Card components
+│   │   ├── Badge.js               # Badge component
+│   │   ├── Alert.js               # Alert component
+│   │   ├── Field.js               # Form field component
+│   │   ├── FormControls.js        # Form controls
+│   │   ├── UIComponents.js        # Basic UI components
+│   │   ├── CardComponents.js      # Card variants
+│   │   ├── AdvancedComponents.js  # Advanced components
+│   │   ├── ComplexComponents.js   # Complex components
+│   │   ├── ComponentShowcase.js   # Component demo
+│   │   ├── ErrorBoundary.js       # Error handling
+│   │   └── AdBanner.js            # AdMob integration
 │   ├── constants/
-│   │   └── theme.js               # Design system (colors, spacing)
+│   │   ├── theme.js               # Design system (colors, spacing)
+│   │   └── config.js              # App configuration
 │   ├── data/                      # Content data files
-│   │   ├── languagesData.js       # 13 programming languages (3,609 LOC)
-│   │   ├── developerHintsData.js  # 80+ developer hints
-│   │   ├── specializedTopicsData.js # IoT, E-Commerce, Linux (22,619 chars)
+│   │   ├── languagesData.js       # 13 programming languages (5,000+ LOC)
+│   │   ├── tutorialsData.js       # 100+ hours of tutorials (3,251 LOC)
+│   │   ├── certificationsData.js  # 30+ IT certifications (850 LOC)
+│   │   ├── toolsData.js           # 25+ developer tools (3,145 LOC)
+│   │   ├── errorsData.js          # 200+ error solutions (1,709 LOC)
+│   │   ├── developerHintsData.js  # 115+ developer hints
+│   │   ├── specializedTopicsData.js # IoT, E-Commerce, Linux
 │   │   ├── resourceLinksData.js   # 70+ official links
 │   │   ├── platformsData.js       # 6 deployment platforms
 │   │   ├── uiFrameworksData.js    # UI frameworks guide
 │   │   ├── designPatternsData.js  # Design patterns
-│   │   └── learningResourcesData.js # Learning paths
+│   │   ├── learningPathsData.js   # Learning paths
+│   │   └── learningResourcesData.js # Learning resources
+│   ├── hooks/                     # Custom React hooks
+│   │   ├── useAppTranslation.js   # Translation hook
+│   │   └── usePerformance.js      # Performance monitoring
+│   ├── i18n/                      # Internationalization
+│   │   ├── index.js               # i18n configuration
+│   │   └── locales/
+│   │       ├── en.json            # English translations
+│   │       └── de.json            # German translations
 │   ├── navigation/
 │   │   └── AppNavigator.js        # Navigation configuration
-│   └── screens/                   # App screens (11 screens)
+│   └── screens/                   # App screens (24 screens)
 │       ├── HomeScreen.js          # Main landing page
+│       ├── AskAIScreen.js         # AI chat assistant (Groq)
 │       ├── LanguageScreen.js      # Language details
 │       ├── CategoryScreen.js      # Category listings
 │       ├── CodeDetailScreen.js    # Code examples
+│       ├── TutorialsScreen.js     # Tutorial browser
+│       ├── TutorialDetailScreen.js # Tutorial content
+│       ├── CertificationsScreen.js # IT certifications
+│       ├── ToolsScreen.js         # Developer tools
+│       ├── ToolDetailScreen.js    # Tool details
+│       ├── ErrorSolutionsScreen.js # Error database
+│       ├── ComponentsScreen.js    # Component showcase
+│       ├── AdvancedComponentsScreen.js # Advanced components
+│       ├── FieldDemoScreen.js     # Field component demo
 │       ├── SearchScreen.js        # Enhanced search
 │       ├── FavoritesScreen.js     # Saved items
-│       ├── SettingsScreen.js      # User preferences
+│       ├── SettingsScreen.js      # User preferences & API keys
 │       ├── HintsScreen.js         # Developer hints
 │       ├── SpecializedTopicsScreen.js # IoT, E-Commerce, Linux
 │       ├── ResourcesScreen.js     # Official links
 │       ├── PlatformsScreen.js     # Deployment platforms
 │       ├── UIFrameworksScreen.js  # UI frameworks
-│       └── LearningScreen.js      # Learning resources
+│       ├── LearningScreen.js      # Learning resources
+│       └── LanguageLearningPathScreen.js # Learning paths
 └── assets/                        # Images and icons
 ```
 
@@ -309,30 +475,42 @@ Lib-of-Dev-Open-Source-/
 
 ## 🛠️ Tech Stack
 
-- **React Native** - Cross-platform mobile framework
-- **Expo** - Development platform and build system
-- **React Navigation** - Navigation library
+- **React Native 0.81** - Cross-platform mobile framework
+- **Expo 54** - Development platform and build system
+- **React 19** - Latest React version
+- **React Navigation 7** - Stack & Bottom Tab navigation
+- **i18next** - Internationalization framework
+- **react-i18next** - React bindings for i18n
 - **AsyncStorage** - Local data persistence
-- **Clipboard** - Copy-to-clipboard functionality
+- **Expo Clipboard** - Copy-to-clipboard functionality
+- **React Native Gesture Handler** - Touch gestures
+- **React Native Reanimated** - Smooth animations
+- **React Native Screens** - Native navigation
+- **React Native Google Mobile Ads** - AdMob integration
 - **Custom Design System** - shadcn/ui-inspired theme
+- **ErrorBoundary** - Error handling and recovery
 
 ---
 
 ## 📊 Statistics
 
-- **30,000+ Lines** of curated content
-- **30+ Screens** with rich information
+- **50,000+ Lines** of curated content
+- **24 Screens** with rich information
 - **13 Programming Languages** with 100+ examples each
+- **100+ Hours** of interactive tutorials
+- **30+ IT Certifications** from industry leaders
+- **25+ Developer Tools** with comprehensive guides
+- **200+ Error Solutions** with fixes
 - **115+ Developer Hints** across 18 categories
 - **70+ Specialized Topics** (IoT, E-commerce, Linux, DevOps, Security, Testing)
 - **70+ Official Links** to documentation
 - **6 Deployment Platforms** with complete guides
-- **3 UI Frameworks** featured
-- **5 Specialized Topics** (IoT, E-Commerce, Linux, etc.)
+- **50+ UI Components** in showcase
 - **3 Learning Paths** with structured progression
 - **70+ Code Examples** for IoT/Hardware
-- **50+ Best Practices** for development
-- **20+ Developer Tools** documented
+- **2 Languages** (EN/DE) with full i18n support
+- **1 AI Assistant** powered by Groq
+- **AdMob Integration** - Monetization ready
 - **0 Security Vulnerabilities** (CodeQL verified)
 - **Android Support:** Android 7.0 (API 24) and higher
 - **iOS Support:** iOS 13.4 and higher
@@ -418,20 +596,34 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-/discussions)
+- **Instagram**: [@lenfi_development](https://www.instagram.com/lenfi_development)
 
 ---
 
 ## 🎯 Roadmap
 
-- [ ] Add more programming languages (Dart, Elixir, Scala)
+- [x] AI Chat Assistant (Groq API) ✅
+- [x] Internationalization (EN/DE) ✅
+- [x] IT Certifications ✅
+- [x] Developer Tools Database ✅
+- [x] Error Solutions ✅
+- [x] Interactive Tutorials ✅
+- [x] Component Showcase ✅
+- [x] AdMob Integration ✅
+- [ ] More languages (French, Spanish, Italian)
+- [ ] More AI providers (OpenAI, Anthropic)
 - [ ] Video tutorials integration
-- [ ] Interactive code playground
+- [ ] Interactive code playground with execution
 - [ ] Community-contributed examples
 - [ ] Dark/Light theme toggle
-- [ ] Multi-language support (i18n)
-- [ ] Export favorites feature
+- [ ] More programming languages (Dart, Elixir, Scala, Zig)
+- [ ] Cloud sync for favorites
 - [ ] Share code snippets
-- [ ] Persistent favorites with cloud sync
+- [ ] Offline mode indicators
+- [ ] Custom learning paths
+- [ ] Progress tracking
+- [ ] Code snippet collections
+- [ ] Bookmarks and notes
 
 ---
 
@@ -440,5 +632,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Built with ❤️ by the Lib of Dev community**
 
 **[⭐ Star this repo](https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-)** if you find it helpful!
+
+Follow us on [Instagram @lenfi_development](https://www.instagram.com/lenfi_development) for updates!
 
 </div>
