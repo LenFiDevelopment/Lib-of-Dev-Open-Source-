@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -17,11 +17,11 @@ import AdBanner from '../components/AdBanner';
 
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
-  const languages = getAllLanguages();
+  const languages = useMemo(() => getAllLanguages(), []);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLanguages, setFilteredLanguages] = useState(languages);
 
-  const handleSearch = (query) => {
+  const handleSearch = useCallback((query) => {
     setSearchQuery(query);
     if (query.trim() === '') {
       setFilteredLanguages(languages);
@@ -32,15 +32,15 @@ export default function HomeScreen({ navigation }) {
       );
       setFilteredLanguages(filtered);
     }
-  };
+  }, [languages]);
 
-  const getTotalExamples = (language) => {
+  const getTotalExamples = useCallback((language) => {
     let total = 0;
     Object.values(language.categories).forEach(category => {
       total += category.items.length;
     });
     return total;
-  };
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,9 +72,17 @@ export default function HomeScreen({ navigation }) {
               onChangeText={handleSearch}
               autoCapitalize="none"
               autoCorrect={false}
+              accessible={true}
+              accessibilityLabel={t('home.searchPlaceholder')}
+              accessibilityHint="Search for programming languages"
             />
             {searchQuery.length > 0 && (
-              <TouchableOpacity onPress={() => handleSearch('')}>
+              <TouchableOpacity 
+                onPress={() => handleSearch('')}
+                accessible={true}
+                accessibilityLabel="Clear search"
+                accessibilityRole="button"
+              >
                 <Text style={styles.clearButton}>✕</Text>
               </TouchableOpacity>
             )}
@@ -95,73 +103,101 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.quickAccessGrid}>
             <TouchableOpacity
               style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('Search')}
-            >
-              <Text style={styles.quickAccessIcon}>🔍</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.search')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Learning')}
+              accessible={true}
+              accessibilityLabel="Learning resources"
+              accessibilityRole="button"
             >
               <Text style={styles.quickAccessIcon}>🎓</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.learn')}</Text>
             </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Components')}
+              accessible={true}
+              accessibilityLabel="UI Components"
+              accessibilityRole="button"
+            >
+              <Text style={styles.quickAccessIcon}>🎨</Text>
+              <Text style={styles.quickAccessText}>Components</Text>
+            </TouchableOpacity>
+            
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('UIFrameworks')}
+              accessible={true}
+              accessibilityLabel="UI Frameworks"
+              accessibilityRole="button"
             >
-              <Text style={styles.quickAccessIcon}>🎨</Text>
+              <Text style={styles.quickAccessIcon}>🖼️</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.uiDesign')}</Text>
             </TouchableOpacity>
+            
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Platforms')}
+              accessible={true}
+              accessibilityLabel="Development platforms"
+              accessibilityRole="button"
             >
               <Text style={styles.quickAccessIcon}>🚀</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.platforms')}</Text>
             </TouchableOpacity>
+            
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Hints')}
+              accessible={true}
+              accessibilityLabel="Developer hints"
+              accessibilityRole="button"
             >
               <Text style={styles.quickAccessIcon}>💡</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.hints')}</Text>
             </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.quickAccessCard}
+              onPress={() => navigation.navigate('Tools')}
+              accessible={true}
+              accessibilityLabel="Developer tools"
+              accessibilityRole="button"
+            >
+              <Text style={styles.quickAccessIcon}>🛠️</Text>
+              <Text style={styles.quickAccessText}>Tools</Text>
+            </TouchableOpacity>
+            
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('SpecializedTopics')}
+              accessible={true}
+              accessibilityLabel="Specialized topics"
+              accessibilityRole="button"
             >
               <Text style={styles.quickAccessIcon}>🔌</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.iotMore')}</Text>
             </TouchableOpacity>
+            
             <TouchableOpacity
               style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Resources')}
+              accessible={true}
+              accessibilityLabel="Learning resources"
+              accessibilityRole="button"
             >
               <Text style={styles.quickAccessIcon}>🔗</Text>
               <Text style={styles.quickAccessText}>{t('quickAccess.links')}</Text>
             </TouchableOpacity>
+            
             <TouchableOpacity
               style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('Favorites')}
+              onPress={() => navigation.navigate('Certifications')}
+              accessible={true}
+              accessibilityLabel="IT Certifications"
+              accessibilityRole="button"
             >
-              <Text style={styles.quickAccessIcon}>⭐</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.favorites')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('Settings')}
-            >
-              <Text style={styles.quickAccessIcon}>⚙️</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.settings')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('Tools')}
-            >
-              <Text style={styles.quickAccessIcon}>🛠️</Text>
-              <Text style={styles.quickAccessText}>Dev Tools</Text>
+              <Text style={styles.quickAccessIcon}>🎓</Text>
+              <Text style={styles.quickAccessText}>Certifications</Text>
             </TouchableOpacity>
           </View>
         </View>

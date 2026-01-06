@@ -28,6 +28,7 @@ export default function AskAIScreen({ navigation }) {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingHistory, setIsLoadingHistory] = useState(true);
   const [apiKey, setApiKey] = useState('');
   const [responseMode, setResponseMode] = useState('normal'); // short, normal, detailed
   const scrollViewRef = useRef();
@@ -57,12 +58,15 @@ export default function AskAIScreen({ navigation }) {
 
   const loadChatHistory = async () => {
     try {
+      setIsLoadingHistory(true);
       const history = await AsyncStorage.getItem(CHAT_HISTORY_KEY);
       if (history) {
         setMessages(JSON.parse(history));
       }
     } catch (error) {
       console.log('Error loading chat history:', error);
+    } finally {
+      setIsLoadingHistory(false);
     }
   };
 
@@ -299,7 +303,12 @@ export default function AskAIScreen({ navigation }) {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="interactive"
         >
-          {messages.length === 0 ? (
+          {isLoadingHistory ? (
+            <View style={styles.loadingState}>
+              <ActivityIndicator color={colors.primary} size="large" />
+              <Text style={styles.loadingText}>{t('common.loading')}</Text>
+            </View>
+          ) : messages.length === 0 ? (
             <View style={styles.emptyState}>
               <Text style={styles.emptyIcon}>💬</Text>
               <Text style={styles.emptyTitle}>{t('askAI.emptyTitle')}</Text>
@@ -438,6 +447,17 @@ const styles = StyleSheet.create({
   messagesContent: {
     padding: spacing.md,
     paddingBottom: spacing.xl,
+  },
+  loadingState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: spacing.xxl,
+  },
+  loadingText: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    marginTop: spacing.md,
   },
   emptyState: {
     flex: 1,

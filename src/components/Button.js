@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { colors, borderRadius, shadows } from '../constants/theme';
 
-export const Button = ({ 
+export const Button = React.memo(({ 
   title, 
   onPress, 
   variant = 'primary', 
@@ -43,7 +43,9 @@ export const Button = ({
       )}
     </TouchableOpacity>
   );
-};
+});
+
+Button.displayName = 'Button';
 
 const styles = StyleSheet.create({
   button: {

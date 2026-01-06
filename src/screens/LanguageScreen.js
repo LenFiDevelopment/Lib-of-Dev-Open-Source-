@@ -39,6 +39,18 @@ export default function LanguageScreen({ route, navigation }) {
           {/* Quick Actions */}
           <View style={styles.quickActions}>
             <TouchableOpacity
+              style={[styles.quickActionButton, { backgroundColor: '#9C27B0' }]}
+              onPress={() =>
+                navigation.navigate('LanguageLearningPath', {
+                  languageId,
+                  languageName: language.name,
+                })
+              }
+            >
+              <Text style={styles.quickActionIcon}>🗺️</Text>
+              <Text style={styles.quickActionText}>Learning Path</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={[styles.quickActionButton, { backgroundColor: '#4CAF50' }]}
               onPress={() =>
                 navigation.navigate('Tutorials', {
@@ -131,7 +143,7 @@ const styles = StyleSheet.create({
   },
   quickActions: {
     flexDirection: 'row',
-    gap: spacing.md,
+    gap: spacing.sm,
     marginBottom: spacing.lg,
   },
   quickActionButton: {

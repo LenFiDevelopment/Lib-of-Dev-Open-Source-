@@ -27,6 +27,10 @@ import TutorialDetailScreen from '../screens/TutorialDetailScreen';
 import ErrorSolutionsScreen from '../screens/ErrorSolutionsScreen';
 import ToolsScreen from '../screens/ToolsScreen';
 import ToolDetailScreen from '../screens/ToolDetailScreen';
+import ComponentsScreen from '../screens/ComponentsScreen';
+import AdvancedComponentsScreen from '../screens/AdvancedComponentsScreen';
+import LanguageLearningPathScreen from '../screens/LanguageLearningPathScreen';
+import CertificationsScreen from '../screens/CertificationsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -113,6 +117,16 @@ function BrowseStack() {
         options={{ title: `🔗 ${t('resources.title')}` }}
       />
       <Stack.Screen 
+        name="Certifications" 
+        component={CertificationsScreen}
+        options={{ title: '🎓 IT Certifications' }}
+      />
+      <Stack.Screen 
+        name="LanguageLearningPath" 
+        component={LanguageLearningPathScreen}
+        options={({ route }) => ({ title: `🗺️ ${route.params?.languageName || 'Learning Path'}` })}
+      />
+      <Stack.Screen 
         name="Tutorials" 
         component={TutorialsScreen}
         options={({ route }) => ({ title: `📚 ${route.params?.languageName || 'Tutorials'}` })}
@@ -137,6 +151,16 @@ function BrowseStack() {
         component={ToolDetailScreen}
         options={{ title: 'Tool Details' }}
       />
+      <Stack.Screen 
+        name="Components" 
+        component={ComponentsScreen}
+        options={{ title: '🎨 Components' }}
+      />
+      <Stack.Screen 
+        name="AdvancedComponents" 
+        component={AdvancedComponentsScreen}
+        options={{ title: '🚀 Advanced Components' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -160,12 +184,24 @@ function TabNavigator() {
       <Tab.Screen 
         name="Browse" 
         component={BrowseStack}
-        options={{
+        options={({ route }) => ({
           tabBarLabel: t('navigation.home'),
           tabBarIcon: ({ color, size = 24 }) => (
             <Text style={{ fontSize: size, color }}>📚</Text>
           ),
-        }}
+          tabBarStyle: ((route) => {
+            const routeName = route.state
+              ? route.state.routes[route.state.index].name
+              : route.name;
+            // Always show tab bar
+            return {
+              backgroundColor: colors.backgroundElevated,
+              borderTopColor: colors.border,
+              borderTopWidth: 1,
+              display: 'flex',
+            };
+          })(route),
+        })}
       />
       <Tab.Screen 
         name="Search" 

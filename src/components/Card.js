@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, borderRadius, shadows, spacing } from '../constants/theme';
 
-export const Card = ({ 
+export const Card = React.memo(({ 
   children, 
   onPress, 
   style,
@@ -29,9 +29,11 @@ export const Card = ({
   }
 
   return <View style={cardStyles}>{children}</View>;
-};
+});
 
-export const LanguageCard = ({ 
+Card.displayName = 'Card';
+
+export const LanguageCard = React.memo(({ 
   icon, 
   name, 
   description, 
@@ -56,9 +58,11 @@ export const LanguageCard = ({
       <Text style={styles.arrow}>›</Text>
     </Card>
   );
-};
+});
 
-export const CodeCard = ({ 
+LanguageCard.displayName = 'LanguageCard';
+
+export const CodeCard = React.memo(({ 
   title, 
   code, 
   language,
@@ -84,7 +88,9 @@ export const CodeCard = ({
       )}
     </Card>
   );
-};
+});
+
+CodeCard.displayName = 'CodeCard';
 
 const styles = StyleSheet.create({
   card: {
