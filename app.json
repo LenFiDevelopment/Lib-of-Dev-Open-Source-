@@ -27,6 +27,7 @@
         "backgroundColor": "#0A0E1A"
       },
       "package": "com.lenfi.libofdev",
+      "versionCode": 23,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.lenfi.libofdev",
       "permissions": [
         "INTERNET",
