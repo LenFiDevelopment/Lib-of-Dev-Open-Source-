@@ -79,11 +79,10 @@ export default function SettingsScreen() {
 
   // Survey time window: 08.01.2026 00:01 CET to 14.01.2026 23:29 CET
   const isSurveyActive = () => {
-    return true; // TEMP: Always show for testing - will be time-restricted later
-    // const now = new Date();
-    // const startDate = new Date('2026-01-08T00:01:00+01:00'); // CET
-    // const endDate = new Date('2026-01-14T23:29:00+01:00'); // CET
-    // return now >= startDate && now <= endDate;
+    const now = new Date();
+    const startDate = new Date('2026-01-08T00:01:00+01:00'); // CET
+    const endDate = new Date('2026-01-14T23:29:00+01:00'); // CET
+    return now >= startDate && now <= endDate;
   };
 
   useEffect(() => {
