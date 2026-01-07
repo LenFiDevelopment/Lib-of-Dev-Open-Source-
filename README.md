@@ -2,7 +2,7 @@
 
 > **The Ultimate Developer Companion App** - Your comprehensive offline-first mobile reference library with 50,000+ lines of curated content
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-)
+[![Version](https://img.shields.io/badge/version-2.0.4-blue.svg)](https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![React Native](https://img.shields.io/badge/React%20Native-0.81-61DAFB.svg)](https://reactnative.dev/)
 [![Expo](https://img.shields.io/badge/Expo-54.0-000020.svg)](https://expo.dev/)
