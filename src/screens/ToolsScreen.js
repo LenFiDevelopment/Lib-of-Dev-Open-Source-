@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { theme } from '../constants/theme';
 import { toolsData, getAllCategories, searchTools } from '../data/toolsData';
+import AdBanner from '../components/AdBanner';
 
 export default function ToolsScreen({ navigation }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -164,6 +165,11 @@ export default function ToolsScreen({ navigation }) {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+      {/* AdMob Banner */}
+      <View style={styles.adContainer}>
+        <AdBanner adUnitId="ca-app-pub-5526801232554836/7375183205" />
+      </View>
 
       {/* Tools List */}
       <ScrollView
@@ -415,5 +421,9 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     textAlign: 'center',
     fontStyle: 'italic',
+  },
+  adContainer: {
+    marginVertical: 16,
+    alignItems: 'center',
   },
 });

@@ -53,14 +53,24 @@ export default function SpecializedTopicsScreen({ navigation }) {
           </Text>
         </View>
 
+        {/* New Topics Highlight */}
+        <View style={styles.highlightCard}>
+          <Text style={styles.highlightBadge}>✨ NEW</Text>
+          <Text style={styles.highlightTitle}>Home Server & How-To Projects</Text>
+          <Text style={styles.highlightText}>
+            🏠 Build your own home server with CasaOS, Nextcloud, and Cloudflare Tunnels
+            {`\n`}🎯 Complete project guides from deployment to production
+          </Text>
+        </View>
+
         <View style={styles.topicsGrid}>
           {topics.map(renderTopicCard)}
         </View>
 
         <View style={styles.infoCard}>
-          <Text style={styles.infoTitle}>🚀 {t('specializedTopics.newTopics')}</Text>
+          <Text style={styles.infoTitle}>📚 What's Inside</Text>
           <Text style={styles.infoText}>
-            {t('specializedTopics.newTopicsList')}
+            Explore specialized topics including IoT, Home Automation, E-Commerce, Linux, DevOps, Cloud, Blockchain, Security, and more.
           </Text>
         </View>
       </ScrollView>
@@ -145,6 +155,35 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.textSecondary,
     marginLeft: spacing.sm,
+  },
+  highlightCard: {
+    backgroundColor: colors.primary,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.lg,
+    ...shadows.md,
+  },
+  highlightBadge: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    color: colors.backgroundElevated,
+    fontSize: typography.sizes.xs,
+    fontWeight: typography.weights.bold,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: borderRadius.sm,
+    alignSelf: 'flex-start',
+    marginBottom: spacing.sm,
+  },
+  highlightTitle: {
+    fontSize: typography.sizes.xl,
+    fontWeight: typography.weights.bold,
+    color: colors.backgroundElevated,
+    marginBottom: spacing.sm,
+  },
+  highlightText: {
+    fontSize: typography.sizes.md,
+    color: 'rgba(255, 255, 255, 0.95)',
+    lineHeight: 22,
   },
   infoCard: {
     backgroundColor: colors.primaryAlpha,

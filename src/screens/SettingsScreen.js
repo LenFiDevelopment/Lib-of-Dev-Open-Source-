@@ -18,6 +18,19 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
+// Try to import InterstitialAd from AdMob
+let InterstitialAd, AdEventType, TestIds;
+let isAdMobAvailable = false;
+try {
+  const GoogleMobileAds = require('react-native-google-mobile-ads');
+  InterstitialAd = GoogleMobileAds.InterstitialAd;
+  AdEventType = GoogleMobileAds.AdEventType;
+  TestIds = GoogleMobileAds.TestIds;
+  isAdMobAvailable = true;
+} catch (error) {
+  console.log('AdMob module not available');
+}
+
 const GITHUB_URL = 'https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-';
 const LANGUAGE_STORAGE_KEY = '@app_language';
 const GROQ_API_KEY_STORAGE = '@groq_api_key';
@@ -31,6 +44,7 @@ export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [apiKeyInput, setApiKeyInput] = useState('');
   const [interests, setInterests] = useState({
@@ -82,6 +96,50 @@ export default function SettingsScreen() {
       Alert.alert(t('common.success'), t('settings.apiKeySaved'));
     } catch (error) {
       Alert.alert(t('common.error'), t('settings.apiKeySaveError'));
+    }
+  };
+
+  const showSupportAd = async () => {
+    if (!isAdMobAvailable) {
+      // If AdMob is not available, just show thank you
+      setShowThankYouModal(true);
+      return;
+    }
+
+    try {
+      // Production Interstitial Ad Unit ID for Support Button
+      const adUnitId = Platform.select({
+        ios: 'ca-app-pub-5526801232554836/4489165417',
+        android: 'ca-app-pub-5526801232554836/4489165417',
+      });
+
+      const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+        requestNonPersonalizedAdsOnly: false,
+      });
+
+      // Load the ad
+      interstitial.load();
+
+      // Listen for ad events
+      const unsubscribeLoaded = interstitial.addAdEventListener(
+        AdEventType.LOADED,
+        () => {
+          interstitial.show();
+        }
+      );
+
+      const unsubscribeClosed = interstitial.addAdEventListener(
+        AdEventType.CLOSED,
+        () => {
+          setShowThankYouModal(true);
+          unsubscribeLoaded();
+          unsubscribeClosed();
+        }
+      );
+    } catch (error) {
+      console.log('Error showing ad:', error);
+      // Still show thank you even if ad fails
+      setShowThankYouModal(true);
     }
   };
 
@@ -307,6 +365,30 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
+        {/* Support Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>❤️ Support Development</Text>
+          <TouchableOpacity
+            style={styles.supportButton}
+            onPress={showSupportAd}
+            activeOpacity={0.7}
+          >
+            <View style={styles.supportButtonContent}>
+              <Text style={styles.supportButtonIcon}>🙏</Text>
+              <View style={styles.supportButtonTextContainer}>
+                <Text style={styles.supportButtonTitle}>Support Me</Text>
+                <Text style={styles.supportButtonDescription}>
+                  Watch a short ad to support development
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.supportInfo}>
+            💡 Clicking this button will show a brief ad. That's it! Your support helps 
+            keep this app free and actively developed. Thank you! 🚀
+          </Text>
+        </View>
+
         {/* About Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>ℹ️ {t('settings.aboutSection')}</Text>
@@ -350,6 +432,39 @@ export default function SettingsScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Thank You Modal */}
+      <Modal
+        visible={showThankYouModal}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setShowThankYouModal(false)}
+      >
+        <View style={styles.thankYouOverlay}>
+          <View style={styles.thankYouContainer}>
+            <Text style={styles.thankYouEmoji}>🎉</Text>
+            <Text style={styles.thankYouTitle}>Thank You!</Text>
+            <Text style={styles.thankYouMessage}>
+              Your support means the world to us! Every contribution helps us:
+            </Text>
+            <View style={styles.thankYouList}>
+              <Text style={styles.thankYouListItem}>✨ Add new features</Text>
+              <Text style={styles.thankYouListItem}>🐛 Fix bugs faster</Text>
+              <Text style={styles.thankYouListItem}>📚 Create more content</Text>
+              <Text style={styles.thankYouListItem}>🚀 Keep the app updated</Text>
+            </View>
+            <Text style={styles.thankYouFooter}>
+              You're awesome! 💙
+            </Text>
+            <TouchableOpacity
+              style={styles.thankYouButton}
+              onPress={() => setShowThankYouModal(false)}
+            >
+              <Text style={styles.thankYouButtonText}>Continue</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* API Key Modal */}
       <Modal
@@ -609,6 +724,103 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: spacing.xs,
     textAlign: 'center',
+  },
+  supportButton: {
+    backgroundColor: colors.primary,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+    ...shadows.medium,
+  },
+  supportButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  supportButtonIcon: {
+    fontSize: 40,
+    marginRight: spacing.md,
+  },
+  supportButtonTextContainer: {
+    flex: 1,
+  },
+  supportButtonTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 4,
+  },
+  supportButtonDescription: {
+    fontSize: 14,
+    color: '#FFFFFF',
+    opacity: 0.9,
+  },
+  supportInfo: {
+    fontSize: 13,
+    color: colors.textMuted,
+    lineHeight: 20,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  thankYouOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.xl,
+  },
+  thankYouContainer: {
+    backgroundColor: colors.background,
+    borderRadius: borderRadius.xl,
+    padding: spacing.xl * 1.5,
+    width: '100%',
+    maxWidth: 400,
+    alignItems: 'center',
+    ...shadows.large,
+  },
+  thankYouEmoji: {
+    fontSize: 72,
+    marginBottom: spacing.md,
+  },
+  thankYouTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: spacing.md,
+  },
+  thankYouMessage: {
+    fontSize: 16,
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+    lineHeight: 24,
+  },
+  thankYouList: {
+    width: '100%',
+    marginBottom: spacing.lg,
+  },
+  thankYouListItem: {
+    fontSize: 16,
+    color: colors.text,
+    marginBottom: spacing.sm,
+    paddingLeft: spacing.md,
+  },
+  thankYouFooter: {
+    fontSize: 18,
+    color: colors.primary,
+    fontWeight: '600',
+    marginBottom: spacing.lg,
+  },
+  thankYouButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.xl * 2,
+    paddingVertical: spacing.md,
+    borderRadius: borderRadius.lg,
+    ...shadows.medium,
+  },
+  thankYouButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   modalContainer: {
     flex: 1,

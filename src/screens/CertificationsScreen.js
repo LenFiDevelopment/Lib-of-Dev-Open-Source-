@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getAllCertificationCategories } from '../data/certificationsData';
 import { colors, spacing, borderRadius, shadows, typography } from '../constants/theme';
+import AdBanner from '../components/AdBanner';
 
 export default function CertificationsScreen({ navigation }) {
   const { t } = useTranslation();
@@ -164,6 +165,11 @@ export default function CertificationsScreen({ navigation }) {
             </TouchableOpacity>
           ))}
         </ScrollView>
+
+        {/* AdMob Banner */}
+        <View style={styles.adContainer}>
+          <AdBanner adUnitId="ca-app-pub-5526801232554836/7251399431" />
+        </View>
 
         {/* Stats */}
         <View style={styles.statsContainer}>

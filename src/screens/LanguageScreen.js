@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getLanguageById } from '../data/languagesData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import AdBanner from '../components/AdBanner';
 
 export default function LanguageScreen({ route, navigation }) {
   const { t } = useTranslation();
@@ -74,6 +75,11 @@ export default function LanguageScreen({ route, navigation }) {
               <Text style={styles.quickActionIcon}>⚠️</Text>
               <Text style={styles.quickActionText}>Solve Errors</Text>
             </TouchableOpacity>
+          </View>
+
+          {/* AdMob Banner */}
+          <View style={styles.adContainer}>
+            <AdBanner adUnitId="ca-app-pub-5526801232554836/8967466472" />
           </View>
 
           <Text style={styles.sectionTitle}>{t('categories.title')}</Text>
@@ -145,6 +151,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: spacing.sm,
     marginBottom: spacing.lg,
+  },
+  adContainer: {
+    marginVertical: spacing.lg,
+    alignItems: 'center',
   },
   quickActionButton: {
     flex: 1,

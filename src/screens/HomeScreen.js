@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -279,6 +280,74 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.emptySubtext}>Try a different search term</Text>
             </View>
           )}
+        </View>
+
+        {/* Get Involved Section - Prominent Placement */}
+        <View style={styles.getInvolvedContainer}>
+          <View style={styles.getInvolvedHeader}>
+            <Text style={styles.getInvolvedBadge}>🌟 CONTRIBUTE</Text>
+            <Text style={styles.sectionTitle}>🤝 Join Our Community</Text>
+          </View>
+          <Text style={styles.getInvolvedDescription}>
+            Help us make this app even better! Contribute code, report bugs, or suggest new features.
+          </Text>
+          
+          <View style={styles.communityLinks}>
+            <TouchableOpacity 
+              style={styles.communityLink}
+              onPress={() => Linking.openURL('https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-')}
+            >
+              <Text style={styles.communityIcon}>📦</Text>
+              <View style={styles.communityLinkContent}>
+                <Text style={styles.communityLinkTitle}>GitHub Repository</Text>
+                <Text style={styles.communityLinkSubtext}>Star, fork & contribute code</Text>
+              </View>
+              <Text style={styles.communityArrow}>→</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.communityLink}
+              onPress={() => Linking.openURL('https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-/discussions')}
+            >
+              <Text style={styles.communityIcon}>💬</Text>
+              <View style={styles.communityLinkContent}>
+                <Text style={styles.communityLinkTitle}>GitHub Discussions</Text>
+                <Text style={styles.communityLinkSubtext}>Ask questions & share ideas</Text>
+              </View>
+              <Text style={styles.communityArrow}>→</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.communityLink}
+              onPress={() => Linking.openURL('https://github.com/LenFiDevelopment/Lib-of-Dev-Open-Source-/issues')}
+            >
+              <Text style={styles.communityIcon}>🐛</Text>
+              <View style={styles.communityLinkContent}>
+                <Text style={styles.communityLinkTitle}>Report Issues</Text>
+                <Text style={styles.communityLinkSubtext}>Bug reports & feature requests</Text>
+              </View>
+              <Text style={styles.communityArrow}>→</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.communityLink}
+              onPress={() => Linking.openURL('https://www.instagram.com/lenfi_development/')}
+            >
+              <Text style={styles.communityIcon}>📸</Text>
+              <View style={styles.communityLinkContent}>
+                <Text style={styles.communityLinkTitle}>Instagram</Text>
+                <Text style={styles.communityLinkSubtext}>Follow @lenfi_development</Text>
+              </View>
+              <Text style={styles.communityArrow}>→</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.contributionCallout}>
+            <Text style={styles.contributionEmoji}>💪</Text>
+            <Text style={styles.contributionText}>
+              Every contribution counts! Whether you're fixing typos, adding examples, or building new features – we appreciate your help.
+            </Text>
+          </View>
         </View>
 
         {/* Features Section */}
@@ -615,5 +684,91 @@ const styles = StyleSheet.create({
   bannerBold: {
     fontWeight: '600',
     color: '#1565C0',
+  },
+  getInvolvedContainer: {
+    marginHorizontal: spacing.md,
+    marginVertical: spacing.lg,
+    padding: spacing.lg,
+    backgroundColor: colors.primary + '15',
+    borderRadius: borderRadius.lg,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    ...shadows.medium,
+  },
+  getInvolvedHeader: {
+    marginBottom: spacing.md,
+  },
+  getInvolvedBadge: {
+    backgroundColor: colors.primary,
+    color: colors.backgroundElevated,
+    fontSize: 11,
+    fontWeight: '700',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 4,
+    borderRadius: borderRadius.sm,
+    alignSelf: 'flex-start',
+    marginBottom: spacing.sm,
+    overflow: 'hidden',
+  },
+  getInvolvedDescription: {
+    fontSize: 15,
+    color: colors.textSecondary,
+    lineHeight: 22,
+    marginBottom: spacing.lg,
+  },
+  communityLinks: {
+    marginBottom: spacing.md,
+  },
+  communityLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.backgroundCard,
+    padding: spacing.md,
+    borderRadius: borderRadius.md,
+    marginBottom: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.small,
+  },
+  communityIcon: {
+    fontSize: 28,
+    marginRight: spacing.md,
+  },
+  communityLinkContent: {
+    flex: 1,
+  },
+  communityLinkTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 2,
+  },
+  communityLinkSubtext: {
+    fontSize: 13,
+    color: colors.textSecondary,
+  },
+  communityArrow: {
+    fontSize: 20,
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  contributionCallout: {
+    flexDirection: 'row',
+    backgroundColor: colors.primaryAlpha,
+    padding: spacing.md,
+    borderRadius: borderRadius.md,
+    borderWidth: 1,
+    borderColor: colors.primary + '30',
+    alignItems: 'center',
+  },
+  contributionEmoji: {
+    fontSize: 32,
+    marginRight: spacing.sm,
+  },
+  contributionText: {
+    flex: 1,
+    fontSize: 13,
+    color: colors.text,
+    lineHeight: 19,
   },
 });

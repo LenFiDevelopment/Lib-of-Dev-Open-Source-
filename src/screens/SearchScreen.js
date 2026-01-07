@@ -12,13 +12,18 @@ import { useTranslation } from 'react-i18next';
 import { getAllLanguages } from '../data/languagesData';
 import { getAllDesignPatterns } from '../data/designPatternsData';
 import { getAllPlatforms } from '../data/platformsData';
+import { specializedTopics } from '../data/specializedTopicsData';
+import { getAllCertificationCategories } from '../data/certificationsData';
+import { developerHints, quickTips } from '../data/developerHintsData';
+import { getAllTools } from '../data/toolsData';
+import { getTutorialsByLanguage } from '../data/tutorialsData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function SearchScreen({ navigation }) {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [filter, setFilter] = useState('all'); // all, languages, patterns, platforms
+  const [filter, setFilter] = useState('all'); // all, languages, patterns, platforms, topics, tutorials, tools, hints, certifications
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -29,13 +34,11 @@ export default function SearchScreen({ navigation }) {
     }
 
     const results = [];
-    const languages = getAllLanguages();
-    const patterns = getAllDesignPatterns();
-    const platforms = getAllPlatforms();
     const lowerQuery = query.toLowerCase();
 
-    // Search in languages
+    // Search in languages (17 languages)
     if (filter === 'all' || filter === 'languages') {
+      const languages = getAllLanguages();
       languages.forEach((language) => {
         Object.entries(language.categories).forEach(([categoryId, category]) => {
           category.items.forEach((item, itemIndex) => {
@@ -56,8 +59,112 @@ export default function SearchScreen({ navigation }) {
       });
     }
 
+    // Search in specialized topics (HomeServer, HowTo, IoT, etc.)
+    if (filter === 'all' || filter === 'topics') {
+      const topics = Object.values(specializedTopics);
+      topics.forEach((topic) => {
+        Object.entries(topic.categories).forEach(([categoryId, category]) => {
+          category.items.forEach((item, itemIndex) => {
+            const searchableText = `${topic.name} ${item.title} ${item.description} ${item.code} ${item.usage} ${JSON.stringify(item.technologies || [])}`.toLowerCase();
+            
+            if (searchableText.includes(lowerQuery)) {
+              results.push({
+                type: 'topic',
+                topic,
+                categoryId,
+                category,
+                item,
+                itemIndex,
+              });
+            }
+          });
+        });
+      });
+    }
+
+    // Search in tutorials
+    if (filter === 'all' || filter === 'tutorials') {
+      const languages = getAllLanguages();
+      languages.forEach((language) => {
+        const tutorials = getTutorialsByLanguage(language.id);
+        if (tutorials && tutorials.tutorials) {
+          tutorials.tutorials.forEach((tutorial, index) => {
+            const searchableText = `${language.name} ${tutorial.title} ${tutorial.description} ${tutorial.level} ${JSON.stringify(tutorial.topics || [])}`.toLowerCase();
+            
+            if (searchableText.includes(lowerQuery)) {
+              results.push({
+                type: 'tutorial',
+                language,
+                tutorial,
+                index,
+              });
+            }
+          });
+        }
+      });
+    }
+
+    // Search in tools
+    if (filter === 'all' || filter === 'tools') {
+      const tools = getAllTools();
+      tools.forEach((tool) => {
+        const searchableText = `${tool.name} ${tool.developer} ${tool.description} ${tool.category} ${JSON.stringify(tool.features || [])} ${JSON.stringify(tool.platforms || [])}`.toLowerCase();
+        
+        if (searchableText.includes(lowerQuery)) {
+          results.push({
+            type: 'tool',
+            tool,
+          });
+        }
+      });
+    }
+
+    // Search in developer hints
+    if (filter === 'all' || filter === 'hints') {
+      Object.values(developerHints).forEach((hint) => {
+        const searchableText = `${hint.title} ${hint.question} ${hint.answer} ${hint.category}`.toLowerCase();
+        
+        if (searchableText.includes(lowerQuery)) {
+          results.push({
+            type: 'hint',
+            hint,
+          });
+        }
+      });
+
+      quickTips.forEach((tip) => {
+        const searchableText = `${tip.title} ${tip.answer} ${tip.category}`.toLowerCase();
+        
+        if (searchableText.includes(lowerQuery)) {
+          results.push({
+            type: 'quicktip',
+            tip,
+          });
+        }
+      });
+    }
+
+    // Search in certifications
+    if (filter === 'all' || filter === 'certifications') {
+      const categories = getAllCertificationCategories();
+      categories.forEach((category) => {
+        category.certifications.forEach((cert) => {
+          const searchableText = `${category.name} ${cert.name} ${cert.provider} ${cert.description} ${cert.level}`.toLowerCase();
+          
+          if (searchableText.includes(lowerQuery)) {
+            results.push({
+              type: 'certification',
+              category,
+              certification: cert,
+            });
+          }
+        });
+      });
+    }
+
     // Search in design patterns
     if (filter === 'all' || filter === 'patterns') {
+      const patterns = getAllDesignPatterns();
       patterns.forEach((pattern) => {
         const searchableText = `${pattern.name} ${pattern.description} ${pattern.category}`.toLowerCase();
         if (searchableText.includes(lowerQuery)) {
@@ -71,6 +178,7 @@ export default function SearchScreen({ navigation }) {
 
     // Search in platforms
     if (filter === 'all' || filter === 'platforms') {
+      const platforms = getAllPlatforms();
       platforms.forEach((platform) => {
         const searchableText = `${platform.name} ${platform.description} ${platform.category}`.toLowerCase();
         if (searchableText.includes(lowerQuery)) {
@@ -124,6 +232,200 @@ export default function SearchScreen({ navigation }) {
               {result.item.code}
             </Text>
           </View>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'topic') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'CodeDetail',
+              params: {
+                languageId: result.topic.id,
+                categoryId: result.categoryId,
+                itemIndex: result.itemIndex,
+                itemTitle: result.item.title,
+                languageName: result.topic.name,
+              },
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#9B59B6' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#9B59B6' }]}>TOPIC</Text>
+            </View>
+            <Text style={styles.resultLanguage}>
+              {result.topic.icon} {result.topic.name}
+            </Text>
+            <Text style={styles.resultCategory}>
+              {result.category.name}
+            </Text>
+          </View>
+          <Text style={styles.resultTitle}>{result.item.title}</Text>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.item.description}
+          </Text>
+          {result.item.code && (
+            <View style={styles.resultCodePreview}>
+              <Text style={styles.resultCode} numberOfLines={2}>
+                {result.item.code}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'tutorial') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Learn', {
+              screen: 'TutorialDetail',
+              params: {
+                tutorial: result.tutorial,
+                languageName: result.language.name,
+              },
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: colors.success + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: colors.success }]}>TUTORIAL</Text>
+            </View>
+            <Text style={styles.resultLanguage}>
+              {result.language.icon} {result.language.name}
+            </Text>
+            <Text style={styles.resultCategory}>
+              {result.tutorial.level}
+            </Text>
+          </View>
+          <Text style={styles.resultTitle}>{result.tutorial.title}</Text>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.tutorial.description}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'tool') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'ToolDetail',
+              params: { tool: result.tool },
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#E67E22' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#E67E22' }]}>TOOL</Text>
+            </View>
+            <Text style={styles.resultLanguage}>
+              {result.tool.icon} {result.tool.name}
+            </Text>
+            <Text style={styles.resultCategory}>
+              {result.tool.category}
+            </Text>
+          </View>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.tool.description}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'hint') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'Hints',
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#1ABC9C' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#1ABC9C' }]}>HINT</Text>
+            </View>
+            <Text style={styles.resultCategory}>
+              {result.hint.category}
+            </Text>
+          </View>
+          <Text style={styles.resultTitle}>{result.hint.title}</Text>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.hint.answer}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'quicktip') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Browse', {
+              screen: 'Hints',
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#16A085' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#16A085' }]}>TIP</Text>
+            </View>
+            <Text style={styles.resultCategory}>
+              {result.tip.category}
+            </Text>
+          </View>
+          <Text style={styles.resultTitle}>{result.tip.title}</Text>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.tip.answer}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    if (result.type === 'certification') {
+      return (
+        <TouchableOpacity
+          key={index}
+          style={styles.resultCard}
+          onPress={() =>
+            navigation.navigate('Learn', {
+              screen: 'Certifications',
+            })
+          }
+        >
+          <View style={styles.resultHeader}>
+            <View style={[styles.typeBadge, { backgroundColor: '#F39C12' + '30' }]}>
+              <Text style={[styles.typeBadgeText, { color: '#F39C12' }]}>CERT</Text>
+            </View>
+            <Text style={styles.resultLanguage}>
+              {result.certification.name}
+            </Text>
+            <Text style={styles.resultCategory}>
+              {result.certification.level}
+            </Text>
+          </View>
+          <Text style={styles.resultDescription} numberOfLines={2}>
+            {result.certification.description}
+          </Text>
+          <Text style={styles.resultCategory}>
+            Provider: {result.certification.provider}
+          </Text>
         </TouchableOpacity>
       );
     }
@@ -216,6 +518,46 @@ export default function SearchScreen({ navigation }) {
           >
             <Text style={[styles.filterButtonText, filter === 'languages' && styles.filterButtonTextActive]}>
               📚 {t('search.filterLanguages')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'topics' && styles.filterButtonActive]}
+            onPress={() => { setFilter('topics'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'topics' && styles.filterButtonTextActive]}>
+              🎯 Topics
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'tutorials' && styles.filterButtonActive]}
+            onPress={() => { setFilter('tutorials'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'tutorials' && styles.filterButtonTextActive]}>
+              📖 Tutorials
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'tools' && styles.filterButtonActive]}
+            onPress={() => { setFilter('tools'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'tools' && styles.filterButtonTextActive]}>
+              🛠️ Tools
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'hints' && styles.filterButtonActive]}
+            onPress={() => { setFilter('hints'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'hints' && styles.filterButtonTextActive]}>
+              💡 Hints
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'certifications' && styles.filterButtonActive]}
+            onPress={() => { setFilter('certifications'); handleSearch(searchQuery); }}
+          >
+            <Text style={[styles.filterButtonText, filter === 'certifications' && styles.filterButtonTextActive]}>
+              🏆 Certs
             </Text>
           </TouchableOpacity>
           <TouchableOpacity

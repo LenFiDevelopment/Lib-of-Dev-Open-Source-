@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getTutorialsByLanguage } from '../data/tutorialsData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import AdBanner from '../components/AdBanner';
 
 export default function TutorialsScreen({ route, navigation }) {
   const { t } = useTranslation();
@@ -49,6 +50,11 @@ export default function TutorialsScreen({ route, navigation }) {
         <View style={styles.content}>
           <Text style={styles.sectionTitle}>📚 Available Tutorials</Text>
           
+          {/* AdMob Banner */}
+          <View style={styles.adContainer}>
+            <AdBanner adUnitId="ca-app-pub-5526801232554836/8911626154" />
+          </View>
+
           {languageTutorials.tutorials && languageTutorials.tutorials.map((tutorial) => (
             <TouchableOpacity
               key={tutorial.id}
@@ -132,6 +138,10 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: spacing.md,
+  },
+  adContainer: {
+    marginVertical: spacing.lg,
+    alignItems: 'center',
   },
   sectionTitle: {
     fontSize: 20,

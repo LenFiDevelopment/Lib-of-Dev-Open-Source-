@@ -2187,6 +2187,1965 @@ test('increments counter on button click', () => {
       },
     },
   },
+  homeserver: {
+    id: 'homeserver',
+    name: 'Home Server',
+    icon: '🏠',
+    color: '#8B5CF6',
+    description: 'Everything you need for your own home server - software, security, and solutions',
+    categories: {
+      hardware: {
+        name: 'Hardware & Setup',
+        items: [
+          {
+            title: 'Choosing Hardware',
+            code: `# Recommended Home Server Hardware
+
+## Entry Level ($200-400)
+- Raspberry Pi 4 (8GB RAM)
+- Mini PC (Intel N100, 16GB RAM)
+- Old laptop repurposed
+
+## Mid Range ($400-800)
+- Intel NUC (i5/i7, 32GB RAM)
+- Custom build (AMD Ryzen 5, 32GB)
+- Synology/QNAP NAS
+
+## High End ($800+)
+- Dell PowerEdge R720
+- HP ProLiant MicroServer
+- Custom build (Ryzen 9, 64GB+ RAM)
+
+## Key Considerations:
+✓ Power consumption (24/7 operation)
+✓ Noise level (if in living space)
+✓ Expandability (drive bays, RAM slots)
+✓ Network connectivity (Gigabit+)`,
+            description: 'Hardware recommendations for home servers',
+            usage: 'Choose based on budget, use case, and space constraints',
+            technologies: ['Hardware', 'Raspberry Pi', 'NAS', 'Mini PC'],
+            bestPractices: [
+              'Calculate power costs for 24/7 operation',
+              'Ensure adequate cooling',
+              'Plan for future expansion',
+              'Consider noise levels'
+            ]
+          },
+          {
+            title: 'Initial Setup Checklist',
+            code: `# Home Server Setup Checklist
+
+## 1. Network Configuration
+□ Static IP address assignment
+□ Port forwarding (if needed)
+□ DDNS setup (e.g., DuckDNS)
+□ Firewall rules configured
+
+## 2. Operating System
+□ Ubuntu Server / Debian installed
+□ SSH enabled and secured
+□ System updated (apt update && apt upgrade)
+□ Hostname configured
+
+## 3. Security Basics
+□ Non-root user created
+□ SSH key authentication enabled
+□ Password authentication disabled
+□ Fail2ban installed
+□ UFW firewall configured
+
+## 4. Essential Tools
+□ Docker & Docker Compose installed
+□ Portainer for container management
+□ Cockpit for web-based management
+□ Backup solution configured`,
+            description: 'Essential setup steps for new home server',
+            usage: 'Follow this checklist when setting up a new server',
+            technologies: ['Linux', 'Networking', 'Security'],
+          }
+        ]
+      },
+      os: {
+        name: 'Operating Systems',
+        items: [
+          {
+            title: 'Ubuntu Server Setup',
+            code: `# Ubuntu Server 22.04 LTS Installation
+
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install essential packages
+sudo apt install -y \\
+  curl wget git vim \\
+  htop net-tools \\
+  ca-certificates gnupg
+
+# Install Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker $USER
+
+# Install Docker Compose
+sudo apt install docker-compose-plugin
+
+# Enable Docker on boot
+sudo systemctl enable docker
+
+# Set static IP (netplan)
+sudo nano /etc/netplan/00-installer-config.yaml
+# Add:
+network:
+  ethernets:
+    eth0:
+      addresses:
+        - 192.168.1.100/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]
+  version: 2
+
+sudo netplan apply`,
+            description: 'Complete Ubuntu Server setup',
+            usage: 'Most popular choice for home servers',
+            technologies: ['Ubuntu', 'Linux', 'Docker'],
+          },
+          {
+            title: 'Proxmox VE',
+            code: `# Proxmox Virtual Environment
+# Run multiple VMs and containers on one server
+
+## Installation
+1. Download Proxmox VE ISO
+2. Boot from USB
+3. Follow installation wizard
+4. Access web UI: https://your-ip:8006
+
+## Create Ubuntu VM
+pct create 100 local:vztmpl/ubuntu-22.04-standard.tar.gz \\
+  --hostname web-server \\
+  --memory 2048 \\
+  --cores 2 \\
+  --net0 name=eth0,bridge=vmbr0,ip=dhcp \\
+  --rootfs local-lvm:8
+
+## Start container
+pct start 100
+
+## Benefits:
+✓ Run multiple OS simultaneously
+✓ Easy snapshots and backups
+✓ Resource allocation per VM
+✓ Web-based management`,
+            description: 'Proxmox for virtualization',
+            usage: 'Run multiple services isolated in VMs/containers',
+            technologies: ['Proxmox', 'Virtualization', 'KVM', 'LXC'],
+          },
+          {
+            title: 'TrueNAS Scale',
+            code: `# TrueNAS Scale - NAS + Kubernetes
+
+## Features:
+- ZFS filesystem (data integrity)
+- Built-in apps via Kubernetes
+- SMB/NFS file sharing
+- Docker container support
+- Web-based management
+
+## SMB Share Setup (Web UI):
+1. Storage → Pools → Create Pool
+2. Shares → Windows (SMB) → Add
+3. Set permissions
+4. Enable SMB service
+
+## Access from Windows:
+\\\\192.168.1.100\\sharename
+
+## Docker App Example:
+1. Apps → Discover Apps
+2. Install Plex/Jellyfin/Nextcloud
+3. Configure and deploy`,
+            description: 'TrueNAS for file storage and apps',
+            usage: 'Best for data storage with app support',
+            technologies: ['TrueNAS', 'ZFS', 'Kubernetes', 'NAS'],
+          },
+          {
+            title: 'CasaOS - Modern Home Server',
+            code: `# CasaOS - Beautiful UI for Home Server Management
+
+## What is CasaOS?
+- Modern dashboard for home servers
+- One-click app installation
+- Docker container management
+- File management built-in
+- Beautiful UI, beginner-friendly
+
+## Installation (Ubuntu/Debian)
+wget -qO- https://get.casaos.io | sudo bash
+
+# After installation, access:
+# http://your-server-ip
+
+## Features:
+✓ App Store with 100+ apps
+✓ Docker management without complexity
+✓ Built-in file manager (like Dropbox)
+✓ System monitoring dashboard
+✓ Mobile-friendly interface
+✓ RAID management
+✓ User management
+
+## Popular Apps (One-Click Install):
+- Plex/Jellyfin (Media Server)
+- Nextcloud (Cloud Storage)
+- Pi-hole (Ad Blocker)
+- Home Assistant
+- Bitwarden (Password Manager)
+- Portainer (Advanced Docker)
+- Syncthing (File Sync)
+- Photoprism (Photo Management)
+
+## Why Choose CasaOS?
+✓ Easier than Proxmox for beginners
+✓ More features than basic Ubuntu
+✓ Beautiful interface
+✓ Active development
+✓ Perfect for home use
+
+## Update CasaOS
+casaos-cli update
+
+## Uninstall (if needed)
+sudo casaos-uninstall`,
+            description: 'User-friendly home server OS with app store',
+            usage: 'Perfect for beginners, beautiful UI, one-click apps',
+            technologies: ['CasaOS', 'Docker', 'Home Server', 'Dashboard'],
+            bestPractices: [
+              'Start with CasaOS if new to home servers',
+              'Use built-in app store for easy setup',
+              'Regular updates for security',
+              'Backup configuration before major changes'
+            ],
+            relatedTopics: ['Docker', 'Home Assistant', 'Nextcloud']
+          }
+        ]
+      },
+      applications: {
+        name: 'Essential Applications',
+        items: [
+          {
+            title: 'Media Server - Plex/Jellyfin',
+            code: `# Plex Media Server (Docker Compose)
+version: '3'
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+    volumes:
+      - /path/to/config:/config
+      - /path/to/tv:/tv
+      - /path/to/movies:/movies
+    restart: unless-stopped
+
+# Jellyfin (Open Source Alternative)
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    ports:
+      - 8096:8096
+    volumes:
+      - /path/to/config:/config
+      - /path/to/media:/media
+    restart: unless-stopped`,
+            description: 'Stream your media library',
+            usage: 'Access movies/TV shows from any device',
+            technologies: ['Plex', 'Jellyfin', 'Docker', 'Streaming'],
+          },
+          {
+            title: 'Home Assistant',
+            code: `# Home Assistant - Smart Home Hub
+version: '3'
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+
+# Access: http://your-ip:8123
+
+## Features:
+- Control smart devices (lights, thermostats)
+- Automation rules
+- Voice assistants integration
+- 2000+ integrations
+- Mobile app support`,
+            description: 'Central smart home control',
+            usage: 'Automate and control all smart home devices',
+            technologies: ['Home Assistant', 'IoT', 'Automation'],
+          },
+          {
+            title: 'Nextcloud - Personal Cloud',
+            code: `# Nextcloud with PostgreSQL
+version: '3'
+services:
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+
+  app:
+    image: nextcloud
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - db
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=nextcloud
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+
+volumes:
+  db:
+  nextcloud:
+
+## Essential Features:
+✓ File sync & share (like Dropbox)
+✓ Calendar & Contacts sync
+✓ Office documents online (Collabora/OnlyOffice)
+✓ End-to-end encryption
+✓ Mobile apps (iOS/Android)
+✓ Desktop clients (Windows/Mac/Linux)
+✓ 2-Factor authentication
+✓ Video calls (Nextcloud Talk)
+✓ Photo galleries
+✓ Tasks & Notes
+✓ Email client
+
+## Recommended Apps (Install via UI):
+- Collabora Online (Office documents)
+- Nextcloud Talk (Video calls)
+- Calendar
+- Contacts
+- Tasks
+- Notes
+- Photos
+- Deck (Kanban board)
+- Forms (Surveys)
+- Maps
+
+## External Storage Support:
+- SMB/CIFS (Windows shares)
+- FTP/SFTP
+- Amazon S3
+- Dropbox
+- Google Drive
+- OneDrive
+
+## Performance Optimization:
+# Add to config.php
+'memcache.distributed' => '\\OC\\Memcache\\Redis',
+'memcache.locking' => '\\OC\\Memcache\\Redis',
+'redis' => [
+  'host' => 'redis',
+  'port' => 6379,
+],
+
+## Backup Strategy:
+# Daily backup script
+docker exec nextcloud-db pg_dump -U nextcloud > nextcloud_backup.sql
+tar -czf nextcloud_files.tar.gz /path/to/nextcloud/data
+
+## Access Options:
+1. Local: http://192.168.1.100:8080
+2. With reverse proxy: https://cloud.yourdomain.com
+3. Via Cloudflare Tunnel (no port forwarding!)
+
+## Security Hardening:
+- Enable HTTPS (Let's Encrypt)
+- Set up 2FA for all users
+- Regular updates
+- Strong passwords
+- Limit login attempts
+- Enable encryption`,
+            description: 'Complete personal cloud solution',
+            usage: 'Replace Google Drive/Dropbox/Office 365 with self-hosted',
+            technologies: ['Nextcloud', 'PostgreSQL', 'PHP', 'Docker'],
+            bestPractices: [
+              'Use Redis for caching - improves performance',
+              'Enable HTTPS - never run HTTP in production',
+              'Regular backups - both database and files',
+              'Monitor storage space',
+              'Keep Nextcloud updated'
+            ],
+            relatedTopics: ['Docker', 'PostgreSQL', 'Reverse Proxy', 'Cloudflare Tunnels']
+          },
+          {
+            title: 'Pi-hole - Network Ad Blocker',
+            code: `# Pi-hole - Network-wide ad blocking
+docker run -d \\
+  --name pihole \\
+  -p 53:53/tcp -p 53:53/udp \\
+  -p 80:80 \\
+  -e TZ="America/New_York" \\
+  -e WEBPASSWORD="admin123" \\
+  -v ./etc-pihole:/etc/pihole \\
+  -v ./etc-dnsmasq.d:/etc/dnsmasq.d \\
+  --restart=unless-stopped \\
+  pihole/pihole:latest
+
+# Configure router to use Pi-hole IP as DNS
+# Primary DNS: 192.168.1.100
+# Secondary DNS: 1.1.1.1
+
+## Benefits:
+✓ Block ads on all devices
+✓ Faster browsing
+✓ Malware protection
+✓ Usage statistics
+
+# Web interface: http://your-ip/admin`,
+            description: 'Block ads for entire network',
+            usage: 'Set as DNS server to block ads on all devices',
+            technologies: ['Pi-hole', 'DNS', 'Ad Blocking'],
+          },
+          {
+            title: 'Portainer - Container Management',
+            code: `# Portainer - Docker management UI
+docker run -d \\
+  -p 9000:9000 \\
+  -p 9443:9443 \\
+  --name=portainer \\
+  --restart=always \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -v portainer_data:/data \\
+  portainer/portainer-ce:latest
+
+# Access: https://your-ip:9443
+
+## Features:
+- Manage containers with GUI
+- Deploy stacks from templates
+- Monitor resource usage
+- View logs
+- Execute commands in containers
+
+## Alternative: Yacht
+docker run -d \\
+  -p 8000:8000 \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -v yacht:/config \\
+  selfhostedpro/yacht`,
+            description: 'Manage Docker containers with web UI',
+            usage: 'Easier than command line for Docker management',
+            technologies: ['Portainer', 'Docker', 'Management'],
+          },
+          {
+            title: 'Nginx Proxy Manager',
+            code: `# Nginx Proxy Manager - Reverse proxy with SSL
+version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+# Access: http://your-ip:81
+# Default: admin@example.com / changeme
+
+## Setup SSL Certificate:
+1. Add proxy host
+2. Set domain: plex.yourdomain.com
+3. Forward to: localhost:32400
+4. Request Let's Encrypt SSL
+5. Enable force SSL
+
+## Benefits:
+✓ Easy SSL certificates
+✓ Access services via subdomains
+✓ Web-based configuration
+✓ Free Let's Encrypt integration`,
+            description: 'Reverse proxy with automatic SSL',
+            usage: 'Access services securely with custom domains',
+            technologies: ['Nginx', 'Reverse Proxy', 'SSL'],
+          }
+        ]
+      },
+      networking: {
+        name: 'Remote Access & Networking',
+        items: [
+          {
+            title: 'Cloudflare Tunnels vs Port Forwarding',
+            code: `# COMPARISON: Cloudflare Tunnels vs Traditional Port Forwarding
+
+## Port Forwarding (Traditional Method)
+### How it works:
+1. Open ports on router (e.g., 80, 443)
+2. Forward traffic to your server
+3. Use DDNS for dynamic IP
+4. Directly expose server to internet
+
+### Pros:
+✓ Direct connection (lower latency)
+✓ Works with any protocol
+✓ No third-party dependency
+✓ Full control
+
+### Cons:
+✗ Exposes your home IP address
+✗ Security risk (open ports = attack surface)
+✗ Need to manage firewall rules
+✗ ISP may block ports
+✗ Requires dynamic DNS
+✗ Router configuration needed
+✗ ISP IP changes break connection
+
+### Security Risks:
+- Port scanning attacks
+- DDoS attacks directly to home
+- Exposed server vulnerabilities
+- IP address leaks location
+
+## Port Forwarding Setup:
+# Router Configuration
+1. Login to router (usually 192.168.1.1)
+2. Find "Port Forwarding" section
+3. Add rules:
+   - External Port: 80 → Internal IP: 192.168.1.100:80
+   - External Port: 443 → Internal IP: 192.168.1.100:443
+
+# DDNS Setup (DuckDNS example)
+echo url="https://www.duckdns.org/update?domains=yourdomain&token=YOUR_TOKEN&ip=" | curl -k -o ~/duckdns/duck.log -K -
+# Add to crontab
+*/5 * * * * ~/duckdns/duck.sh >/dev/null 2>&1
+
+---
+
+## Cloudflare Tunnels (Modern Solution) ✨
+### How it works:
+1. Install cloudflared on your server
+2. Create tunnel via Cloudflare dashboard
+3. No ports opened on router
+4. Encrypted outbound connection only
+5. Cloudflare proxies traffic
+
+### Pros:
+✓ No port forwarding needed
+✓ Hide your home IP address
+✓ Free SSL certificates (automatic)
+✓ DDoS protection by Cloudflare
+✓ Works behind CGNAT
+✓ No router configuration
+✓ Built-in access control
+✓ Multiple services, one tunnel
+✓ Works with ISP restrictions
+
+### Cons:
+✗ Slight latency increase (routed through Cloudflare)
+✗ Depends on Cloudflare service
+✗ HTTP/HTTPS only (no custom protocols)
+✗ Must own a domain
+
+## Cloudflare Tunnel Setup:
+
+# 1. Install cloudflared
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+sudo dpkg -i cloudflared-linux-amd64.deb
+
+# 2. Authenticate
+cloudflared tunnel login
+# Opens browser to authenticate with Cloudflare
+
+# 3. Create tunnel
+cloudflared tunnel create my-home-server
+# Note the tunnel ID shown
+
+# 4. Create config file
+sudo nano ~/.cloudflared/config.yml
+
+# Add:
+tunnel: YOUR_TUNNEL_ID
+credentials-file: /root/.cloudflared/YOUR_TUNNEL_ID.json
+
+ingress:
+  # Nextcloud
+  - hostname: cloud.yourdomain.com
+    service: http://localhost:8080
+  
+  # Plex
+  - hostname: plex.yourdomain.com
+    service: http://localhost:32400
+  
+  # Home Assistant
+  - hostname: home.yourdomain.com
+    service: http://localhost:8123
+  
+  # Catch-all rule (required)
+  - service: http_status:404
+
+# 5. Route DNS
+cloudflared tunnel route dns my-home-server cloud.yourdomain.com
+cloudflared tunnel route dns my-home-server plex.yourdomain.com
+cloudflared tunnel route dns my-home-server home.yourdomain.com
+
+# 6. Run tunnel
+cloudflared tunnel run my-home-server
+
+# 7. Install as service
+sudo cloudflared service install
+sudo systemctl start cloudflared
+sudo systemctl enable cloudflared
+
+# 8. Check status
+sudo systemctl status cloudflared
+cloudflared tunnel info my-home-server
+
+## Advanced Features:
+
+# Access Control (restrict by email)
+cloudflared tunnel route dns my-home-server private.yourdomain.com
+# Then in Cloudflare Dashboard:
+# Access → Applications → Add application
+# Policy: Allow emails ending in @yourcompany.com
+
+# Multiple Services, One Tunnel:
+ingress:
+  - hostname: "*.yourdomain.com"
+    service: http://localhost:80
+  - hostname: api.yourdomain.com
+    service: http://localhost:3000
+  - service: http_status:404
+
+## Monitoring & Logs:
+journalctl -u cloudflared -f
+
+---
+
+## WHEN TO USE WHAT?
+
+### Use Port Forwarding If:
+- Running game servers (need UDP)
+- Need lowest possible latency
+- Running VPN server (WireGuard, OpenVPN)
+- Have static IP
+- Don't care about IP exposure
+- Running non-HTTP services
+
+### Use Cloudflare Tunnels If: ✅
+- Running web services (HTTP/HTTPS)
+- Want to hide home IP
+- Behind CGNAT (no public IP)
+- ISP blocks ports
+- Want free DDoS protection
+- Need easy SSL certificates
+- Want access control
+- Multiple services to expose
+- Security is priority
+
+## Best Practice: Hybrid Approach 🎯
+- Cloudflare Tunnels: Web services (Nextcloud, Home Assistant)
+- VPN (WireGuard): Internal network access
+- No port forwarding: Maximum security
+
+## Cost Comparison:
+Port Forwarding: $0 (but security risks)
+Cloudflare Tunnels: $0 (free tier)
+VPN + Tunnels: $0 (best security)
+
+## Security Recommendation: ⭐
+Use Cloudflare Tunnels + WireGuard VPN:
+- Public services → Cloudflare Tunnels
+- Private access → WireGuard VPN
+- Nothing directly exposed to internet
+- Multiple layers of security`,
+            description: 'Compare remote access methods',
+            usage: 'Choose the best method for your home server',
+            technologies: ['Cloudflare', 'Networking', 'Security', 'Tunnels'],
+            bestPractices: [
+              'Prefer Cloudflare Tunnels for web services',
+              'Use VPN for internal network access',
+              'Never expose SSH directly to internet',
+              'Always use HTTPS',
+              'Implement fail2ban even behind tunnels',
+              'Regular security updates'
+            ],
+            commonMistakes: [
+              'Opening all ports on router',
+              'Exposing SSH to internet',
+              'No firewall configuration',
+              'Using HTTP instead of HTTPS',
+              'Weak passwords on exposed services'
+            ],
+            relatedTopics: ['WireGuard VPN', 'Nginx Proxy', 'Security', 'DNS']
+          },
+          {
+            title: 'WireGuard VPN Server',
+            code: `# WireGuard VPN - Access home network remotely
+docker run -d \\
+  --name=wireguard \\
+  --cap-add=NET_ADMIN \\
+  --cap-add=SYS_MODULE \\
+  -e PUID=1000 \\
+  -e PGID=1000 \\
+  -e TZ=America/New_York \\
+  -e SERVERURL=your-public-ip \\
+  -e SERVERPORT=51820 \\
+  -e PEERS=phone,laptop,tablet \\
+  -e PEERDNS=auto \\
+  -p 51820:51820/udp \\
+  -v ./config:/config \\
+  -v /lib/modules:/lib/modules \\
+  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \\
+  --restart unless-stopped \\
+  linuxserver/wireguard
+
+# Get client configs
+docker exec -it wireguard cat /config/peer_phone/peer_phone.conf
+
+# Scan QR code with WireGuard mobile app
+docker exec -it wireguard /app/show-peer phone
+
+## Use Cases:
+✓ Access home network from anywhere
+✓ Secure public WiFi usage
+✓ Access local services (Nextcloud, Plex)
+✓ Better than port forwarding for security
+✓ Works with Cloudflare Tunnels
+
+## Best Practice:
+- Public web services: Cloudflare Tunnels
+- Private network access: WireGuard VPN
+- Maximum security: Both combined`,
+            description: 'Secure VPN access to home network',
+            usage: 'Access home services safely from anywhere',
+            technologies: ['WireGuard', 'VPN', 'Security', 'Docker'],
+          }
+        ]
+      },
+      security: {
+        name: 'Security & Protection',
+        items: [
+          {
+            title: 'SSH Hardening',
+            code: `# Secure SSH Configuration
+sudo nano /etc/ssh/sshd_config
+
+# Change default port
+Port 2222
+
+# Disable root login
+PermitRootLogin no
+
+# Disable password authentication
+PasswordAuthentication no
+PubkeyAuthentication yes
+
+# Only allow specific users
+AllowUsers yourusername
+
+# Restart SSH
+sudo systemctl restart sshd
+
+# Generate SSH key (on client)
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Copy to server
+ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server
+
+# Connect with custom port
+ssh -p 2222 user@server`,
+            description: 'Harden SSH for security',
+            usage: 'Prevent unauthorized access',
+            technologies: ['SSH', 'Security', 'Linux'],
+          },
+          {
+            title: 'Firewall Setup (UFW)',
+            code: `# UFW - Uncomplicated Firewall
+
+# Install
+sudo apt install ufw
+
+# Default policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (custom port)
+sudo ufw allow 2222/tcp
+
+# Allow HTTP/HTTPS
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+# Allow specific services
+sudo ufw allow 8096/tcp  # Jellyfin
+sudo ufw allow 32400/tcp # Plex
+
+# Enable firewall
+sudo ufw enable
+
+# Check status
+sudo ufw status verbose
+
+# Delete rule
+sudo ufw delete allow 80/tcp`,
+            description: 'Configure firewall rules',
+            usage: 'Control network traffic to server',
+            technologies: ['UFW', 'Firewall', 'Security'],
+          },
+          {
+            title: 'Fail2Ban - Intrusion Prevention',
+            code: `# Fail2Ban - Ban IPs after failed login attempts
+
+# Install
+sudo apt install fail2ban
+
+# Create local config
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo nano /etc/fail2ban/jail.local
+
+# Configure
+[DEFAULT]
+bantime = 1h
+findtime = 10m
+maxretry = 5
+
+[sshd]
+enabled = true
+port = 2222
+logpath = /var/log/auth.log
+
+# Start service
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban
+
+# Check status
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+
+# Unban IP
+sudo fail2ban-client set sshd unbanip 192.168.1.50`,
+            description: 'Automatically ban malicious IPs',
+            usage: 'Protect against brute force attacks',
+            technologies: ['Fail2Ban', 'Security', 'IPS'],
+          },
+          {
+            title: 'Backup Strategy',
+            code: `# 3-2-1 Backup Rule
+# 3 copies of data
+# 2 different media types
+# 1 offsite backup
+
+## Option 1: Rsync
+# Daily backup script
+#!/bin/bash
+rsync -avz --delete \\
+  /home/user/important/ \\
+  /mnt/backup/daily/
+
+## Option 2: Restic (Encrypted)
+# Install
+sudo apt install restic
+
+# Initialize repository
+restic -r /mnt/backup init
+
+# Create backup
+restic -r /mnt/backup backup /home/user/important
+
+# Restore
+restic -r /mnt/backup restore latest --target /restore
+
+## Option 3: Duplicati (Web UI)
+# Docker compose
+version: '3'
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./config:/config
+      - ./backups:/backups
+      - /:/source
+    ports:
+      - 8200:8200
+    restart: unless-stopped`,
+            description: 'Automated backup solutions',
+            usage: 'Protect data from loss',
+            technologies: ['Rsync', 'Restic', 'Duplicati', 'Backup'],
+          }
+        ]
+      },
+      monitoring: {
+        name: 'Monitoring & Maintenance',
+        items: [
+          {
+            title: 'System Monitoring',
+            code: `# Grafana + Prometheus + Node Exporter
+version: '3'
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - 9100:9100
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+# prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']`,
+            description: 'Monitor server health and performance',
+            usage: 'Track CPU, RAM, disk, network usage',
+            technologies: ['Grafana', 'Prometheus', 'Monitoring'],
+          },
+          {
+            title: 'Uptime Monitoring',
+            code: `# Uptime Kuma - Self-hosted monitoring
+docker run -d \\
+  --name uptime-kuma \\
+  -p 3001:3001 \\
+  -v uptime-kuma:/app/data \\
+  --restart=always \\
+  louislam/uptime-kuma:1
+
+# Access: http://your-ip:3001
+
+## Features:
+✓ Monitor HTTP(s) / TCP / Ping
+✓ Push notifications
+✓ Status page for users
+✓ Multi-language support
+✓ Beautiful UI
+
+## Example monitors:
+- Website: https://example.com
+- Plex: http://192.168.1.100:32400
+- Pi-hole: http://192.168.1.100/admin
+- Docker containers`,
+            description: 'Monitor service uptime',
+            usage: 'Get alerts when services go down',
+            technologies: ['Uptime Kuma', 'Monitoring', 'Alerts'],
+          },
+          {
+            title: 'Log Management',
+            code: `# Dozzle - Real-time Docker logs viewer
+docker run -d \\
+  --name dozzle \\
+  -v /var/run/docker.sock:/var/run/docker.sock \\
+  -p 8888:8080 \\
+  amir20/dozzle:latest
+
+# Access: http://your-ip:8888
+
+## Alternative: Portainer logs
+# Built-in log viewer in Portainer
+
+## System logs
+# View SSH login attempts
+sudo tail -f /var/log/auth.log
+
+# View system messages
+sudo journalctl -f
+
+# Docker logs
+docker logs -f container_name
+
+# Save logs to file
+docker logs container_name > logs.txt 2>&1`,
+            description: 'Centralized log viewing',
+            usage: 'Debug issues and monitor activity',
+            technologies: ['Dozzle', 'Logging', 'Docker'],
+          }
+        ]
+      },
+      advanced: {
+        name: 'Advanced Topics',
+        items: [
+          {
+            title: 'VPN Server (WireGuard)',
+            code: `# WireGuard VPN - Access home network remotely
+docker run -d \\
+  --name=wireguard \\
+  --cap-add=NET_ADMIN \\
+  --cap-add=SYS_MODULE \\
+  -e PUID=1000 \\
+  -e PGID=1000 \\
+  -e TZ=America/New_York \\
+  -e SERVERURL=your-public-ip \\
+  -e SERVERPORT=51820 \\
+  -e PEERS=phone,laptop,tablet \\
+  -e PEERDNS=auto \\
+  -p 51820:51820/udp \\
+  -v ./config:/config \\
+  -v /lib/modules:/lib/modules \\
+  --sysctl="net.ipv4.conf.all.src_valid_mark=1" \\
+  --restart unless-stopped \\
+  linuxserver/wireguard
+
+# Get client configs
+docker exec -it wireguard cat /config/peer_phone/peer_phone.conf
+
+# Scan QR code with WireGuard mobile app
+docker exec -it wireguard /app/show-peer phone`,
+            description: 'Secure access to home network',
+            usage: 'Access home services from anywhere',
+            technologies: ['WireGuard', 'VPN', 'Security'],
+          },
+          {
+            title: 'Download Automation',
+            code: `# Sonarr + Radarr + Transmission
+version: '3'
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./transmission:/config
+      - ./downloads:/downloads
+    ports:
+      - 9091:9091
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./sonarr:/config
+      - ./tv:/tv
+      - ./downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./radarr:/config
+      - ./movies:/movies
+      - ./downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped`,
+            description: 'Automated media management',
+            usage: 'Automatically organize media library',
+            technologies: ['Sonarr', 'Radarr', 'Automation'],
+          }
+        ]
+      }
+    }
+  },
+  howto: {
+    id: 'howto',
+    name: 'How-To Projects',
+    icon: '🎯',
+    color: '#F59E0B',
+    description: 'Step-by-step guides for real-world projects',
+    categories: {
+      webProjects: {
+        name: 'Web Development',
+        items: [
+          {
+            title: 'Deploy Website with Vercel',
+            code: `# Complete Guide: VS Code → GitHub → Vercel → Custom Domain
+
+## 1. Create Project in VS Code
+mkdir my-website
+cd my-website
+npm create vite@latest . -- --template react
+npm install
+
+## 2. Initialize Git Repository
+git init
+git add .
+git commit -m "Initial commit"
+
+## 3. Create GitHub Repository
+# Go to github.com → New repository
+# Name: my-website
+# Don't initialize with README
+
+git remote add origin https://github.com/username/my-website.git
+git branch -M main
+git push -u origin main
+
+## 4. Deploy to Vercel
+# Option A: Vercel CLI
+npm i -g vercel
+vercel login
+vercel
+
+# Option B: Web Interface
+# 1. Go to vercel.com
+# 2. Sign in with GitHub
+# 3. Import repository: my-website
+# 4. Configure:
+#    - Framework Preset: Vite
+#    - Build Command: npm run build
+#    - Output Directory: dist
+# 5. Click "Deploy"
+
+## 5. Add Custom Domain
+# Vercel Dashboard:
+# 1. Project → Settings → Domains
+# 2. Add domain: www.yoursite.com
+# 3. Update DNS records at registrar:
+#    - Type: CNAME
+#    - Name: www
+#    - Value: cname.vercel-dns.com
+# 4. Wait for DNS propagation (up to 24h)
+
+## 6. Environment Variables
+# Vercel Dashboard → Settings → Environment Variables
+VITE_API_KEY=your_key_here
+VITE_API_URL=https://api.example.com
+
+## 7. Automatic Deployments
+# Every git push to main = new deployment!
+git add .
+git commit -m "Update homepage"
+git push
+
+# Preview deployments for PRs
+git checkout -b feature
+git push -u origin feature
+# Create PR on GitHub → Vercel creates preview URL`,
+            description: 'Complete deployment workflow',
+            usage: 'From local development to production',
+            technologies: ['VS Code', 'GitHub', 'Vercel', 'DNS', 'React', 'Vite'],
+            bestPractices: [
+              'Use environment variables for secrets',
+              'Test locally before pushing',
+              'Use branches for features',
+              'Enable HTTPS (automatic on Vercel)',
+              'Set up custom 404 page'
+            ],
+            relatedTopics: ['Git', 'CI/CD', 'DNS Management', 'React'],
+            estimatedTime: '30-60 minutes'
+          },
+          {
+            title: 'Next.js Blog with MDX',
+            code: `# Create a blog with Next.js + MDX + Tailwind
+
+## 1. Create Project
+npx create-next-app@latest my-blog --typescript --tailwind --app
+cd my-blog
+
+## 2. Install MDX
+npm install @next/mdx @mdx-js/loader @mdx-js/react @types/mdx
+
+## 3. Configure next.config.js
+import createMDX from '@next/mdx'
+
+const nextConfig = {
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
+}
+
+const withMDX = createMDX({})
+export default withMDX(nextConfig)
+
+## 4. Create Blog Post Structure
+mkdir -p app/blog
+mkdir -p content/posts
+
+## 5. Create First Blog Post
+# content/posts/first-post.mdx
+---
+title: "My First Post"
+date: "2024-01-15"
+author: "Your Name"
+excerpt: "This is my first blog post"
+---
+
+# Hello World
+
+This is my **first** blog post written in MDX!
+
+\`\`\`javascript
+console.log("Hello from code block!");
+\`\`\`
+
+## 6. Blog Listing Page
+# app/blog/page.tsx
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import Link from 'next/link'
+
+export default function Blog() {
+  const postsDirectory = path.join(process.cwd(), 'content/posts')
+  const filenames = fs.readdirSync(postsDirectory)
+  
+  const posts = filenames.map((filename) => {
+    const filePath = path.join(postsDirectory, filename)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const { data } = matter(fileContents)
+    
+    return {
+      slug: filename.replace('.mdx', ''),
+      ...data
+    }
+  })
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-4xl font-bold mb-8">Blog</h1>
+      {posts.map((post) => (
+        <Link key={post.slug} href={\`/blog/\${post.slug}\`}>
+          <article className="mb-8 p-6 border rounded-lg hover:shadow-lg">
+            <h2 className="text-2xl font-bold">{post.title}</h2>
+            <p className="text-gray-600">{post.date}</p>
+            <p className="mt-2">{post.excerpt}</p>
+          </article>
+        </Link>
+      ))}
+    </div>
+  )
+}
+
+## 7. Deploy
+git init
+git add .
+git commit -m "Initial blog"
+git push
+
+# Vercel will auto-detect Next.js!`,
+            description: 'Build a blog with MDX content',
+            usage: 'Write blog posts in Markdown with React components',
+            technologies: ['Next.js', 'MDX', 'Tailwind CSS', 'TypeScript'],
+            estimatedTime: '2-3 hours'
+          },
+          {
+            title: 'Portfolio with GitHub Pages',
+            code: `# Free Portfolio Hosting with GitHub Pages
+
+## 1. Create React Portfolio
+npx create-react-app portfolio
+cd portfolio
+
+## 2. Install gh-pages
+npm install gh-pages --save-dev
+
+## 3. Update package.json
+{
+  "name": "portfolio",
+  "homepage": "https://username.github.io/portfolio",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  }
+}
+
+## 4. Create Portfolio Components
+# src/App.js
+function App() {
+  return (
+    <div className="App">
+      <header>
+        <h1>John Doe</h1>
+        <p>Full Stack Developer</p>
+      </header>
+      
+      <section id="about">
+        <h2>About Me</h2>
+        <p>I build amazing web applications...</p>
+      </section>
+      
+      <section id="projects">
+        <h2>Projects</h2>
+        <div className="project-grid">
+          <ProjectCard 
+            title="E-commerce Site"
+            tech={["React", "Node.js", "MongoDB"]}
+            link="https://github.com/username/ecommerce"
+          />
+        </div>
+      </section>
+      
+      <section id="contact">
+        <h2>Contact</h2>
+        <a href="mailto:john@example.com">Email</a>
+        <a href="https://github.com/username">GitHub</a>
+        <a href="https://linkedin.com/in/username">LinkedIn</a>
+      </section>
+    </div>
+  )
+}
+
+## 5. Deploy to GitHub Pages
+git init
+git add .
+git commit -m "Initial portfolio"
+git remote add origin https://github.com/username/portfolio.git
+git push -u origin main
+
+npm run deploy
+
+## 6. Enable GitHub Pages
+# GitHub → Repository → Settings → Pages
+# Source: gh-pages branch
+# Your site is live at: https://username.github.io/portfolio
+
+## 7. Custom Domain (Optional)
+# Add CNAME file in public folder
+echo "www.yoursite.com" > public/CNAME
+
+# Update DNS at registrar:
+# Type: CNAME
+# Name: www
+# Value: username.github.io`,
+            description: 'Free portfolio hosting',
+            usage: 'Showcase your projects with custom domain',
+            technologies: ['React', 'GitHub Pages', 'DNS'],
+            estimatedTime: '1-2 hours'
+          }
+        ]
+      },
+      apiProjects: {
+        name: 'Backend & APIs',
+        items: [
+          {
+            title: 'REST API with Express + PostgreSQL',
+            code: `# Build Production-Ready REST API
+
+## 1. Initialize Project
+mkdir my-api
+cd my-api
+npm init -y
+npm install express pg dotenv cors helmet
+
+## 2. Project Structure
+my-api/
+├── src/
+│   ├── config/
+│   │   └── database.js
+│   ├── routes/
+│   │   └── users.js
+│   ├── controllers/
+│   │   └── userController.js
+│   ├── middleware/
+│   │   └── auth.js
+│   └── server.js
+├── .env
+└── package.json
+
+## 3. Database Configuration
+# .env
+DATABASE_URL=postgresql://user:password@localhost:5432/mydb
+PORT=3000
+NODE_ENV=development
+
+# src/config/database.js
+const { Pool } = require('pg')
+require('dotenv').config()
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+})
+
+module.exports = pool
+
+## 4. Express Server
+# src/server.js
+const express = require('express')
+const cors = require('cors')
+const helmet = require('helmet')
+const userRoutes = require('./routes/users')
+
+const app = express()
+
+// Middleware
+app.use(helmet())
+app.use(cors())
+app.use(express.json())
+
+// Routes
+app.use('/api/users', userRoutes)
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).json({ error: 'Something went wrong!' })
+})
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log(\`Server running on port \${PORT}\`)
+})
+
+## 5. User Routes
+# src/routes/users.js
+const express = require('express')
+const router = express.Router()
+const userController = require('../controllers/userController')
+
+router.get('/', userController.getAllUsers)
+router.get('/:id', userController.getUserById)
+router.post('/', userController.createUser)
+router.put('/:id', userController.updateUser)
+router.delete('/:id', userController.deleteUser)
+
+module.exports = router
+
+## 6. User Controller
+# src/controllers/userController.js
+const pool = require('../config/database')
+
+const getAllUsers = async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM users')
+    res.json(result.rows)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+
+const createUser = async (req, res) => {
+  const { name, email } = req.body
+  try {
+    const result = await pool.query(
+      'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
+      [name, email]
+    )
+    res.status(201).json(result.rows[0])
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+}
+
+module.exports = { getAllUsers, createUser }
+
+## 7. Deploy to Railway/Render
+# Add to package.json
+"scripts": {
+  "start": "node src/server.js",
+  "dev": "nodemon src/server.js"
+}
+
+# Railway: railway.app
+# 1. Connect GitHub
+# 2. Deploy
+# 3. Add PostgreSQL database
+# 4. Set environment variables
+
+## 8. API Documentation
+# Create README.md
+## Endpoints
+GET    /api/users      - Get all users
+GET    /api/users/:id  - Get user by ID
+POST   /api/users      - Create user
+PUT    /api/users/:id  - Update user
+DELETE /api/users/:id  - Delete user`,
+            description: 'Full-stack API development',
+            usage: 'Build scalable backend services',
+            technologies: ['Express', 'PostgreSQL', 'REST API', 'Node.js'],
+            estimatedTime: '3-4 hours'
+          },
+          {
+            title: 'GraphQL API with Apollo',
+            code: `# Modern GraphQL API
+
+## 1. Setup
+npm install apollo-server graphql
+npm install @apollo/server express graphql
+
+## 2. Schema Definition
+# schema.js
+const typeDefs = \`#graphql
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    posts: [Post!]!
+  }
+
+  type Post {
+    id: ID!
+    title: String!
+    content: String!
+    author: User!
+  }
+
+  type Query {
+    users: [User!]!
+    user(id: ID!): User
+    posts: [Post!]!
+  }
+
+  type Mutation {
+    createUser(name: String!, email: String!): User!
+    createPost(userId: ID!, title: String!, content: String!): Post!
+  }
+\`
+
+## 3. Resolvers
+const resolvers = {
+  Query: {
+    users: () => users,
+    user: (_, { id }) => users.find(u => u.id === id),
+    posts: () => posts,
+  },
+  Mutation: {
+    createUser: (_, { name, email }) => {
+      const user = { id: String(users.length + 1), name, email }
+      users.push(user)
+      return user
+    },
+  },
+  User: {
+    posts: (user) => posts.filter(p => p.userId === user.id)
+  },
+  Post: {
+    author: (post) => users.find(u => u.id === post.userId)
+  }
+}
+
+## 4. Server Setup
+const { ApolloServer } = require('@apollo/server')
+const { startStandaloneServer } = require('@apollo/server/standalone')
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+})
+
+startStandaloneServer(server, {
+  listen: { port: 4000 },
+}).then(({ url }) => {
+  console.log(\`Server ready at \${url}\`)
+})
+
+## 5. Example Queries
+# Get all users with posts
+query {
+  users {
+    id
+    name
+    posts {
+      title
+    }
+  }
+}
+
+# Create user
+mutation {
+  createUser(name: "Alice", email: "alice@example.com") {
+    id
+    name
+  }
+}
+
+## 6. Deploy to Railway
+git init
+git add .
+git commit -m "GraphQL API"
+git push
+
+# Railway auto-detects Node.js!`,
+            description: 'Modern API with GraphQL',
+            usage: 'Flexible queries, single endpoint',
+            technologies: ['GraphQL', 'Apollo Server', 'Node.js'],
+            estimatedTime: '2-3 hours'
+          }
+        ]
+      },
+      fullStack: {
+        name: 'Full-Stack Applications',
+        items: [
+          {
+            title: 'MERN Stack Todo App',
+            code: `# Complete MERN Stack Application
+
+## 1. Backend Setup
+mkdir todo-app
+cd todo-app
+mkdir server client
+
+# Server
+cd server
+npm init -y
+npm install express mongoose cors dotenv
+
+## 2. MongoDB Model
+# models/Todo.js
+const mongoose = require('mongoose')
+
+const todoSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  completed: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now }
+})
+
+module.exports = mongoose.model('Todo', todoSchema)
+
+## 3. Express API
+# server.js
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const Todo = require('./models/Todo')
+
+const app = express()
+app.use(cors())
+app.use(express.json())
+
+mongoose.connect(process.env.MONGODB_URI)
+
+// Get all todos
+app.get('/api/todos', async (req, res) => {
+  const todos = await Todo.find()
+  res.json(todos)
+})
+
+// Create todo
+app.post('/api/todos', async (req, res) => {
+  const todo = new Todo({ title: req.body.title })
+  await todo.save()
+  res.json(todo)
+})
+
+// Toggle completed
+app.patch('/api/todos/:id', async (req, res) => {
+  const todo = await Todo.findById(req.params.id)
+  todo.completed = !todo.completed
+  await todo.save()
+  res.json(todo)
+})
+
+// Delete todo
+app.delete('/api/todos/:id', async (req, res) => {
+  await Todo.findByIdAndDelete(req.params.id)
+  res.json({ message: 'Deleted' })
+})
+
+app.listen(5000, () => console.log('Server running'))
+
+## 4. React Frontend
+cd ../client
+npx create-react-app .
+npm install axios
+
+## 5. Todo Component
+# src/App.js
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const API_URL = 'http://localhost:5000/api/todos'
+
+function App() {
+  const [todos, setTodos] = useState([])
+  const [input, setInput] = useState('')
+
+  useEffect(() => {
+    fetchTodos()
+  }, [])
+
+  const fetchTodos = async () => {
+    const { data } = await axios.get(API_URL)
+    setTodos(data)
+  }
+
+  const addTodo = async (e) => {
+    e.preventDefault()
+    const { data } = await axios.post(API_URL, { title: input })
+    setTodos([...todos, data])
+    setInput('')
+  }
+
+  const toggleTodo = async (id) => {
+    const { data } = await axios.patch(\`\${API_URL}/\${id}\`)
+    setTodos(todos.map(t => t._id === id ? data : t))
+  }
+
+  const deleteTodo = async (id) => {
+    await axios.delete(\`\${API_URL}/\${id}\`)
+    setTodos(todos.filter(t => t._id !== id))
+  }
+
+  return (
+    <div className="App">
+      <h1>My Todos</h1>
+      <form onSubmit={addTodo}>
+        <input 
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Add todo..."
+        />
+        <button>Add</button>
+      </form>
+      
+      <ul>
+        {todos.map(todo => (
+          <li key={todo._id}>
+            <span 
+              onClick={() => toggleTodo(todo._id)}
+              style={{ 
+                textDecoration: todo.completed ? 'line-through' : 'none',
+                cursor: 'pointer'
+              }}
+            >
+              {todo.title}
+            </span>
+            <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+## 6. Deploy
+# Backend: Railway/Render + MongoDB Atlas
+# Frontend: Vercel/Netlify
+
+# Update API_URL in production:
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/todos'`,
+            description: 'Complete MERN stack app',
+            usage: 'Full-stack development from scratch',
+            technologies: ['MongoDB', 'Express', 'React', 'Node.js'],
+            estimatedTime: '4-6 hours'
+          }
+        ]
+      },
+      automation: {
+        name: 'Automation & Scripts',
+        items: [
+          {
+            title: 'GitHub Actions CI/CD',
+            code: `# Automate Testing & Deployment
+
+## 1. Create Workflow File
+# .github/workflows/main.yml
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests
+      run: npm test
+      
+    - name: Run linter
+      run: npm run lint
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build
+      run: npm run build
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: build
+        path: dist/
+    
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: \${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: \${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: \${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+
+## 2. Add Secrets
+# GitHub → Settings → Secrets → New secret
+# Add: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+
+## 3. Test Workflow
+git add .github/workflows/main.yml
+git commit -m "Add CI/CD pipeline"
+git push
+
+# Check: GitHub → Actions tab
+
+## Benefits:
+✓ Automatic testing on every PR
+✓ Deploy only if tests pass
+✓ Preview deployments for PRs
+✓ Rollback if deployment fails`,
+            description: 'Automated testing and deployment',
+            usage: 'CI/CD pipeline for every project',
+            technologies: ['GitHub Actions', 'CI/CD', 'Automation'],
+            estimatedTime: '1 hour'
+          },
+          {
+            title: 'Automated Backups Script',
+            code: `# Daily Backup Script with Email Notifications
+
+## 1. Create Backup Script
+# backup.sh
+#!/bin/bash
+
+# Configuration
+BACKUP_DIR="/backups"
+SOURCE_DIR="/home/user/important"
+DATE=$(date +%Y-%m-%d)
+BACKUP_FILE="backup-$DATE.tar.gz"
+EMAIL="admin@example.com"
+RETENTION_DAYS=7
+
+# Create backup
+echo "Starting backup..."
+tar -czf "$BACKUP_DIR/$BACKUP_FILE" "$SOURCE_DIR"
+
+# Check if successful
+if [ $? -eq 0 ]; then
+    SIZE=$(du -h "$BACKUP_DIR/$BACKUP_FILE" | cut -f1)
+    echo "Backup successful: $BACKUP_FILE ($SIZE)"
+    
+    # Send success email
+    echo "Backup completed successfully. Size: $SIZE" | \\
+        mail -s "Backup Success - $DATE" $EMAIL
+else
+    echo "Backup failed!" | \\
+        mail -s "Backup FAILED - $DATE" $EMAIL
+    exit 1
+fi
+
+# Delete old backups
+find "$BACKUP_DIR" -name "backup-*.tar.gz" \\
+    -mtime +$RETENTION_DAYS -delete
+
+echo "Old backups cleaned up (>$RETENTION_DAYS days)"
+
+## 2. Make Executable
+chmod +x backup.sh
+
+## 3. Schedule with Cron
+crontab -e
+
+# Add line (daily at 2 AM):
+0 2 * * * /path/to/backup.sh >> /var/log/backup.log 2>&1
+
+## 4. Install Mail Utility
+sudo apt install mailutils
+
+## 5. Test Backup
+./backup.sh
+
+## 6. Cloud Backup (Optional)
+# Upload to Google Drive with rclone
+rclone copy "$BACKUP_DIR/$BACKUP_FILE" gdrive:backups/
+
+# Or AWS S3
+aws s3 cp "$BACKUP_DIR/$BACKUP_FILE" s3://my-bucket/backups/`,
+            description: 'Automated backup solution',
+            usage: 'Never lose data again',
+            technologies: ['Bash', 'Cron', 'Linux', 'Automation'],
+            estimatedTime: '30 minutes'
+          }
+        ]
+      }
+    }
+  },
 };
 
 // Export individual topic categories for easier access
@@ -2200,3 +4159,5 @@ export const cloudTopics = specializedTopics.cloud;
 export const blockchainTopics = specializedTopics.blockchain;
 export const securityTopics = specializedTopics.security;
 export const testingTopics = specializedTopics.testing;
+export const homeServerTopics = specializedTopics.homeserver;
+export const howtoTopics = specializedTopics.howto;

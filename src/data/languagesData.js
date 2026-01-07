@@ -4227,6 +4227,697 @@ fibonacci = 0 : 1 : zipWith (+) fibonacci (tail fibonacci)`,
         ]
       }
     }
+  },
+  scala: {
+    id: 'scala',
+    name: 'Scala',
+    icon: '🔴',
+    color: '#DC322F',
+    description: 'Multi-paradigm language combining OOP and FP',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Values',
+            code: `// Immutable value (preferred)
+val name: String = "Alice"
+val age = 30  // Type inference
+
+// Mutable variable
+var count = 0
+count += 1
+
+// Lazy values
+lazy val expensive = {
+  println("Computing...")
+  42
+}`,
+            description: 'Scala variable declarations',
+            usage: 'Prefer val over var for immutability',
+            bestPractices: [
+              'Use val by default, var only when necessary',
+              'Let type inference work for you',
+              'Use lazy val for expensive computations'
+            ]
+          },
+          {
+            title: 'Functions',
+            code: `// Basic function
+def add(x: Int, y: Int): Int = x + y
+
+// Function with default parameters
+def greet(name: String, greeting: String = "Hello") =
+  s"$greeting, $name!"
+
+// Higher-order function
+def applyTwice(f: Int => Int, x: Int): Int =
+  f(f(x))
+
+// Anonymous function
+val double = (x: Int) => x * 2
+
+// Currying
+def multiply(x: Int)(y: Int): Int = x * y
+val multiplyBy2 = multiply(2) _`,
+            description: 'Function definitions in Scala',
+            usage: 'Scala supports functional programming paradigm'
+          }
+        ]
+      },
+      collections: {
+        name: 'Collections',
+        items: [
+          {
+            title: 'Lists & Arrays',
+            code: `// Immutable List
+val numbers = List(1, 2, 3, 4, 5)
+val doubled = numbers.map(_ * 2)
+val evens = numbers.filter(_ % 2 == 0)
+val sum = numbers.reduce(_ + _)
+
+// Mutable Array
+val arr = Array(1, 2, 3)
+arr(0) = 10
+
+// Vector (efficient immutable)
+val vec = Vector(1, 2, 3, 4, 5)
+
+// For comprehension
+val squares = for (n <- numbers) yield n * n`,
+            description: 'Working with collections',
+            usage: 'Rich collection library with functional operations'
+          },
+          {
+            title: 'Pattern Matching',
+            code: `// Basic pattern matching
+def describe(x: Any): String = x match {
+  case 0 => "zero"
+  case i: Int if i > 0 => "positive integer"
+  case s: String => s"string: $s"
+  case list: List[_] => s"list of length \${list.length}"
+  case _ => "something else"
+}
+
+// Case classes
+case class Person(name: String, age: Int)
+
+val alice = Person("Alice", 30)
+alice match {
+  case Person(name, age) if age >= 18 =>
+    s"$name is an adult"
+  case Person(name, _) =>
+    s"$name is a minor"
+}`,
+            description: 'Pattern matching and case classes',
+            usage: 'Powerful way to destructure and match data'
+          }
+        ]
+      },
+      oop: {
+        name: 'Object-Oriented',
+        items: [
+          {
+            title: 'Classes & Objects',
+            code: `// Class with primary constructor
+class Person(val name: String, var age: Int) {
+  def greet(): String = s"Hi, I'm $name"
+  
+  def haveBirthday(): Unit = {
+    age += 1
+  }
+}
+
+// Case class (immutable)
+case class Point(x: Double, y: Double)
+
+// Object (singleton)
+object MathUtils {
+  def square(x: Int): Int = x * x
+}
+
+// Companion object
+class Circle(val radius: Double)
+object Circle {
+  def apply(radius: Double) = new Circle(radius)
+}`,
+            description: 'OOP in Scala',
+            usage: 'Combines OOP with functional programming'
+          },
+          {
+            title: 'Traits & Mixins',
+            code: `// Trait (like interface but with implementation)
+trait Greeter {
+  def greet(name: String): String = s"Hello, $name!"
+}
+
+trait Timestamped {
+  val timestamp: Long = System.currentTimeMillis()
+}
+
+// Class with multiple traits
+class User(val name: String) extends Greeter with Timestamped {
+  override def greet(name: String) = s"Hi $name, I'm \${this.name}!"
+}`,
+            description: 'Traits and mixins',
+            usage: 'Flexible composition mechanism'
+          }
+        ]
+      }
+    }
+  },
+  r: {
+    id: 'r',
+    name: 'R',
+    icon: '📊',
+    color: '#276DC3',
+    description: 'Statistical computing and data analysis',
+    categories: {
+      basics: {
+        name: 'Basics & Data Types',
+        items: [
+          {
+            title: 'Variables & Vectors',
+            code: `# Variables
+x <- 42
+y = 3.14
+name <- "Alice"
+
+# Vectors
+numbers <- c(1, 2, 3, 4, 5)
+names <- c("Alice", "Bob", "Charlie")
+
+# Vector operations
+doubled <- numbers * 2
+sum_all <- sum(numbers)
+mean_val <- mean(numbers)
+
+# Sequences
+seq1 <- 1:10
+seq2 <- seq(0, 100, by=10)
+repeated <- rep(1:3, times=3)`,
+            description: 'Basic R syntax and vectors',
+            usage: 'Everything in R is a vector',
+            bestPractices: [
+              'Use <- for assignment (R convention)',
+              'Vectorize operations instead of loops',
+              'Use meaningful variable names'
+            ]
+          },
+          {
+            title: 'Data Frames',
+            code: `# Create data frame
+df <- data.frame(
+  name = c("Alice", "Bob", "Charlie"),
+  age = c(25, 30, 35),
+  score = c(85, 90, 88)
+)
+
+# Access columns
+df$name
+df[["age"]]
+df[, "score"]
+
+# Filter rows
+df[df$age > 28, ]
+subset(df, score > 85)
+
+# Add column
+df$grade <- ifelse(df$score >= 90, "A", "B")
+
+# Summary statistics
+summary(df)
+str(df)`,
+            description: 'Working with data frames',
+            usage: 'Data frames are the primary data structure for analysis'
+          }
+        ]
+      },
+      dataAnalysis: {
+        name: 'Data Analysis',
+        items: [
+          {
+            title: 'dplyr Operations',
+            code: `library(dplyr)
+
+# Pipe operator
+result <- df %>%
+  filter(age > 25) %>%
+  select(name, score) %>%
+  arrange(desc(score)) %>%
+  mutate(grade = ifelse(score >= 90, "A", "B"))
+
+# Grouping and summarizing
+df %>%
+  group_by(grade) %>%
+  summarise(
+    count = n(),
+    avg_score = mean(score),
+    avg_age = mean(age)
+  )
+
+# Joins
+inner_join(df1, df2, by = "id")
+left_join(df1, df2, by = "id")`,
+            description: 'dplyr for data manipulation',
+            usage: 'Modern and intuitive data manipulation'
+          },
+          {
+            title: 'Visualization with ggplot2',
+            code: `library(ggplot2)
+
+# Basic scatter plot
+ggplot(df, aes(x = age, y = score)) +
+  geom_point() +
+  labs(title = "Age vs Score", x = "Age", y = "Score")
+
+# Bar chart
+ggplot(df, aes(x = name, y = score, fill = grade)) +
+  geom_bar(stat = "identity") +
+  theme_minimal()
+
+# Histogram
+ggplot(df, aes(x = score)) +
+  geom_histogram(bins = 10, fill = "steelblue") +
+  labs(title = "Score Distribution")
+
+# Boxplot
+ggplot(df, aes(x = grade, y = score)) +
+  geom_boxplot()`,
+            description: 'Data visualization with ggplot2',
+            usage: 'Grammar of graphics for creating plots'
+          }
+        ]
+      },
+      statistics: {
+        name: 'Statistical Analysis',
+        items: [
+          {
+            title: 'Descriptive Statistics',
+            code: `# Summary statistics
+mean(numbers)
+median(numbers)
+sd(numbers)        # Standard deviation
+var(numbers)       # Variance
+quantile(numbers, c(0.25, 0.75))
+
+# Correlation
+cor(df$age, df$score)
+cor.test(df$age, df$score)
+
+# Distribution
+hist(numbers)
+density(numbers)
+qqnorm(numbers)`,
+            description: 'Basic statistical functions',
+            usage: 'Built-in functions for statistical analysis'
+          },
+          {
+            title: 'Linear Regression',
+            code: `# Simple linear regression
+model <- lm(score ~ age, data = df)
+summary(model)
+
+# Predictions
+new_data <- data.frame(age = c(28, 32))
+predictions <- predict(model, new_data)
+
+# Multiple regression
+model2 <- lm(score ~ age + experience + education, data = df)
+
+# Model diagnostics
+plot(model)
+residuals(model)
+coefficients(model)`,
+            description: 'Linear regression modeling',
+            usage: 'Fundamental statistical modeling technique'
+          }
+        ]
+      }
+    }
+  },
+  elixir: {
+    id: 'elixir',
+    name: 'Elixir',
+    icon: '💧',
+    color: '#4B275F',
+    description: 'Functional, concurrent language built on Erlang VM',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Pattern Matching',
+            code: `# Variables (immutable)
+name = "Alice"
+age = 30
+
+# Pattern matching
+{a, b, c} = {1, 2, 3}
+[head | tail] = [1, 2, 3, 4]
+
+# Match operator
+x = 1
+^x = 1  # This works
+# ^x = 2  # This would fail
+
+# Pin operator in functions
+defmodule Example do
+  def check(value, expected) do
+    ^expected = value
+    "Match!"
+  end
+end`,
+            description: 'Elixir variables and pattern matching',
+            usage: 'Pattern matching is fundamental in Elixir',
+            bestPractices: [
+              'Use pattern matching instead of conditionals',
+              'Variables are immutable - embrace it',
+              'Use descriptive names for matched values'
+            ]
+          },
+          {
+            title: 'Functions & Modules',
+            code: `# Anonymous function
+add = fn a, b -> a + b end
+add.(1, 2)
+
+# Shorthand
+multiply = &(&1 * &2)
+multiply.(3, 4)
+
+# Named functions in module
+defmodule Math do
+  def sum(a, b) do
+    a + b
+  end
+  
+  # Function with guards
+  def abs(n) when n < 0, do: -n
+  def abs(n), do: n
+  
+  # Pattern matching in functions
+  def factorial(0), do: 1
+  def factorial(n), do: n * factorial(n - 1)
+end`,
+            description: 'Defining functions in Elixir',
+            usage: 'Functions are first-class citizens'
+          }
+        ]
+      },
+      collections: {
+        name: 'Collections',
+        items: [
+          {
+            title: 'Lists & Enums',
+            code: `# Lists
+list = [1, 2, 3, 4, 5]
+
+# Enum module
+Enum.map(list, fn x -> x * 2 end)
+Enum.filter(list, fn x -> rem(x, 2) == 0 end)
+Enum.reduce(list, 0, fn x, acc -> x + acc end)
+
+# Pipe operator
+list
+|> Enum.map(&(&1 * 2))
+|> Enum.filter(&(&1 > 5))
+|> Enum.sum()
+
+# List comprehensions
+for n <- list, rem(n, 2) == 0, do: n * n
+
+# Keyword lists
+options = [size: 10, color: "red"]
+options[:size]`,
+            description: 'Working with lists and enumerables',
+            usage: 'Rich enumerable functions for data processing'
+          },
+          {
+            title: 'Maps & Structs',
+            code: `# Maps
+person = %{name: "Alice", age: 30}
+person.name
+person[:age]
+
+# Update map
+person = %{person | age: 31}
+
+# Nested update
+put_in(person[:address][:city], "NYC")
+
+# Structs (typed maps)
+defmodule User do
+  defstruct name: "", email: "", age: 0
+end
+
+user = %User{name: "Bob", email: "bob@example.com"}
+user.name`,
+            description: 'Maps and structs for data organization',
+            usage: 'Maps for dynamic data, structs for typed data'
+          }
+        ]
+      },
+      concurrency: {
+        name: 'Concurrency',
+        items: [
+          {
+            title: 'Processes & Messages',
+            code: `# Spawn a process
+pid = spawn(fn -> 
+  IO.puts("Hello from process!")
+end)
+
+# Send and receive messages
+defmodule Messenger do
+  def loop do
+    receive do
+      {:hello, caller} -> 
+        send(caller, {:ok, "Hi there!"})
+        loop()
+      :stop -> 
+        :ok
+    end
+  end
+end
+
+# Start messenger
+pid = spawn(Messenger, :loop, [])
+send(pid, {:hello, self()})
+
+receive do
+  {:ok, message} -> IO.puts(message)
+end`,
+            description: 'Lightweight processes and message passing',
+            usage: 'Core concurrency model in Elixir'
+          },
+          {
+            title: 'Tasks & Agents',
+            code: `# Task for one-off computations
+task = Task.async(fn -> 
+  # Expensive computation
+  :timer.sleep(1000)
+  42
+end)
+
+result = Task.await(task)
+
+# Agent for state management
+{:ok, agent} = Agent.start_link(fn -> %{} end)
+
+# Update state
+Agent.update(agent, fn state -> 
+  Map.put(state, :counter, 1)
+end)
+
+# Get state
+counter = Agent.get(agent, fn state -> 
+  state[:counter]
+end)`,
+            description: 'High-level concurrency abstractions',
+            usage: 'Tasks for async work, Agents for state'
+          }
+        ]
+      }
+    }
+  },
+  lua: {
+    id: 'lua',
+    name: 'Lua',
+    icon: '🌙',
+    color: '#000080',
+    description: 'Lightweight embeddable scripting language',
+    categories: {
+      basics: {
+        name: 'Basics & Syntax',
+        items: [
+          {
+            title: 'Variables & Types',
+            code: `-- Variables (dynamically typed)
+local name = "Alice"
+local age = 30
+local isActive = true
+local nothing = nil
+
+-- Global variable (avoid when possible)
+globalVar = "I'm global"
+
+-- Multiple assignment
+local x, y, z = 1, 2, 3
+
+-- Tables (Lua's only data structure)
+local person = {
+  name = "Bob",
+  age = 25
+}`,
+            description: 'Lua basic types and variables',
+            usage: 'Use local for better performance and scoping',
+            bestPractices: [
+              'Always use local variables',
+              'Lua is 1-indexed (not 0)',
+              'nil is the only false value besides false'
+            ]
+          },
+          {
+            title: 'Functions',
+            code: `-- Basic function
+local function greet(name)
+  return "Hello, " .. name .. "!"
+end
+
+-- Multiple returns
+local function divmod(a, b)
+  return a / b, a % b
+end
+
+local quotient, remainder = divmod(10, 3)
+
+-- Anonymous function
+local double = function(x)
+  return x * 2
+end
+
+-- Higher-order function
+local function apply(func, value)
+  return func(value)
+end
+
+-- Closures
+local function counter()
+  local count = 0
+  return function()
+    count = count + 1
+    return count
+  end
+end`,
+            description: 'Function definitions in Lua',
+            usage: 'Functions are first-class values'
+          }
+        ]
+      },
+      tables: {
+        name: 'Tables',
+        items: [
+          {
+            title: 'Arrays & Dictionaries',
+            code: `-- Array (1-indexed!)
+local fruits = {"apple", "banana", "cherry"}
+print(fruits[1])  -- "apple"
+
+-- Length operator
+print(#fruits)  -- 3
+
+-- Dictionary
+local person = {
+  name = "Alice",
+  age = 30,
+  ["full-name"] = "Alice Smith"
+}
+
+-- Access
+print(person.name)
+print(person["full-name"])
+
+-- Iterate array
+for i, fruit in ipairs(fruits) do
+  print(i, fruit)
+end
+
+-- Iterate dictionary
+for key, value in pairs(person) do
+  print(key, value)
+end`,
+            description: 'Tables as arrays and dictionaries',
+            usage: 'Tables are the universal data structure'
+          },
+          {
+            title: 'Metatables',
+            code: `-- Metatable for operator overloading
+local Vector = {}
+Vector.__index = Vector
+
+function Vector.new(x, y)
+  local self = setmetatable({}, Vector)
+  self.x = x
+  self.y = y
+  return self
+end
+
+-- Operator overloading
+function Vector.__add(a, b)
+  return Vector.new(a.x + b.x, a.y + b.y)
+end
+
+function Vector.__tostring(v)
+  return "(" .. v.x .. ", " .. v.y .. ")"
+end
+
+local v1 = Vector.new(1, 2)
+local v2 = Vector.new(3, 4)
+local v3 = v1 + v2
+print(v3)  -- (4, 6)`,
+            description: 'Metatables for advanced table behavior',
+            usage: 'Implement OOP-like features and operator overloading'
+          }
+        ]
+      },
+      advanced: {
+        name: 'Advanced Features',
+        items: [
+          {
+            title: 'Coroutines',
+            code: `-- Create coroutine
+local co = coroutine.create(function()
+  for i = 1, 5 do
+    print("Coroutine:", i)
+    coroutine.yield()
+  end
+end)
+
+-- Resume coroutine
+coroutine.resume(co)  -- Prints 1
+coroutine.resume(co)  -- Prints 2
+
+-- Producer-consumer pattern
+local function producer()
+  return coroutine.create(function()
+    for i = 1, 10 do
+      coroutine.yield(i)
+    end
+  end)
+end
+
+local p = producer()
+while coroutine.status(p) ~= "dead" do
+  local _, value = coroutine.resume(p)
+  if value then print(value) end
+end`,
+            description: 'Cooperative multitasking with coroutines',
+            usage: 'Implement generators and async-like patterns'
+          }
+        ]
+      }
+    }
   }
 };
 
