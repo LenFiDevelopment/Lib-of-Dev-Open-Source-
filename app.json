@@ -30,10 +30,7 @@
         "INTERNET",
         "READ_EXTERNAL_STORAGE",
         "WRITE_EXTERNAL_STORAGE"
-      ],
-      "config": {
-        "googleMobileAdsAppId": "ca-app-pub-5526801232554836~6275754332"
-      }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -44,7 +41,8 @@
       }
     },
     "plugins": [
-      "expo-asset"
+      "expo-asset",
+      "./app.plugin.js"
     ]
   }
 }
