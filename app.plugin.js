@@ -11,6 +11,24 @@ const withGoogleMobileAds = (config) => {
     }
     androidManifest.manifest.$['xmlns:tools'] = 'http://schemas.android.com/tools';
 
+    // Add AD_ID permission for Google Mobile Ads
+    if (!androidManifest.manifest['uses-permission']) {
+      androidManifest.manifest['uses-permission'] = [];
+    }
+    
+    // Check if AD_ID permission already exists
+    const hasAdIdPermission = androidManifest.manifest['uses-permission'].some(
+      (perm) => perm.$['android:name'] === 'com.google.android.gms.permission.AD_ID'
+    );
+    
+    if (!hasAdIdPermission) {
+      androidManifest.manifest['uses-permission'].push({
+        $: {
+          'android:name': 'com.google.android.gms.permission.AD_ID',
+        },
+      });
+    }
+
     // Find or create meta-data array
     if (!mainApplication['meta-data']) {
       mainApplication['meta-data'] = [];
