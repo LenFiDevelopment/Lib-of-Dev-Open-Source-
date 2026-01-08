@@ -7,7 +7,7 @@
 
 const VERSION_CHECK_URL = 'https://www.lenfi.uk/scr_appversionupdatemanager.json';
 const APP_KEY = 'lib_of_dev';
-const CURRENT_VERSION_CODE = '060120263'; // TagMonatJahrRevision (als String wegen führender 0)
+const CURRENT_VERSION_CODE = '080120263'; // TagMonatJahrRevision (als String wegen führender 0)
 
 /**
  * Update-Status-Typen
