@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { getAllUIFrameworks } from '../data/uiFrameworksData';
+import { getToolsByCategory } from '../data/toolsData';
 import { colors, spacing, borderRadius, shadows, typography } from '../constants/theme';
 
 export default function UIFrameworksScreen({ navigation }) {
   const { t } = useTranslation();
-  const frameworks = getAllUIFrameworks();
+  const frameworks = getToolsByCategory('UI Frameworks & Design');
 
   const openLink = (url) => {
     Linking.openURL(url);
@@ -31,99 +31,11 @@ export default function UIFrameworksScreen({ navigation }) {
         </View>
 
         <View style={styles.content}>
-          {/* Featured: shadcn/ui */}
-          {frameworks.filter(f => f.id === 'shadcn').map((framework) => (
-            <View key={framework.id} style={styles.featuredCard}>
-              <View style={styles.featuredBadge}>
-                <Text style={styles.featuredBadgeText}>⭐ {t('uiFrameworks.featured')}</Text>
-              </View>
-              <View style={styles.frameworkHeader}>
-                <View style={[styles.iconContainer, { backgroundColor: framework.color + '10' }]}>
-                  <Text style={styles.icon}>{framework.icon}</Text>
-                </View>
-                <View style={styles.frameworkInfo}>
-                  <Text style={styles.frameworkName}>{framework.name}</Text>
-                  <Text style={styles.frameworkCategory}>{framework.category}</Text>
-                </View>
-              </View>
-              
-              <Text style={styles.frameworkDescription}>
-                {framework.description}
-              </Text>
-
-              {framework.features && (
-                <View style={styles.featuresContainer}>
-                  <Text style={styles.sectionTitle}>{t('uiFrameworks.keyFeatures')}</Text>
-                  {framework.features.slice(0, 4).map((feature, index) => (
-                    <View key={index} style={styles.featureItem}>
-                      <Text style={styles.featureBullet}>•</Text>
-                      <Text style={styles.featureText}>{feature}</Text>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {framework.designPrinciples && (
-                <View style={styles.principlesContainer}>
-                  <Text style={styles.sectionTitle}>{t('uiFrameworks.designPrinciples')}</Text>
-                  <View style={styles.principlesGrid}>
-                    {framework.designPrinciples.map((principle, index) => (
-                      <View key={index} style={styles.principleCard}>
-                        <Text style={styles.principleIcon}>{principle.icon}</Text>
-                        <Text style={styles.principleTitle}>{principle.title}</Text>
-                        <Text style={styles.principleDescription}>{principle.description}</Text>
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              )}
-
-              {framework.components && (
-                <View style={styles.componentsContainer}>
-                  <Text style={styles.sectionTitle}>{t('uiFrameworks.availableComponents')}</Text>
-                  <View style={styles.componentTags}>
-                    {framework.components.slice(0, 6).map((component, index) => (
-                      <View key={index} style={styles.componentTag}>
-                        <Text style={styles.componentTagText}>{component.name}</Text>
-                      </View>
-                    ))}
-                  </View>
-                </View>
-              )}
-
-              {framework.links && (
-                <View style={styles.linksContainer}>
-                  <TouchableOpacity
-                    style={[styles.linkButton, styles.primaryButton]}
-                    onPress={() => openLink(framework.links.website)}
-                  >
-                    <Text style={styles.primaryButtonText}>🌐 {t('uiFrameworks.visitWebsite')}</Text>
-                  </TouchableOpacity>
-                  <View style={styles.linkRow}>
-                    <TouchableOpacity
-                      style={styles.secondaryButton}
-                      onPress={() => openLink(framework.links.docs)}
-                    >
-                      <Text style={styles.secondaryButtonText}>📚 {t('uiFrameworks.docs')}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.secondaryButton}
-                      onPress={() => openLink(framework.links.github)}
-                    >
-                      <Text style={styles.secondaryButtonText}>🐙 {t('uiFrameworks.github')}</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-            </View>
-          ))}
-
-          {/* Other frameworks */}
-          <Text style={styles.categoryTitle}>{t('uiFrameworks.otherFrameworks')}</Text>
-          {frameworks.filter(f => f.id !== 'shadcn').map((framework) => (
+          {frameworks.map((framework) => (
             <TouchableOpacity
               key={framework.id}
               style={styles.frameworkCard}
+              onPress={() => navigation.navigate('ToolDetail', { tool: framework })}
             >
               <View style={styles.frameworkHeader}>
                 <View style={[styles.iconContainer, { backgroundColor: framework.color + '20' }]}>
@@ -150,22 +62,13 @@ export default function UIFrameworksScreen({ navigation }) {
                 </View>
               )}
 
-              {framework.links && (
+              {framework.officialDocs && (
                 <View style={styles.linksRow}>
                   <TouchableOpacity
                     style={styles.smallLinkButton}
                     onPress={(e) => {
                       e.stopPropagation();
-                      openLink(framework.links.website);
-                    }}
-                  >
-                    <Text style={styles.smallLinkButtonText}>🌐 Website</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.smallLinkButton}
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      openLink(framework.links.docs);
+                      openLink(framework.officialDocs);
                     }}
                   >
                     <Text style={styles.smallLinkButtonText}>📚 Docs</Text>

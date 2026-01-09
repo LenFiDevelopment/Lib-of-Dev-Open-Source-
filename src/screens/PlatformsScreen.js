@@ -9,12 +9,15 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { getAllPlatforms } from '../data/platformsData';
+import { getToolsByCategory } from '../data/toolsData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
 export default function PlatformsScreen({ navigation }) {
   const { t } = useTranslation();
-  const platforms = getAllPlatforms();
+  
+  // Get platform-related tools from multiple categories
+  const platformCategories = ['Cloud & Hosting', 'Mobile Development', 'Version Control & CI/CD'];
+  const platforms = platformCategories.flatMap(category => getToolsByCategory(category));
 
   const openLink = (url) => {
     Linking.openURL(url);
@@ -35,7 +38,7 @@ export default function PlatformsScreen({ navigation }) {
             <TouchableOpacity
               key={platform.id}
               style={styles.platformCard}
-              onPress={() => navigation.navigate('PlatformDetail', { platformId: platform.id })}
+              onPress={() => navigation.navigate('ToolDetail', { tool: platform })}
             >
               <View style={styles.platformHeader}>
                 <View style={[styles.iconContainer, { backgroundColor: platform.color + '20' }]}>
@@ -62,22 +65,13 @@ export default function PlatformsScreen({ navigation }) {
                 </View>
               )}
 
-              {platform.links && (
+              {platform.officialDocs && (
                 <View style={styles.linksContainer}>
                   <TouchableOpacity
                     style={styles.linkButton}
                     onPress={(e) => {
                       e.stopPropagation();
-                      openLink(platform.links.website);
-                    }}
-                  >
-                    <Text style={styles.linkButtonText}>🌐 {t('platforms.website')}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.linkButton}
-                    onPress={(e) => {
-                      e.stopPropagation();
-                      openLink(platform.links.docs);
+                      openLink(platform.officialDocs);
                     }}
                   >
                     <Text style={styles.linkButtonText}>📚 {t('platforms.docs')}</Text>

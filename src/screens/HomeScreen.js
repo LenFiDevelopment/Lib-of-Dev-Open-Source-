@@ -132,17 +132,6 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.quickAccessGrid}>
             <TouchableOpacity
               style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('Learning')}
-              accessible={true}
-              accessibilityLabel="Learning resources"
-              accessibilityRole="button"
-            >
-              <Text style={styles.quickAccessIcon}>🎓</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.learn')}</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.quickAccessCard}
               onPress={() => navigation.navigate('Components')}
               accessible={true}
               accessibilityLabel="UI Components"
@@ -150,28 +139,6 @@ export default function HomeScreen({ navigation }) {
             >
               <Text style={styles.quickAccessIcon}>🎨</Text>
               <Text style={styles.quickAccessText}>Components</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('UIFrameworks')}
-              accessible={true}
-              accessibilityLabel="UI Frameworks"
-              accessibilityRole="button"
-            >
-              <Text style={styles.quickAccessIcon}>🖼️</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.uiDesign')}</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={styles.quickAccessCard}
-              onPress={() => navigation.navigate('Platforms')}
-              accessible={true}
-              accessibilityLabel="Development platforms"
-              accessibilityRole="button"
-            >
-              <Text style={styles.quickAccessIcon}>🚀</Text>
-              <Text style={styles.quickAccessText}>{t('quickAccess.platforms')}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity

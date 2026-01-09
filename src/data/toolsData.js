@@ -483,6 +483,203 @@ wrangler pages publish dist`,
   },
 
   {
+    id: 'netlify',
+    name: 'Netlify',
+    category: 'Cloud & Hosting',
+    icon: '🌐',
+    color: '#00C7B7',
+    developer: 'Netlify',
+    platforms: ['Web'],
+    pricing: 'Free Starter / Pro ($19/month) / Business / Enterprise',
+    description: 'All-in-one platform for modern web projects with continuous deployment.',
+    features: [
+      'Continuous deployment from Git',
+      'Instant rollbacks',
+      'Split testing (A/B testing)',
+      'Serverless functions',
+      'Form handling',
+      'Identity and authentication',
+      'Edge functions',
+      'Analytics',
+      'Custom domains & SSL',
+      'Deploy previews'
+    ],
+    useCases: [
+      'Static sites',
+      'JAMstack applications',
+      'Serverless APIs',
+      'Frontend deployments',
+      'Landing pages',
+      'Documentation sites'
+    ],
+    gettingStarted: `// Install Netlify CLI
+npm install -g netlify-cli
+
+// Deploy site
+netlify deploy
+
+// Deploy to production
+netlify deploy --prod
+
+// Link to Git for continuous deployment
+netlify init
+
+// netlify.toml configuration
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+// Serverless function (netlify/functions/hello.js)
+exports.handler = async (event, context) => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Hello from Netlify!' })
+  };
+};
+
+// Form handling (HTML)
+<form name="contact" netlify>
+  <input type="text" name="name" />
+  <input type="email" name="email" />
+  <button type="submit">Submit</button>
+</form>`,
+    proTips: [
+      'Use deploy previews for every pull request',
+      'Enable form handling with netlify attribute',
+      'Set up split testing for A/B experiments',
+      'Use edge functions for dynamic content',
+      'Configure redirects for SPA routing',
+      'Enable Netlify Identity for user auth',
+      'Use environment variables for secrets',
+      'Set up build hooks for scheduled rebuilds'
+    ],
+    bestFor: ['JAMstack sites', 'Static site generators', 'Frontend deployments'],
+    officialDocs: 'https://docs.netlify.com/',
+    tutorial: 'https://docs.netlify.com/get-started/'
+  },
+
+  {
+    id: 'expo',
+    name: 'Expo',
+    category: 'Mobile Development',
+    icon: '📱',
+    color: '#000020',
+    developer: 'Expo',
+    platforms: ['iOS', 'Android', 'Web'],
+    pricing: 'Free / Production ($29/month) / Enterprise',
+    description: 'Framework and platform for universal React applications on mobile and web.',
+    features: [
+      'Managed workflow with minimal config',
+      'Access to 50+ native APIs',
+      'Over-the-air (OTA) updates',
+      'Easy building and deployment',
+      'Web support out of the box',
+      'Development tools and debugging',
+      'EAS Build (cloud builds)',
+      'EAS Submit (app store submission)',
+      'Push notifications',
+      'Hot reloading'
+    ],
+    useCases: [
+      'Cross-platform mobile apps',
+      'React Native development',
+      'Rapid prototyping',
+      'MVPs and startups',
+      'Apps with frequent updates',
+      'Progressive Web Apps (PWA)'
+    ],
+    gettingStarted: `// Create new Expo app
+npx create-expo-app my-app
+cd my-app
+npx expo start
+
+// Run on device (scan QR code with Expo Go app)
+npx expo start
+
+// Run on simulator/emulator
+npx expo start --ios
+npx expo start --android
+
+// Install dependencies
+npx expo install expo-camera expo-location
+
+// Build for production with EAS
+npm install -g eas-cli
+eas login
+eas build:configure
+
+// Build iOS
+eas build --platform ios
+
+// Build Android
+eas build --platform android
+
+// Submit to app stores
+eas submit --platform ios
+eas submit --platform android
+
+// OTA updates
+eas update:configure
+eas update --branch production
+
+// app.json configuration
+{
+  "expo": {
+    "name": "My App",
+    "slug": "my-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.myapp"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.yourcompany.myapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}`,
+    proTips: [
+      'Use Expo Go for quick testing on devices',
+      'EAS Build for production apps',
+      'OTA updates for instant bug fixes',
+      'expo-dev-client for custom native code',
+      'Use Expo Router for navigation',
+      'Configure app.json for all platforms',
+      'Test on real devices, not just simulators',
+      'Use expo-updates for update strategies'
+    ],
+    bestFor: ['React Native apps', 'Cross-platform development', 'Rapid prototyping'],
+    officialDocs: 'https://docs.expo.dev/',
+    tutorial: 'https://docs.expo.dev/tutorial/introduction/'
+  },
+
+  {
     id: 'github',
     name: 'GitHub',
     category: 'Version Control & CI/CD',
@@ -687,6 +884,422 @@ ollama rm llama2      # Remove model`,
     bestFor: ['Local AI development', 'Privacy-focused apps', 'Learning AI'],
     officialDocs: 'https://ollama.ai/docs',
     tutorial: 'https://github.com/ollama/ollama'
+  },
+
+  // ==================== UI FRAMEWORKS & DESIGN SYSTEMS ====================
+  {
+    id: 'shadcn',
+    name: 'shadcn/ui',
+    category: 'UI Frameworks & Design',
+    icon: '🎨',
+    color: '#000000',
+    developer: 'shadcn',
+    platforms: ['Web'],
+    pricing: 'Open Source (Free)',
+    description: 'Beautifully designed components built with Radix UI and Tailwind CSS.',
+    features: [
+      'Accessible components built on Radix UI',
+      'Customizable with Tailwind CSS',
+      'Copy/paste components - you own the code',
+      'TypeScript support',
+      'Dark mode built-in',
+      'Fully responsive',
+      'Server-side rendering ready',
+      'No dependency lock-in'
+    ],
+    useCases: [
+      'Modern web applications',
+      'React projects',
+      'Next.js applications',
+      'Design systems',
+      'Component libraries',
+      'Admin dashboards'
+    ],
+    gettingStarted: `// Initialize shadcn/ui
+npx shadcn-ui@latest init
+
+// Add individual components
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add card
+npx shadcn-ui@latest add dialog
+npx shadcn-ui@latest add input
+npx shadcn-ui@latest add select
+
+// Button component usage
+import { Button } from "@/components/ui/button"
+
+export default function ButtonDemo() {
+  return (
+    <div className="flex gap-4">
+      <Button variant="default">Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+    </div>
+  )
+}
+
+// Card component usage
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+export default function CardDemo() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+        <CardDescription>Card Description</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Card Content</p>
+      </CardContent>
+      <CardFooter>
+        <p>Card Footer</p>
+      </CardFooter>
+    </Card>
+  )
+}
+
+// Dialog component
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
+export default function DialogDemo() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Open Dialog</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone.
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+// Form with validation
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+const formSchema = z.object({
+  username: z.string().min(2).max(50),
+})
+
+export default function FormDemo() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { username: "" },
+  })
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values)
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}`,
+    proTips: [
+      'Copy components instead of installing - you own the code',
+      'Customize with Tailwind CSS classes',
+      'Built on accessible Radix UI primitives',
+      'Use dark mode with CSS variables',
+      'Combine components for complex UIs',
+      'TypeScript support out of the box',
+      'Works with Next.js, Vite, Remix',
+      'Add only components you need'
+    ],
+    bestFor: ['React applications', 'Design systems', 'Next.js projects'],
+    officialDocs: 'https://ui.shadcn.com/docs',
+    tutorial: 'https://ui.shadcn.com/docs/installation'
+  },
+
+  {
+    id: 'tailwindcss',
+    name: 'Tailwind CSS',
+    category: 'UI Frameworks & Design',
+    icon: '💨',
+    color: '#06B6D4',
+    developer: 'Tailwind Labs',
+    platforms: ['Web'],
+    pricing: 'Open Source (Free) / Tailwind UI (Paid)',
+    description: 'A utility-first CSS framework for rapidly building custom user interfaces.',
+    features: [
+      'Utility-first approach',
+      'Responsive design utilities',
+      'Dark mode support',
+      'JIT (Just-In-Time) compiler',
+      'Customizable via config file',
+      'Plugin ecosystem',
+      'PurgeCSS integration',
+      'IntelliSense support'
+    ],
+    useCases: [
+      'Web applications',
+      'Landing pages',
+      'Admin dashboards',
+      'E-commerce sites',
+      'Marketing websites',
+      'Component libraries'
+    ],
+    gettingStarted: `// Install Tailwind CSS
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'brand': '#3B82F6',
+      },
+    },
+  },
+  plugins: [],
+}
+
+// globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Button styles example
+<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  Click me
+</button>
+
+<button className="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white border border-blue-500 hover:border-transparent rounded py-2 px-4">
+  Outline Button
+</button>
+
+// Card layout example
+<div className="max-w-sm rounded overflow-hidden shadow-lg bg-white dark:bg-gray-800">
+  <img className="w-full" src="/img.jpg" alt="Sunset" />
+  <div className="px-6 py-4">
+    <div className="font-bold text-xl mb-2">Card Title</div>
+    <p className="text-gray-700 dark:text-gray-300 text-base">
+      Card content goes here
+    </p>
+  </div>
+  <div className="px-6 pt-4 pb-2">
+    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+      #tag
+    </span>
+  </div>
+</div>
+
+// Responsive grid
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div className="bg-white p-6 rounded-lg shadow">Item 1</div>
+  <div className="bg-white p-6 rounded-lg shadow">Item 2</div>
+  <div className="bg-white p-6 rounded-lg shadow">Item 3</div>
+</div>
+
+// Dark mode
+<div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+  Content here
+</div>
+
+// Custom components layer
+@layer components {
+  .btn-primary {
+    @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
+  }
+}`,
+    proTips: [
+      'Use JIT mode for faster builds',
+      'Customize theme in tailwind.config.js',
+      'Use @apply for reusable components',
+      'Install Tailwind CSS IntelliSense extension',
+      'Use dark: prefix for dark mode',
+      'Responsive prefixes: sm: md: lg: xl: 2xl:',
+      'Hover, focus, active states with prefixes',
+      'Group utilities with group-hover'
+    ],
+    bestFor: ['Rapid prototyping', 'Utility-first styling', 'Custom designs'],
+    officialDocs: 'https://tailwindcss.com/docs',
+    tutorial: 'https://tailwindcss.com/docs/installation'
+  },
+
+  {
+    id: 'radixui',
+    name: 'Radix UI',
+    category: 'UI Frameworks & Design',
+    icon: '⚛️',
+    color: '#8B5CF6',
+    developer: 'WorkOS',
+    platforms: ['Web'],
+    pricing: 'Open Source (Free)',
+    description: 'Unstyled, accessible components for building high-quality design systems.',
+    features: [
+      'Fully accessible (WAI-ARIA)',
+      'Unstyled and customizable',
+      'TypeScript support',
+      'Composable components',
+      'Server-side rendering',
+      'Keyboard navigation',
+      'Focus management',
+      'Portals and layers'
+    ],
+    useCases: [
+      'Design systems',
+      'Accessible applications',
+      'Custom component libraries',
+      'React applications',
+      'Headless UI',
+      'Component foundations'
+    ],
+    gettingStarted: `// Install Radix UI components
+npm install @radix-ui/react-dialog
+npm install @radix-ui/react-dropdown-menu
+npm install @radix-ui/react-select
+npm install @radix-ui/react-tooltip
+
+// Dialog component
+import * as Dialog from '@radix-ui/react-dialog';
+
+<Dialog.Root>
+  <Dialog.Trigger className="btn">Open</Dialog.Trigger>
+  <Dialog.Portal>
+    <Dialog.Overlay className="dialog-overlay" />
+    <Dialog.Content className="dialog-content">
+      <Dialog.Title>Dialog Title</Dialog.Title>
+      <Dialog.Description>
+        Dialog description
+      </Dialog.Description>
+      <Dialog.Close className="btn">Close</Dialog.Close>
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>
+
+// Dropdown Menu
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger className="btn">
+    Options
+  </DropdownMenu.Trigger>
+  <DropdownMenu.Content className="dropdown-content">
+    <DropdownMenu.Item className="dropdown-item">
+      Edit
+    </DropdownMenu.Item>
+    <DropdownMenu.Item className="dropdown-item">
+      Duplicate
+    </DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item className="dropdown-item">
+      Delete
+    </DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+
+// Select component
+import * as Select from '@radix-ui/react-select';
+
+<Select.Root>
+  <Select.Trigger className="select-trigger">
+    <Select.Value placeholder="Select an option" />
+  </Select.Trigger>
+  <Select.Portal>
+    <Select.Content className="select-content">
+      <Select.Item value="option1">Option 1</Select.Item>
+      <Select.Item value="option2">Option 2</Select.Item>
+      <Select.Item value="option3">Option 3</Select.Item>
+    </Select.Content>
+  </Select.Portal>
+</Select.Root>
+
+// Tooltip
+import * as Tooltip from '@radix-ui/react-tooltip';
+
+<Tooltip.Provider>
+  <Tooltip.Root>
+    <Tooltip.Trigger>Hover me</Tooltip.Trigger>
+    <Tooltip.Portal>
+      <Tooltip.Content className="tooltip-content">
+        Tooltip text
+        <Tooltip.Arrow />
+      </Tooltip.Content>
+    </Tooltip.Portal>
+  </Tooltip.Root>
+</Tooltip.Provider>
+
+// Styling with CSS
+.dialog-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  inset: 0;
+}
+
+.dialog-content {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}`,
+    proTips: [
+      'Components are unstyled - add your own CSS',
+      'Fully accessible out of the box',
+      'Composable API for flexibility',
+      'Use with any styling solution',
+      'TypeScript definitions included',
+      'Works with CSS-in-JS, CSS modules, Tailwind',
+      'Portal components for overlays',
+      'Keyboard navigation built-in'
+    ],
+    bestFor: ['Accessible UIs', 'Design systems', 'Headless components'],
+    officialDocs: 'https://www.radix-ui.com/docs/primitives',
+    tutorial: 'https://www.radix-ui.com/docs/primitives/overview/introduction'
   },
 
   // ==================== MOBILE PUBLISHING ====================

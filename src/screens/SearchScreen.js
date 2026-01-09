@@ -11,11 +11,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { getAllLanguages } from '../data/languagesData';
 import { getAllDesignPatterns } from '../data/designPatternsData';
-import { getAllPlatforms } from '../data/platformsData';
+import { getAllTools } from '../data/toolsData';
 import { specializedTopics } from '../data/specializedTopicsData';
 import { getAllCertificationCategories } from '../data/certificationsData';
 import { developerHints, quickTips } from '../data/developerHintsData';
-import { getAllTools } from '../data/toolsData';
 import { getTutorialsByLanguage } from '../data/tutorialsData';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 
@@ -176,11 +175,13 @@ export default function SearchScreen({ navigation }) {
       });
     }
 
-    // Search in platforms
+    // Search in platforms (now part of tools)
     if (filter === 'all' || filter === 'platforms') {
-      const platforms = getAllPlatforms();
-      platforms.forEach((platform) => {
-        const searchableText = `${platform.name} ${platform.description} ${platform.category}`.toLowerCase();
+      const allTools = getAllTools();
+      const platformCategories = ['Cloud & Hosting', 'Mobile Development', 'Version Control & CI/CD'];
+      const platformTools = allTools.filter(tool => platformCategories.includes(tool.category));
+      platformTools.forEach((platform) => {
+        const searchableText = `${platform.name} ${platform.description} ${platform.category} ${JSON.stringify(platform.features || [])}`.toLowerCase();
         if (searchableText.includes(lowerQuery)) {
           results.push({
             type: 'platform',
