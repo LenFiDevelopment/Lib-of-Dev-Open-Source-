@@ -6,88 +6,612 @@ export const languages = {
     name: 'JavaScript',
     icon: '🟨',
     color: '#F7DF1E',
-    description: 'High-level, interpreted programming language',
+    description: 'Die Programmiersprache des Webs - läuft im Browser und auf Servern (Node.js). Dynamisch typisiert, event-driven und perfekt für interaktive Websites, APIs und Full-Stack Development.',
     categories: {
       basics: {
         name: 'Basics & Syntax',
         items: [
           {
             title: 'Variables',
-            code: `// var, let, const
-let name = "John";
+            code: `// 3 Arten Variablen zu deklarieren
+
+// 1. const - Kann NICHT neu zugewiesen werden (empfohlen!)
+const userName = "Max Mustermann";
 const PI = 3.14159;
-var oldStyle = "legacy";`,
-            description: 'Variable declarations in JavaScript',
-            usage: 'Use let for reassignable variables, const for constants',
+const isLoggedIn = true;
+// userName = "Neuer Name"; // ❌ Fehler: Assignment to constant variable
+
+// 2. let - Kann neu zugewiesen werden
+let counter = 0;
+counter = 1; // ✅ Funktioniert
+counter++; // ✅ Auch okay
+
+let email = "alt@email.com";
+email = "neu@email.com"; // ✅ Kein Problem
+
+// 3. var - VERALTET! Nutze es nicht mehr!
+var oldStyle = "legacy"; // ❌ Nicht empfohlen
+
+// Wichtig: Block Scope
+{
+  const innerVar = "nur hier sichtbar";
+  let alsoInner = "auch nur hier";
+}
+// console.log(innerVar); // ❌ ReferenceError: not defined
+
+// Mehrere Variablen gleichzeitig
+const firstName = "Max", lastName = "Mustermann", age = 25;`,
+            description: 'Variablen sind Container für Daten. In JavaScript gibt es 3 Arten: const (konstant), let (veränderbar) und var (veraltet). const solltest du IMMER als Standard nutzen - nur wenn du wirklich neu zuweisen musst, nimm let.',
+            usage: 'Nutze const für alles was sich nicht ändert (90% der Fälle). let nur wenn du wirklich reassignen musst (z.B. Counter in Loops). var ist veraltet wegen Function Scope statt Block Scope.',
             bestPractices: [
-              'Always use const by default, only use let when you need to reassign',
-              'Avoid var - it has function scope and can cause unexpected behavior',
-              'Use descriptive variable names (e.g., userName instead of x)',
-              'Declare variables at the top of their scope for better readability'
+              '✅ Immer const als Standard verwenden',
+              '✅ Nur let nutzen wenn Reassignment nötig ist',
+              '✅ Beschreibende Namen: userName statt x, totalPrice statt tp',
+              '✅ camelCase für Variablennamen: userLoginTime',
+              '✅ SCREAMING_SNAKE_CASE für Konstanten: MAX_RETRY_COUNT',
+              '❌ var komplett vermeiden (Function Scope Problem)',
+              '❌ Keine Keywords als Namen: let class = "test" ❌',
+              '❌ Keine Umlaute: let Größe - besser: groesse'
             ],
             commonMistakes: [
-              'Using var instead of let/const in modern JavaScript',
-              'Trying to reassign a const variable (causes TypeError)',
-              'Not initializing variables before use',
-              'Using keywords as variable names'
+              '❌ const neu zuweisen: const x = 5; x = 10; // TypeError',
+              '❌ Variable ohne Deklaration: name = "Max"; // Globale Variable!',
+              '❌ var in Loops nutzen: Loop-Variable leckt in outer scope',
+              '❌ Variablen nicht initialisieren: let user; console.log(user); // undefined'
             ],
             performanceTips: [
-              'const and let have similar performance - use based on semantics',
-              'Avoid creating unnecessary variables in loops'
+              'const und let haben identische Performance',
+              'Nutze const für Semantik, nicht Performance',
+              'Vermeide globale Variablen (langsamer Zugriff)',
+              'Declare Variablen möglichst nah an ihrer Verwendung'
             ],
-            relatedTopics: ['Scope', 'Hoisting', 'Temporal Dead Zone'],
-            challenge: 'Create three variables: one that should never change (const), one that will change (let), and explain why you chose each.'
+            relatedTopics: ['Scope', 'Hoisting', 'Temporal Dead Zone', 'Memory Management'],
+            challenge: '💪 Erstelle: 1) Eine Konstante für dein Geburtsjahr, 2) Eine Variable für dein aktuelles Alter (ändert sich!), 3) Berechne das Jahr (Geburtsjahr + Alter)'
           },
           {
             title: 'Data Types',
-            code: `// Primitive types
-let str = "string";
-let num = 42;
-let bool = true;
-let undef = undefined;
-let nul = null;
-let sym = Symbol('unique');
-let bigInt = 123n;`,
-            description: 'JavaScript primitive data types',
-            usage: 'Understanding different data types is fundamental'
-          },
-          {
-            title: 'Functions',
-            code: `// Function declaration
-function greet(name) {
-  return \`Hello, \${name}!\`;
-}
+            code: `// JavaScript hat 8 Datentypen (7 Primitive + Object)
 
-// Arrow function
-const greetArrow = (name) => \`Hello, \${name}!\`;
+// 1. STRING - Text
+const name = "Max Mustermann";
+const greeting = 'Hallo Welt'; // Single quotes auch okay
+const template = \`Hallo \${name}!\`; // Template literals mit Backticks
+const multiline = \`Zeile 1
+Zeile 2
+Zeile 3\`;
 
-// Async function
-async function fetchData() {
-  const data = await fetch('api/url');
-  return data.json();
-}`,
-            description: 'Different ways to declare functions',
-            usage: 'Choose the appropriate function type based on context',
+// 2. NUMBER - Zahlen (Int und Float sind gleich!)
+const age = 25; // Integer
+const price = 19.99; // Float
+const negative = -42;
+const scientific = 1.5e6; // 1500000
+const infinity = Infinity;
+const notANumber = NaN; // Not a Number
+
+// 3. BOOLEAN - true oder false
+const isLoggedIn = true;
+const hasAccess = false;
+const isAdult = age >= 18; // true
+
+// 4. UNDEFINED - Variable deklariert aber nicht zugewiesen
+let user; // undefined
+console.log(user); // undefined
+
+// 5. NULL - Absichtlich kein Wert
+const emptyValue = null;
+let result = null; // Explizit leer setzen
+
+// 6. SYMBOL - Einzigartiger Identifier (Advanced)
+const id = Symbol('id');
+const anotherId = Symbol('id');
+// id !== anotherId // true! Jedes Symbol ist unique
+
+// 7. BIGINT - Sehr große Zahlen
+const bigNumber = 9007199254740991n; // 'n' am Ende!
+const alsoBig = BigInt(9007199254740991);
+
+// 8. OBJECT - Komplexe Datenstrukturen
+const person = {
+  name: "Max",
+  age: 25
+};
+const numbers = [1, 2, 3]; // Arrays sind auch Objects!
+const func = function() {}; // Functions auch!
+
+// Type Checking
+typeof "text"; // "string"
+typeof 42; // "number"
+typeof true; // "boolean"
+typeof undefined; // "undefined"
+typeof null; // "object" ⚠️ JavaScript Bug!
+typeof {}; // "object"
+typeof []; // "object" ⚠️ Use Array.isArray([])`,
+            description: 'JavaScript hat 8 Datentypen: String (Text), Number (Zahlen), Boolean (true/false), Undefined (nicht zugewiesen), Null (leer), Symbol (unique IDs), BigInt (große Zahlen) und Object (komplexe Daten). Die ersten 7 sind "Primitives" (unveränderlich), Object ist komplex.',
+            usage: 'Strings für Text, Numbers für Mathematik, Booleans für Bedingungen, Objects für strukturierte Daten. typeof prüft den Typ. Wichtig: JavaScript ist dynamisch typisiert - Variablen können ihren Typ ändern!',
             bestPractices: [
-              'Use arrow functions for callbacks and when you need lexical this',
-              'Use function declarations for methods that need their own this context',
-              'Keep functions small and focused on a single task',
-              'Use descriptive function names that explain what they do',
-              'Always handle errors in async functions with try-catch'
+              '✅ Template Literals \`${var}\` statt String Concatenation',
+              '✅ === statt == für Type-Safe Vergleiche',
+              '✅ Array.isArray() statt typeof für Arrays',
+              '✅ null für absichtlich leere Werte, undefined für nicht initialisiert',
+              '✅ Number.isNaN() statt isNaN() (letzteres konvertiert)',
+              '❌ Nicht == verwenden (macht Type Coercion)',
+              '❌ typeof null === "object" ist ein Bug - extra checken!'
             ],
             commonMistakes: [
-              'Forgetting to return a value from a function',
-              'Using arrow functions as methods (loses this context)',
-              'Not handling promise rejections in async functions',
-              'Creating functions inside loops (performance issue)'
+              '❌ == statt === nutzen: "5" == 5 ist true (Type Coercion)',
+              '❌ NaN === NaN ist false! Nutze Number.isNaN()',
+              '❌ typeof [] gibt "object" - nutze Array.isArray()',
+              '❌ String + Number: "5" + 3 = "53" (String Concatenation!)',
+              '❌ undefined vs null verwechseln'
             ],
             performanceTips: [
-              'Arrow functions are slightly faster but the difference is negligible',
-              'Avoid creating functions inside render loops',
-              'Use function memoization for expensive computations'
+              'Primitive Types sind schneller als Objects',
+              'Template Literals sind schnell - nutze sie!',
+              'typeof ist sehr schnell',
+              'parseInt() ist langsamer als Number()'
             ],
-            relatedTopics: ['Closures', 'This Binding', 'Promises', 'Callbacks'],
-            challenge: 'Create a function that takes an array and returns a new array with doubled values. Try implementing it with both regular and arrow functions!'
+            relatedTopics: ['Type Coercion', 'Type Conversion', 'Truthy/Falsy', 'NaN'],
+            challenge: '💪 Erstelle Variablen für: Name (string), Alter (number), isStudent (boolean). Nutze typeof um jeden Typ zu prüfen und console.log das Ergebnis!'
+          },
+          {
+            title: 'Functions - Funktionen',
+            code: `// JavaScript hat mehrere Wege Funktionen zu definieren
+
+// 1. FUNCTION DECLARATION - Klassische Funktion
+function greet(name) {
+  return \`Hallo, \${name}!\`;
+}
+console.log(greet("Max")); // "Hallo, Max!"
+
+// Hoisting: Function Declarations können VOR ihrer Definition aufgerufen werden
+sayHi(); // ✅ Funktioniert!
+function sayHi() {
+  console.log("Hi!");
+}
+
+// 2. FUNCTION EXPRESSION - Funktion als Wert
+const greetFunc = function(name) {
+  return \`Hallo, \${name}!\`;
+};
+// sayHi2(); // ❌ Fehler: Cannot access before initialization
+const sayHi2 = function() {
+  console.log("Hi!");
+};
+
+// 3. ARROW FUNCTIONS - Moderne Syntax (ES6+)
+const greetArrow = (name) => {
+  return \`Hallo, \${name}!\`;
+};
+
+// Arrow Function - Verkürzt (wenn nur 1 Expression)
+const greetShort = name => \`Hallo, \${name}!\`; // Implicit return
+const double = x => x * 2; // Keine Klammern bei 1 Parameter
+const add = (a, b) => a + b; // Klammern bei mehreren Parametern
+
+// Arrow Functions ohne Parameter
+const getTime = () => new Date().toLocaleTimeString();
+
+// 4. IIFE - Immediately Invoked Function Expression
+(function() {
+  console.log("Ich werde sofort ausgeführt!");
+})();
+
+// 5. DEFAULT PARAMETERS - Standardwerte
+function greetWithDefault(name = "Gast", age = 18) {
+  return \`Hallo \${name}, du bist \${age} Jahre alt\`;
+}
+greetWithDefault(); // "Hallo Gast, du bist 18 Jahre alt"
+greetWithDefault("Max"); // "Hallo Max, du bist 18 Jahre alt"
+greetWithDefault("Max", 25); // "Hallo Max, du bist 25 Jahre alt"
+
+// 6. REST PARAMETERS - Beliebig viele Argumente
+function sum(...numbers) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+sum(1, 2, 3); // 6
+sum(1, 2, 3, 4, 5); // 15
+
+// 7. CALLBACK FUNCTIONS - Funktionen als Argumente
+function processUser(name, callback) {
+  console.log(\`Processing \${name}...\`);
+  callback(name);
+}
+processUser("Max", (name) => {
+  console.log(\`Done processing \${name}!\`);
+});
+
+// 8. HIGHER ORDER FUNCTIONS - Return Functions
+function multiplier(factor) {
+  return function(number) {
+    return number * factor;
+  };
+}
+const double = multiplier(2);
+const triple = multiplier(3);
+console.log(double(5)); // 10
+console.log(triple(5)); // 15
+
+// 9. ASYNC FUNCTIONS - Für asynchronen Code
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fehler:', error);
+    throw error;
+  }
+}
+
+// 10. GENERATOR FUNCTIONS - Pausierbare Funktionen
+function* numberGenerator() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+const gen = numberGenerator();
+console.log(gen.next().value); // 1
+console.log(gen.next().value); // 2`,
+            description: 'Funktionen sind wiederverwendbare Code-Blöcke. Es gibt viele Arten: Function Declarations (klassisch), Arrow Functions (modern), Async Functions (für Promises), Callbacks (als Argumente), Higher Order Functions (returnen Functions). Arrow Functions haben kein eigenes "this".',
+            usage: 'Function Declarations für Methoden mit "this". Arrow Functions für Callbacks und wenn du lexical "this" brauchst. Async Functions für API Calls. Default Parameters für optionale Argumente. Rest Parameters für variable Anzahl.',
+            bestPractices: [
+              '✅ Arrow Functions für Callbacks: array.map(x => x * 2)',
+              '✅ Function Declarations für Object Methods (brauchen this)',
+              '✅ Kurze Arrow Functions ohne {} wenn nur 1 Expression',
+              '✅ Default Parameters statt || Operator',
+              '✅ Eine Funktion = Eine Aufgabe (Single Responsibility)',
+              '✅ Beschreibende Namen: getUserById() statt get()',
+              '✅ Try-Catch in async Functions',
+              '✅ Pure Functions bevorzugen (keine Side Effects)',
+              '❌ Nicht Arrow Functions als Object Methods (verlieren this)',
+              '❌ Funktionen nicht in Loops erstellen (Performance)',
+              '❌ Zu viele Parameter (max 3, sonst Object nutzen)'
+            ],
+            commonMistakes: [
+              '❌ Return vergessen: function add(a,b) { a + b } // undefined!',
+              '❌ Arrow Function als Method: obj = { func: () => this.x } // this ist falsch',
+              '❌ Async ohne await: async function() { fetch(url); } // Promise nicht abwarten',
+              '❌ Callback Hell: Zu viele verschachtelte Callbacks',
+              '❌ this in Arrow Functions falsch verstehen'
+            ],
+            performanceTips: [
+              'Arrow Functions sind minimal schneller als normale',
+              'Memoization für teure Berechnungen nutzen',
+              'Funktionen außerhalb von Loops definieren',
+              'Pure Functions sind leichter zu optimieren',
+              'Avoid creating functions in render methods (React)'
+            ],
+            relatedTopics: ['Closures', 'This Binding', 'Promises', 'Callbacks', 'Higher Order Functions', 'Pure Functions'],
+            challenge: '💪 Erstelle: 1) Eine Funktion die 2 Zahlen multipliziert, 2) Als Arrow Function, 3) Mit Default Parameter (falls keine Zahl = 1), 4) Teste mit verschiedenen Eingaben!'
+          },
+          {
+            title: 'Operators - Operatoren',
+            code: `// ARITHMETISCHE OPERATOREN
+let x = 10, y = 3;
+console.log(x + y); // 13 Addition
+console.log(x - y); // 7 Subtraktion
+console.log(x * y); // 30 Multiplikation
+console.log(x / y); // 3.333... Division
+console.log(x % y); // 1 Modulo (Rest)
+console.log(x ** y); // 1000 Potenz (10³)
+
+// INCREMENT / DECREMENT
+let count = 5;
+count++; // 6 Post-increment
+++count; // 7 Pre-increment
+count--; // 6 Post-decrement
+--count; // 5 Pre-decrement
+
+// VERGLEICHSOPERATOREN
+// == vs === !!! WICHTIG !!!
+console.log(5 == "5"); // true ⚠️ Type Coercion!
+console.log(5 === "5"); // false ✅ Strict equality
+console.log(5 != "5"); // false
+console.log(5 !== "5"); // true ✅ Immer strict nutzen!
+
+console.log(10 > 5); // true
+console.log(10 < 5); // false
+console.log(10 >= 10); // true
+console.log(10 <= 5); // false
+
+// LOGISCHE OPERATOREN
+const isAdult = true;
+const hasID = false;
+
+console.log(isAdult && hasID); // false (AND - beide müssen true sein)
+console.log(isAdult || hasID); // true (OR - einer muss true sein)
+console.log(!isAdult); // false (NOT - invertiert)
+
+// SHORT CIRCUIT EVALUATION
+const user = null;
+const name = user && user.name; // null (stoppt bei null)
+const defaultName = name || "Gast"; // "Gast"
+
+// NULLISH COALESCING (??)
+const count = 0;
+const value1 = count || 10; // 10 ⚠️ 0 ist falsy
+const value2 = count ?? 10; // 0 ✅ Nur bei null/undefined
+
+// OPTIONAL CHAINING (?.)
+const person = { address: { city: "Berlin" } };
+console.log(person.address?.city); // "Berlin"
+console.log(person.phone?.number); // undefined (kein Error!)
+
+// TERNARY OPERATOR (? :)
+const age = 20;
+const status = age >= 18 ? "Adult" : "Minor";
+console.log(status); // "Adult"
+
+// ASSIGNMENT OPERATORS
+let num = 10;
+num += 5; // num = num + 5 → 15
+num -= 3; // num = num - 3 → 12
+num *= 2; // num = num * 2 → 24
+num /= 4; // num = num / 4 → 6
+num %= 4; // num = num % 4 → 2
+
+// SPREAD OPERATOR (...)
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+const obj1 = { a: 1, b: 2 };
+const obj2 = { ...obj1, c: 3 }; // { a: 1, b: 2, c: 3 }
+
+// TYPEOF OPERATOR
+console.log(typeof 42); // "number"
+console.log(typeof "text"); // "string"
+console.log(typeof true); // "boolean"`,
+            description: 'Operatoren führen Operationen auf Werten aus. Arithmetisch (+, -, *, /, %), Vergleiche (===, !==, <, >), Logisch (&&, ||, !), Assignment (=, +=). Wichtig: === statt == nutzen für Type-Safe Vergleiche! Moderne Operatoren: ?? (Nullish Coalescing), ?. (Optional Chaining).',
+            usage: '=== für Vergleiche (nicht ==). && für "UND", || für "ODER". ?? statt || wenn 0 oder "" valide sind. ?. für sichere Property-Zugriffe. Ternary ?: für kurze if-else. Spread ... zum Kopieren/Mergen.',
+            bestPractices: [
+              '✅ Immer === und !== nutzen (strict equality)',
+              '✅ ?? statt || wenn 0/"" valide Werte sind',
+              '✅ ?. für Optional Chaining (verhindert Errors)',
+              '✅ Ternary ?: für kurze Bedingungen',
+              '✅ Spread ... zum immutable Kopieren',
+              '❌ == und != vermeiden (Type Coercion)',
+              '❌ Nicht zu viele verschachtelte Ternaries'
+            ],
+            commonMistakes: [
+              '❌ == statt ===: "5" == 5 ist true (Type Coercion)',
+              '❌ = statt ===: if (x = 5) setzt x statt zu vergleichen!',
+              '❌ || statt ??: value || default funktioniert nicht bei 0',
+              '❌ Vergessen dass && und || short-circuit evaluieren'
+            ],
+            relatedTopics: ['Type Coercion', 'Truthy/Falsy', 'Short Circuit', 'Operator Precedence'],
+            challenge: '💪 Schreibe: 1) Check ob Zahl zwischen 10 und 20 liegt (&&), 2) Default Wert mit ??, 3) Ternary für "Even" oder "Odd"'
+          },
+          {
+            title: 'Conditionals - Bedingungen',
+            code: `// IF - ELSE IF - ELSE
+const age = 20;
+
+if (age < 18) {
+  console.log("Minderjährig");
+} else if (age < 65) {
+  console.log("Erwachsen");
+} else {
+  console.log("Senior");
+}
+
+// Nur IF
+if (age >= 18) {
+  console.log("Volljährig!");
+}
+
+// TERNARY OPERATOR - Kurze Alternative
+const status = age >= 18 ? "Adult" : "Minor";
+console.log(status);
+
+// SWITCH STATEMENT
+const day = "Monday";
+
+switch (day) {
+  case "Monday":
+    console.log("Start der Woche");
+    break;
+  case "Friday":
+    console.log("Fast Wochenende!");
+    break;
+  case "Saturday":
+  case "Sunday":
+    console.log("Wochenende! 🎉");
+    break;
+  default:
+    console.log("Normaler Tag");
+}
+
+// TRUTHY und FALSY Values
+// Falsy: false, 0, "", null, undefined, NaN
+// Alles andere ist Truthy!
+
+const value = 0;
+if (value) {
+  console.log("Truthy"); // Wird NICHT ausgeführt
+}
+
+const name = "Max";
+if (name) {
+  console.log("Name existiert"); // Wird ausgeführt
+}
+
+// GUARD CLAUSES - Early Return Pattern
+function processUser(user) {
+  // Statt:
+  // if (user) {
+  //   if (user.isActive) {
+  //     // Logik
+  //   }
+  // }
+  
+  // Besser: Early Returns
+  if (!user) return;
+  if (!user.isActive) return;
+  
+  // Hauptlogik hier
+  console.log(\`Processing \${user.name}\`);
+}
+
+// MULTIPLE CONDITIONS
+const isWeekend = day === "Saturday" || day === "Sunday";
+const canVote = age >= 18 && hasID;
+
+// NULLISH COALESCING mit IF
+const username = user?.name ?? "Anonymous";
+
+// OPTIONAL CHAINING in Conditions
+if (user?.address?.city === "Berlin") {
+  console.log("Berliner!");
+}`,
+            description: 'Bedingungen steuern den Programmfluss. if/else für normale Checks, ternary (? :) für kurze Bedingungen, switch für viele Fälle. Wichtig: Truthy/Falsy Werte kennen! Falsy: false, 0, "", null, undefined, NaN. Guard Clauses (early returns) machen Code lesbarer.',
+            usage: 'if/else für komplexe Logik. Ternary für kurze Zuweisungen. switch wenn viele Fälle. Guard Clauses (early return) vermeiden Verschachtelung. Optional Chaining (?.) für sichere Property-Checks.',
+            bestPractices: [
+              '✅ Guard Clauses (early returns) statt tiefer Verschachtelung',
+              '✅ === in Bedingungen (strict)',
+              '✅ Ternary nur für kurze, lesbare Fälle',
+              '✅ switch mit break (außer bei fall-through)',
+              '✅ default case in switch immer definieren',
+              '❌ Zu viele verschachtelte if/else',
+              '❌ if (x === true) statt if (x)',
+              '❌ Ternary bei langer/komplexer Logik'
+            ],
+            commonMistakes: [
+              '❌ if (x = 5) setzt Wert statt zu vergleichen!',
+              '❌ switch ohne break - fällt durch!',
+              '❌ Truthy/Falsy nicht verstehen: if (0) ist false',
+              '❌ == statt === in Bedingungen'
+            ],
+            relatedTopics: ['Truthy/Falsy', 'Operators', 'Optional Chaining', 'Short Circuit'],
+            challenge: '💪 Schreibe: 1) Function mit Alters-Check (Kind/Jugend/Erwachsen/Senior), 2) Nutze Guard Clauses, 3) Switch für Wochentag'
+          },
+          {
+            title: 'Loops - Schleifen',
+            code: `// FOR LOOP - Klassisch
+for (let i = 0; i < 5; i++) {
+  console.log(i); // 0, 1, 2, 3, 4
+}
+
+// Rückwärts
+for (let i = 10; i >= 0; i--) {
+  console.log(i); // 10, 9, 8...0
+}
+
+// Schritt 2
+for (let i = 0; i < 10; i += 2) {
+  console.log(i); // 0, 2, 4, 6, 8
+}
+
+// WHILE LOOP
+let count = 0;
+while (count < 5) {
+  console.log(count);
+  count++;
+}
+
+// DO-WHILE - Läuft mindestens 1x
+let num = 10;
+do {
+  console.log(num); // Wird 1x ausgeführt
+  num++;
+} while (num < 5);
+
+// FOR...OF - Über Arrays/Strings iterieren
+const numbers = [1, 2, 3, 4, 5];
+for (const num of numbers) {
+  console.log(num); // 1, 2, 3, 4, 5
+}
+
+const name = "Max";
+for (const char of name) {
+  console.log(char); // M, a, x
+}
+
+// FOR...IN - Über Object Keys iterieren
+const person = { name: "Max", age: 25, city: "Berlin" };
+for (const key in person) {
+  console.log(\`\${key}: \${person[key]}\`);
+  // name: Max, age: 25, city: Berlin
+}
+
+// BREAK - Schleife abbrechen
+for (let i = 0; i < 10; i++) {
+  if (i === 5) break;
+  console.log(i); // 0, 1, 2, 3, 4
+}
+
+// CONTINUE - Iteration überspringen
+for (let i = 0; i < 5; i++) {
+  if (i === 2) continue;
+  console.log(i); // 0, 1, 3, 4 (2 übersprungen)
+}
+
+// ARRAY METHODS - Moderne Alternative zu Loops! ✅
+const arr = [1, 2, 3, 4, 5];
+
+// forEach - Über jedes Element
+arr.forEach(num => console.log(num));
+
+// map - Transformieren
+const doubled = arr.map(num => num * 2); // [2, 4, 6, 8, 10]
+
+// filter - Filtern
+const evens = arr.filter(num => num % 2 === 0); // [2, 4]
+
+// reduce - Aggregieren
+const sum = arr.reduce((total, num) => total + num, 0); // 15
+
+// find - Erstes Match
+const found = arr.find(num => num > 3); // 4
+
+// some - Mindestens eins true
+const hasEven = arr.some(num => num % 2 === 0); // true
+
+// every - Alle true
+const allPositive = arr.every(num => num > 0); // true
+
+// NESTED LOOPS
+for (let i = 1; i <= 3; i++) {
+  for (let j = 1; j <= 3; j++) {
+    console.log(\`i=\${i}, j=\${j}\`);
+  }
+}
+
+// INFINITE LOOP - VORSICHT!
+// while (true) { } // ❌ Blockiert Browser!
+
+// Mit Break ist okay:
+let counter = 0;
+while (true) {
+  console.log(counter);
+  counter++;
+  if (counter >= 5) break; // Wichtig!
+}`,
+            description: 'Schleifen wiederholen Code. for für feste Anzahl, while für Bedingung, for...of für Arrays/Strings, for...in für Objects. Moderne Alternative: Array-Methoden (map, filter, forEach)! break beendet Loop, continue überspringt Iteration. for...of ist besser als for...in für Arrays.',
+            usage: 'for für klassische Counter-Loops. for...of für Arrays (besser als for i). while für unbekannte Anzahl. Array-Methoden (map, filter) sind moderner und lesbarer! break zum Abbrechen, continue zum Überspringen.',
+            bestPractices: [
+              '✅ Array-Methoden (map, filter) statt for-Loops',
+              '✅ for...of für Arrays, for...in für Objects',
+              '✅ const in for...of wenn nicht reassigned',
+              '✅ break um infinite loops zu vermeiden',
+              '✅ Aussagekräftige Loop-Variablen (nicht nur i)',
+              '❌ for...in für Arrays (unsortiert, inkl. Prototype)',
+              '❌ Modifiziere Array während Iteration',
+              '❌ Infinite Loops ohne break'
+            ],
+            commonMistakes: [
+              '❌ for...in für Arrays: falsche Reihenfolge möglich',
+              '❌ Off-by-one: i <= arr.length statt i < arr.length',
+              '❌ Infinite while: while(true) ohne break',
+              '❌ forEach mit return: Stoppt nicht die Loop!',
+              '❌ map ohne return: undefined Array'
+            ],
+            performanceTips: [
+              'for ist schnellste Loop (aber weniger lesbar)',
+              'Array-Methoden sind gut optimiert',
+              'Cache array.length: for(let i=0, len=arr.length; i<len; i++)',
+              'Vermeide Nested Loops wo möglich (O(n²))'
+            ],
+            relatedTopics: ['Arrays', 'Iterators', 'Array Methods', 'Break/Continue'],
+            challenge: '💪 Erstelle: 1) Loop für 1-10, überspringt 5, 2) for...of über Namen-Array, 3) Nutze map um Zahlen zu verdoppeln'
           }
         ]
       },
@@ -95,36 +619,265 @@ async function fetchData() {
         name: 'Arrays & Iteration',
         items: [
           {
-            title: 'Array Methods',
-            code: `const arr = [1, 2, 3, 4, 5];
+            title: 'Arrays - Die Basics',
+            code: `// ARRAY ERSTELLEN
+const numbers = [1, 2, 3, 4, 5];
+const mixed = [1, "text", true, null, { key: "value" }];
+const empty = [];
 
-// Map
-const doubled = arr.map(x => x * 2);
+// Mit Constructor (nicht empfohlen)
+const arr = new Array(5); // [empty × 5]
+const arr2 = Array.of(1, 2, 3); // [1, 2, 3]
 
-// Filter
-const evens = arr.filter(x => x % 2 === 0);
+// Array aus String
+const chars = Array.from("Hello"); // ["H", "e", "l", "l", "o"]
 
-// Reduce
-const sum = arr.reduce((acc, x) => acc + x, 0);
+// ZUGRIFF
+const fruits = ["Apple", "Banana", "Orange"];
+console.log(fruits[0]); // "Apple"
+console.log(fruits[2]); // "Orange"
+console.log(fruits[fruits.length - 1]); // "Orange" (letztes Element)
 
-// Find
-const found = arr.find(x => x > 3);
+// LÄNGE
+console.log(fruits.length); // 3
 
-// forEach
-arr.forEach(x => console.log(x));`,
-            description: 'Essential array manipulation methods',
-            usage: 'Use these methods for functional array operations'
+// HINZUFÜGEN
+fruits.push("Grape"); // Am Ende hinzufügen
+console.log(fruits); // ["Apple", "Banana", "Orange", "Grape"]
+
+fruits.unshift("Mango"); // Am Anfang hinzufügen
+console.log(fruits); // ["Mango", "Apple", "Banana", "Orange", "Grape"]
+
+// ENTFERNEN
+const last = fruits.pop(); // Letztes entfernen
+console.log(last); // "Grape"
+console.log(fruits); // ["Mango", "Apple", "Banana", "Orange"]
+
+const first = fruits.shift(); // Erstes entfernen
+console.log(first); // "Mango"
+
+// ELEMENT ERSETZEN
+fruits[1] = "Strawberry";
+console.log(fruits); // ["Apple", "Strawberry", "Orange"]
+
+// PRÜFEN
+console.log(fruits.includes("Apple")); // true
+console.log(fruits.indexOf("Orange")); // 2
+console.log(fruits.indexOf("Kiwi")); // -1 (nicht gefunden)
+
+// SUCHEN
+const nums = [5, 12, 8, 130, 44];
+const found = nums.find(n => n > 10); // 12
+const index = nums.findIndex(n => n > 10); // 1
+
+// KOPIEREN (Shallow Copy)
+const copy = [...fruits]; // Spread
+const copy2 = fruits.slice(); // slice ohne Argumente
+const copy3 = Array.from(fruits);`,
+            description: 'Arrays sind Listen von Werten. Zugriff via Index (0-basiert). Länge mit .length. Hinzufügen: push (Ende), unshift (Anfang). Entfernen: pop (Ende), shift (Anfang). Wichtig: Arrays sind Objekte, Kopien mit [...arr] oder slice() machen!',
+            usage: 'push/pop für Stack (LIFO). shift/unshift für Queue (FIFO). includes() zum Prüfen. indexOf() für Position. [...arr] für Shallow Copy. Nie arr[arr.length] = x nutzen, besser push().',
+            bestPractices: [
+              '✅ [...arr] oder slice() für Kopien (immutable)',
+              '✅ push() statt arr[arr.length] = x',
+              '✅ includes() statt indexOf() !== -1',
+              '✅ at(-1) für letztes Element (modern)',
+              '✅ Array.from() oder [...iterable] für Conversions',
+              '❌ new Array(length) - macht holes',
+              '❌ arr.length = 0 zum Leeren (confusing)'
+            ],
+            commonMistakes: [
+              '❌ Out-of-bounds: arr[100] gibt undefined (kein Error!)',
+              '❌ arr.length verändert Array: arr.length = 2 löscht Rest',
+              '❌ Shallow Copy: const copy = arr; // Keine Kopie!',
+              '❌ arr[-1] funktioniert nicht (wie Python)'
+            ],
+            relatedTopics: ['Array Methods', 'Spread Operator', 'Destructuring', 'Immutability'],
+            challenge: '💪 Erstelle Array mit 5 Früchten. Füge 2 hinzu (Anfang+Ende). Entferne mittleres Element. Prüfe ob "Apple" drin ist.'
           },
           {
-            title: 'Array Destructuring',
-            code: `const arr = [1, 2, 3, 4, 5];
-const [first, second, ...rest] = arr;
-// first = 1, second = 2, rest = [3, 4, 5]
+            title: 'Array Methods - Map, Filter, Reduce',
+            code: `const numbers = [1, 2, 3, 4, 5];
 
-const [a, , c] = arr; // Skip elements
-// a = 1, c = 3`,
-            description: 'Destructure arrays to extract values',
-            usage: 'Clean way to extract array elements'
+// MAP - Transformiert jedes Element, returnt neues Array
+const doubled = numbers.map(num => num * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+
+const squared = numbers.map(num => num ** 2);
+console.log(squared); // [1, 4, 9, 16, 25]
+
+// Mit Index
+const withIndex = numbers.map((num, i) => \`\${i}: \${num}\`);
+console.log(withIndex); // ["0: 1", "1: 2", ...]
+
+// FILTER - Filtert Elements, returnt neues Array
+const evens = numbers.filter(num => num % 2 === 0);
+console.log(evens); // [2, 4]
+
+const greaterThan2 = numbers.filter(num => num > 2);
+console.log(greaterThan2); // [3, 4, 5]
+
+// REDUCE - Reduziert zu einem Wert
+const sum = numbers.reduce((total, num) => {
+  return total + num;
+}, 0); // 0 ist Startwert
+console.log(sum); // 15
+
+const product = numbers.reduce((acc, num) => acc * num, 1);
+console.log(product); // 120
+
+// Objekt bauen
+const users = ["Max", "Anna", "Tom"];
+const userObj = users.reduce((obj, name, i) => {
+  obj[i] = name;
+  return obj;
+}, {});
+console.log(userObj); // {0: "Max", 1: "Anna", 2: "Tom"}
+
+// CHAINING - Methoden verketten!
+const result = numbers
+  .filter(n => n % 2 === 0) // [2, 4]
+  .map(n => n * 3) // [6, 12]
+  .reduce((sum, n) => sum + n, 0); // 18
+
+// FOREACH - Über jedes Element (kein return!)
+numbers.forEach((num, i) => {
+  console.log(\`Index \${i}: \${num}\`);
+});
+
+// FIND - Erstes Element das Bedingung erfüllt
+const found = numbers.find(n => n > 3); // 4
+const notFound = numbers.find(n => n > 10); // undefined
+
+// FINDINDEX - Index des ersten Matches
+const index = numbers.findIndex(n => n > 3); // 3
+const notFoundIndex = numbers.findIndex(n => n > 10); // -1
+
+// SOME - Mindestens ein Element erfüllt Bedingung
+const hasEven = numbers.some(n => n % 2 === 0); // true
+const hasNegative = numbers.some(n => n < 0); // false
+
+// EVERY - Alle Elemente erfüllen Bedingung
+const allPositive = numbers.every(n => n > 0); // true
+const allEven = numbers.every(n => n % 2 === 0); // false
+
+// SORT - Sortieren (⚠️ verändert Original!)
+const nums = [3, 1, 4, 1, 5, 9, 2];
+nums.sort((a, b) => a - b); // Aufsteigend
+console.log(nums); // [1, 1, 2, 3, 4, 5, 9]
+
+// Immutable sort
+const sorted = [...nums].sort((a, b) => b - a); // Absteigend
+
+// REVERSE - Umkehren (⚠️ verändert Original!)
+nums.reverse();
+
+// Immutable reverse
+const reversed = [...nums].reverse();`,
+            description: 'Array-Methoden sind das Herzstück moderner JavaScript-Entwicklung! map() transformiert, filter() filtert, reduce() aggregiert. forEach() iteriert ohne Return. find() sucht erstes Match. some()/every() prüfen Bedingungen. Wichtig: map/filter/reduce returnen NEUE Arrays (immutable)!',
+            usage: 'map() für Transformationen (Daten ändern). filter() für Subsets (Elemente entfernen). reduce() für Aggregationen (sum, product, objects bauen). Chaining kombiniert mehrere Operations. find() statt filter()[0]. some()/every() für Boolean-Checks.',
+            bestPractices: [
+              '✅ map/filter/reduce sind immutable (gut!)',
+              '✅ Chain methods: arr.filter().map().reduce()',
+              '✅ Arrow functions für kurze Callbacks',
+              '✅ find() statt filter()[0]',
+              '✅ some()/every() statt manuelle Checks',
+              '✅ [...arr].sort() für immutable sort',
+              '❌ forEach mit return (macht nichts!)',
+              '❌ map ohne return (undefined array)',
+              '❌ sort() ohne Comparator für Numbers'
+            ],
+            commonMistakes: [
+              '❌ map ohne return: arr.map(x => { x * 2 }) // undefined!',
+              '❌ forEach mit return: stoppt nicht!',
+              '❌ reduce ohne Initial Value bei leerem Array',
+              '❌ sort() ohne Comparator: ["10", "2", "1"] statt [1, 2, 10]',
+              '❌ filter() denken es modified original (tut es nicht)'
+            ],
+            performanceTips: [
+              'for loop ist schneller, aber weniger lesbar',
+              'Chaining ist elegant aber bei großen Arrays langsam',
+              'reduce() kann komplexer sein als loop',
+              'some()/every() stoppen early (gut für Performance)'
+            ],
+            relatedTopics: ['Higher Order Functions', 'Immutability', 'Functional Programming', 'Callbacks'],
+            challenge: '💪 Array [1-10]: 1) Filtere gerade Zahlen, 2) Verdopple sie, 3) Summiere mit reduce, 4) Als eine Chain!'
+          },
+          {
+            title: 'Array Destructuring & Spread',
+            code: `// DESTRUCTURING - Werte extrahieren
+const fruits = ["Apple", "Banana", "Orange", "Grape"];
+
+const [first, second] = fruits;
+console.log(first); // "Apple"
+console.log(second); // "Banana"
+
+// Rest Parameter
+const [head, ...rest] = fruits;
+console.log(head); // "Apple"
+console.log(rest); // ["Banana", "Orange", "Grape"]
+
+// Elemente überspringen
+const [a, , c] = fruits;
+console.log(a); // "Apple"
+console.log(c); // "Orange"
+
+// Default Values
+const [x, y, z = "Default"] = ["A", "B"];
+console.log(z); // "Default"
+
+// Swapping ohne temp Variable
+let num1 = 5, num2 = 10;
+[num1, num2] = [num2, num1];
+console.log(num1, num2); // 10, 5
+
+// SPREAD OPERATOR - Array ausbreiten
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+// Arrays zusammenführen
+const combined = [...arr1, ...arr2]; // [1, 2, 3, 4, 5, 6]
+const withExtra = [0, ...arr1, 3.5, ...arr2]; // [0, 1, 2, 3, 3.5, 4, 5, 6]
+
+// Kopieren (Shallow Copy!)
+const copy = [...arr1];
+copy.push(4); // Original arr1 bleibt unverändert
+
+// Als Function Arguments
+const nums = [1, 5, 3];
+console.log(Math.max(...nums)); // 5 (statt Math.max(1, 5, 3))
+
+// String zu Array
+const word = "Hello";
+const chars = [...word]; // ["H", "e", "l", "l", "o"]
+
+// Set zu Array (Duplikate entfernen)
+const withDupes = [1, 2, 2, 3, 3, 3, 4];
+const unique = [...new Set(withDupes)]; // [1, 2, 3, 4]
+
+// Array in Function Destructuring
+function printFirst([first, second]) {
+  console.log(\`Erste: \${first}, Zweite: \${second}\`);
+}
+printFirst(fruits); // "Erste: Apple, Zweite: Banana"`,
+            description: 'Destructuring extrahiert Werte aus Arrays in Variablen. Spread (...) breitet Array aus. Rest (...rest) sammelt restliche Elemente. Swapping ohne temp Variable möglich. Spread kopiert Arrays (shallow!), merged Arrays, konvertiert Iterables. Set entfernt Duplikate.',
+            usage: 'Destructuring für kompakte Variablen-Zuweisungen. Rest für "alle anderen". Spread für Kopien, Merging, Function Args. [...new Set(arr)] entfernt Duplikate. Swapping: [a, b] = [b, a]. String zu Array: [...str].',
+            bestPractices: [
+              '✅ [...arr] für Shallow Copies',
+              '✅ [a, b] = [b, a] für Swapping',
+              '✅ [...new Set(arr)] für Unique Values',
+              '✅ Rest Parameter für flexible Functions',
+              '✅ Default Values bei Destructuring',
+              '❌ Spread für Deep Copies (nur Shallow!)',
+              '❌ Zu viele Destructured Variablen (unübersichtlich)'
+            ],
+            commonMistakes: [
+              '❌ Spread macht nur Shallow Copy (Nested Objects bleiben referenziert)',
+              '❌ Destructuring mit undefined: const [x] = undefined // Error!',
+              '❌ Rest muss letztes Element sein: [...rest, last] ❌',
+              '❌ Spread in Object vs Array verwechseln'
+            ],
+            relatedTopics: ['Spread Operator', 'Rest Parameters', 'Destructuring', 'Immutability'],
+            challenge: '💪 Array [1,2,3,4,5]: 1) Destructure first + rest, 2) Merge mit [6,7,8], 3) Entferne Duplikate aus [1,1,2,2,3]'
           }
         ]
       },
@@ -132,48 +885,372 @@ const [a, , c] = arr; // Skip elements
         name: 'Objects & Classes',
         items: [
           {
-            title: 'Object Literals',
-            code: `const person = {
-  name: "John",
-  age: 30,
-  greet() {
-    console.log(\`Hello, I'm \${this.name}\`);
+            title: 'Objects - Die Basics',
+            code: `// OBJECT LITERAL - Häufigste Art
+const person = {
+  name: "Max Mustermann",
+  age: 25,
+  city: "Berlin",
+  isStudent: true
+};
+
+// Zugriff mit Dot Notation
+console.log(person.name); // "Max Mustermann"
+console.log(person.age); // 25
+
+// Zugriff mit Bracket Notation
+console.log(person["name"]); // "Max Mustermann"
+const key = "age";
+console.log(person[key]); // 25 (dynamisch!)
+
+// Neues Property hinzufügen
+person.email = "max@example.com";
+person["phone"] = "0123456789";
+
+// Property ändern
+person.age = 26;
+
+// Property löschen
+delete person.isStudent;
+
+// Prüfen ob Property existiert
+console.log("name" in person); // true
+console.log("country" in person); // false
+console.log(person.hasOwnProperty("name")); // true
+
+// METHODS - Funktionen in Objects
+const user = {
+  firstName: "Max",
+  lastName: "Mustermann",
+  // Method (Kurzschreibweise)
+  getFullName() {
+    return \`\${this.firstName} \${this.lastName}\`;
+  },
+  // Arrow Function (kein eigenes this!)
+  getAge: () => {
+    // return this.age; // ❌ this funktioniert hier nicht!
   }
 };
 
-// Destructuring
-const { name, age } = person;
+console.log(user.getFullName()); // "Max Mustermann"
 
-// Spread operator
-const newPerson = { ...person, city: "NYC" };`,
-            description: 'Creating and manipulating objects',
-            usage: 'Objects store key-value pairs and methods'
+// COMPUTED PROPERTY NAMES
+const propertyName = "score";
+const game = {
+  [propertyName]: 100, // score: 100
+  [\`level_\${1 + 1}\`]: "Expert" // level_2: "Expert"
+};
+
+// PROPERTY SHORTHAND
+const name = "Anna";
+const age = 22;
+const student = { name, age }; // { name: "Anna", age: 22 }
+
+// OBJECT DESTRUCTURING
+const { name: userName, age: userAge } = person;
+console.log(userName); // "Max Mustermann"
+
+// Mit Default Values
+const { country = "Deutschland" } = person;
+console.log(country); // "Deutschland"
+
+// REST in Objects
+const { name, ...otherProps } = person;
+console.log(otherProps); // { age: 26, city: "Berlin", email: "..." }
+
+// NESTED OBJECTS
+const company = {
+  name: "Tech Corp",
+  address: {
+    street: "Hauptstr. 1",
+    city: "Berlin",
+    country: "Deutschland"
+  },
+  employees: [
+    { name: "Max", role: "Dev" },
+    { name: "Anna", role: "Designer" }
+  ]
+};
+
+// Zugriff
+console.log(company.address.city); // "Berlin"
+console.log(company.employees[0].name); // "Max"
+
+// Optional Chaining (?.)
+console.log(company.address?.city); // "Berlin"
+console.log(company.location?.city); // undefined (kein Error!)`,
+            description: 'Objects sind Key-Value Paare (Eigenschaften). Zugriff mit . (dot) oder ["key"] (bracket). Methods sind Funktionen in Objects. this referenziert das Object. Computed Properties: [key]. Property Shorthand wenn Variable = Property Name. Optional Chaining (?.) für sichere Zugriffe.',
+            usage: 'Dot Notation für statische Keys. Bracket für dynamische Keys oder Spaces. Methods mit function() für this-Zugriff. Arrow Functions haben kein eigenes this! Optional Chaining (?.) verhindert "Cannot read property of undefined" Errors.',
+            bestPractices: [
+              '✅ Dot notation: obj.key (lesbar)',
+              '✅ Bracket für dynamische Keys: obj[variable]',
+              '✅ Property Shorthand: { name } statt { name: name }',
+              '✅ Optional Chaining: obj?.prop?.nested',
+              '✅ Methods als function() für this',
+              '✅ const für Objects (Properties änderbar!)',
+              '❌ Arrow Functions als Methods (verlieren this)',
+              '❌ delete in Performance-critical Code'
+            ],
+            commonMistakes: [
+              '❌ Arrow Function als Method: verliert this',
+              '❌ obj.key mit Spaces: obj.first name ❌',
+              '❌ Zugriff ohne Optional Chaining: obj.a.b.c // Error wenn a oder b undefined',
+              '❌ delete obj.prop ist langsam, besser obj.prop = undefined'
+            ],
+            relatedTopics: ['This Binding', 'Optional Chaining', 'Destructuring', 'Spread Operator'],
+            challenge: '💪 Erstelle Object "car" mit brand, model, year. Füge Method getInfo() hinzu. Nutze Optional Chaining für car.owner?.name'
           },
           {
-            title: 'Classes',
-            code: `class Person {
+            title: 'Object Methods & Manipulation',
+            code: `const user = {
+  name: "Max",
+  age: 25,
+  city: "Berlin"
+};
+
+// OBJECT.KEYS() - Alle Keys als Array
+const keys = Object.keys(user);
+console.log(keys); // ["name", "age", "city"]
+
+// OBJECT.VALUES() - Alle Values als Array
+const values = Object.values(user);
+console.log(values); // ["Max", 25, "Berlin"]
+
+// OBJECT.ENTRIES() - Key-Value Pairs als Arrays
+const entries = Object.entries(user);
+console.log(entries); 
+// [["name", "Max"], ["age", 25], ["city", "Berlin"]]
+
+// Über Object iterieren
+for (const [key, value] of Object.entries(user)) {
+  console.log(\`\${key}: \${value}\`);
+}
+
+// OBJECT.ASSIGN() - Objects mergen
+const defaults = { theme: "dark", lang: "de" };
+const settings = { theme: "light" };
+const config = Object.assign({}, defaults, settings);
+console.log(config); // { theme: "light", lang: "de" }
+
+// SPREAD OPERATOR - Moderne Alternative zu assign
+const merged = { ...defaults, ...settings };
+
+// SHALLOW COPY
+const original = { name: "Max", address: { city: "Berlin" } };
+const copy1 = { ...original }; // Shallow!
+const copy2 = Object.assign({}, original); // Auch shallow!
+
+copy1.name = "Anna"; // ✅ Ändert nur Copy
+copy1.address.city = "München"; // ⚠️ Ändert auch Original!
+
+// DEEP COPY - Für nested objects
+const deepCopy = JSON.parse(JSON.stringify(original));
+// ⚠️ Verliert Functions, Dates, undefined, Symbol!
+
+// Moderne Alternative: structuredClone
+const betterDeepCopy = structuredClone(original);
+
+// OBJECT.FREEZE() - Object unveränderbar machen
+const frozen = Object.freeze({ name: "Max" });
+frozen.name = "Anna"; // ❌ Keine Änderung (strict mode: Error)
+frozen.age = 25; // ❌ Keine Änderung
+
+// Shallow freeze! Nested Objects änderbar!
+const partialFrozen = Object.freeze({
+  name: "Max",
+  address: { city: "Berlin" }
+});
+partialFrozen.address.city = "München"; // ✅ Funktioniert!
+
+// OBJECT.SEAL() - Keine neuen Properties, aber änderbar
+const sealed = Object.seal({ name: "Max" });
+sealed.name = "Anna"; // ✅ Funktioniert
+sealed.age = 25; // ❌ Keine neue Property
+
+// OBJECT.IS() - Vergleicht wie ===, aber besser für NaN und +/-0
+console.log(Object.is(NaN, NaN)); // true (NaN === NaN ist false!)
+console.log(Object.is(+0, -0)); // false (+0 === -0 ist true)
+
+// OBJECT.FROMENTRIES() - Aus Entries Object bauen
+const pairs = [["name", "Max"], ["age", 25]];
+const obj = Object.fromEntries(pairs);
+console.log(obj); // { name: "Max", age: 25 }
+
+// OPTIONAL CHAINING mit NULLISH COALESCING
+const city = user.address?.city ?? "Unknown";
+
+// DELETE OPERATOR
+delete user.age;
+console.log(user); // { name: "Max", city: "Berlin" }
+
+// IN OPERATOR
+console.log("name" in user); // true
+console.log("age" in user); // false`,
+            description: 'Object.keys/values/entries() für Iteration. Object.assign() oder {...spread} zum Mergen. Shallow Copy default! Deep Copy mit structuredClone() oder JSON.parse(JSON.stringify()). freeze() macht immutable. seal() verhindert neue Properties. Object.is() für sichere Vergleiche.',
+            usage: 'Object.keys() für Iteration. {...spread} für Merging/Copying. structuredClone() für Deep Copies. Object.freeze() für Immutability. Object.entries() + for...of zum Iterieren. Object.fromEntries() zum Transformieren von Arrays zu Objects.',
+            bestPractices: [
+              '✅ {...obj} für Shallow Copies',
+              '✅ structuredClone() für Deep Copies',
+              '✅ Object.freeze() für Constants',
+              '✅ Object.entries() + for...of für Iteration',
+              '✅ ?? mit ?. kombinieren',
+              '❌ JSON.parse/stringify für Deep Copy (verliert Functions)',
+              '❌ delete in Loops (langsam)'
+            ],
+            commonMistakes: [
+              '❌ Shallow Copy für Nested: { ...obj } kopiert nicht Nested!',
+              '❌ JSON.stringify verliert: Functions, undefined, Symbol, Date',
+              '❌ freeze() ist shallow: nested Objects änderbar',
+              '❌ Object.assign({}, obj) statt {...obj} (länger)'
+            ],
+            performanceTips: [
+              'Spread {...} ist schnell und modern',
+              'Object.keys().forEach() ist okay für kleine Objects',
+              'delete ist langsam, besser obj.prop = undefined',
+              'freeze() hat keine Performance Impact'
+            ],
+            relatedTopics: ['Immutability', 'Spread Operator', 'Shallow vs Deep Copy', 'Object Iteration'],
+            challenge: '💪 Object { a: 1, b: { c: 2 } }: 1) Shallow Copy, 2) Deep Copy, 3) Freeze, 4) Iteriere mit Object.entries()'
+          },
+          {
+            title: 'Classes - OOP in JavaScript',
+            code: `// CLASS DECLARATION
+class Person {
+  // Constructor - wird beim "new" aufgerufen
   constructor(name, age) {
-    this.name = name;
+    this.name = name; // Instance Property
     this.age = age;
   }
   
+  // Method
   greet() {
-    return \`Hello, I'm \${this.name}\`;
+    return \`Hallo, ich bin \${this.name}\`;
   }
   
+  // Getter
+  get birthYear() {
+    return new Date().getFullYear() - this.age;
+  }
+  
+  // Setter
+  set birthYear(year) {
+    this.age = new Date().getFullYear() - year;
+  }
+  
+  // Static Method - auf Class, nicht Instance
   static species() {
     return "Homo sapiens";
   }
+  
+  // Static Property (modern)
+  static planet = "Erde";
+  
+  // Private Property (modern)
+  #privateField = "geheim";
+  
+  getPrivate() {
+    return this.#privateField;
+  }
 }
 
+// Instanz erstellen
+const max = new Person("Max", 25);
+console.log(max.greet()); // "Hallo, ich bin Max"
+console.log(max.birthYear); // 1999 (Getter)
+max.birthYear = 1995; // Setter
+console.log(max.age); // 31
+
+// Static Method
+console.log(Person.species()); // "Homo sapiens"
+console.log(Person.planet); // "Erde"
+
+// VERERBUNG - Extends
 class Developer extends Person {
   constructor(name, age, language) {
-    super(name, age);
+    super(name, age); // Parent constructor aufrufen
     this.language = language;
   }
+  
+  // Method Override
+  greet() {
+    const parentGreet = super.greet();
+    return \`\${parentGreet}, ich code in \${this.language}\`;
+  }
+  
+  // Neue Method
+  code() {
+    return \`Coding in \${this.language}...\`;
+  }
+}
+
+const anna = new Developer("Anna", 22, "JavaScript");
+console.log(anna.greet()); 
+// "Hallo, ich bin Anna, ich code in JavaScript"
+console.log(anna.code()); // "Coding in JavaScript..."
+console.log(anna instanceof Developer); // true
+console.log(anna instanceof Person); // true
+
+// CLASS EXPRESSION
+const Animal = class {
+  constructor(name) {
+    this.name = name;
+  }
+};
+
+// PRIVATE METHODS (modern)
+class BankAccount {
+  #balance = 0;
+  
+  deposit(amount) {
+    this.#validateAmount(amount);
+    this.#balance += amount;
+  }
+  
+  #validateAmount(amount) { // Private!
+    if (amount <= 0) throw new Error("Invalid amount");
+  }
+  
+  getBalance() {
+    return this.#balance;
+  }
+}
+
+const account = new BankAccount();
+account.deposit(100);
+console.log(account.getBalance()); // 100
+// account.#balance; // ❌ SyntaxError: Private field
+// account.#validateAmount(50); // ❌ SyntaxError
+
+// STATIC BLOCK (modern)
+class Config {
+  static apiKey;
+  
+  static {
+    // Runs once when class is loaded
+    this.apiKey = "secret-key-123";
+  }
 }`,
-            description: 'ES6 class syntax',
-            usage: 'Use classes for object-oriented programming'
+            description: 'Classes sind Templates für Objects. constructor() wird bei "new" aufgerufen. Methods sind Funktionen. Getter/Setter mit get/set. Static Methods gehören zur Class, nicht zur Instance. extends für Vererbung. super() ruft Parent auf. Private Fields mit #. instanceof prüft Type.',
+            usage: 'Classes für OOP (Objects mit gleicher Struktur). extends für Vererbung. super() in Child Constructor. Static für Utility Functions. Private # für Encapsulation. Getter/Setter für computed Properties. instanceof für Type Checks.',
+            bestPractices: [
+              '✅ Classes für wiederverwendbare Object Types',
+              '✅ super() FIRST in Child Constructor',
+              '✅ Private # für interne State',
+              '✅ Static für Utility Functions',
+              '✅ Getter für computed Properties',
+              '✅ PascalCase für Class Namen: class UserAccount',
+              '❌ Arrow Functions als Methods (verlieren this)',
+              '❌ new vergessen: const x = Person() ❌'
+            ],
+            commonMistakes: [
+              '❌ super() vergessen in Child Constructor',
+              '❌ this falsch verstehen in Methods',
+              '❌ Private # nur in Class Body, nicht außerhalb',
+              '❌ Static Method auf Instance aufrufen: instance.staticMethod() ❌',
+              '❌ Return im Constructor (nur bei Objects)'
+            ],
+            relatedTopics: ['OOP', 'Inheritance', 'Encapsulation', 'This Binding', 'Prototypes'],
+            challenge: '💪 Erstelle: 1) Class Animal mit name, 2) Method speak(), 3) Class Dog extends Animal, 4) Override speak()'
           }
         ]
       },
@@ -181,37 +1258,1867 @@ class Developer extends Person {
         name: 'Async & Promises',
         items: [
           {
-            title: 'Promises',
-            code: `const promise = new Promise((resolve, reject) => {
+            title: 'Promises verstehen',
+            code: `// PROMISE STATES
+// - Pending: Wartet noch
+// - Fulfilled: Erfolgreich (resolve)
+// - Rejected: Fehler (reject)
+
+// PROMISE ERSTELLEN
+const myPromise = new Promise((resolve, reject) => {
+  // Asynchrone Operation simulieren
   setTimeout(() => {
-    resolve('Success!');
+    const success = true;
+    
+    if (success) {
+      resolve("Erfolg! 🎉"); // Fulfilled
+    } else {
+      reject("Fehler! ❌"); // Rejected
+    }
   }, 1000);
 });
 
-promise
-  .then(result => console.log(result))
-  .catch(error => console.error(error))
-  .finally(() => console.log('Done'));`,
-            description: 'Handling asynchronous operations',
-            usage: 'Promises handle async operations elegantly'
+// PROMISE VERWENDEN
+myPromise
+  .then(result => {
+    console.log(result); // "Erfolg! 🎉"
+    return result.toUpperCase(); // Chaining!
+  })
+  .then(upperResult => {
+    console.log(upperResult); // "ERFOLG! 🎉"
+  })
+  .catch(error => {
+    console.error(error); // Falls rejected
+  })
+  .finally(() => {
+    console.log("Fertig!"); // Immer ausgeführt
+  });
+
+// PROMISE CHAINING
+fetch('https://api.example.com/user/1')
+  .then(response => response.json())
+  .then(user => {
+    console.log(user.name);
+    return fetch(\`https://api.example.com/posts/\${user.id}\`);
+  })
+  .then(response => response.json())
+  .then(posts => {
+    console.log(posts);
+  })
+  .catch(error => {
+    console.error("Fehler:", error);
+  });
+
+// PROMISE.ALL - Alle parallel
+const promise1 = fetch('/api/users');
+const promise2 = fetch('/api/posts');
+const promise3 = fetch('/api/comments');
+
+Promise.all([promise1, promise2, promise3])
+  .then(([users, posts, comments]) => {
+    // Alle 3 Promises resolved!
+    console.log({ users, posts, comments });
+  })
+  .catch(error => {
+    // EINE rejected = Ganzes catch
+    console.error(error);
+  });
+
+// PROMISE.ALLSETTLED - Wartet auf alle, egal ob resolved/rejected
+Promise.allSettled([promise1, promise2, promise3])
+  .then(results => {
+    results.forEach(result => {
+      if (result.status === 'fulfilled') {
+        console.log("Success:", result.value);
+      } else {
+        console.log("Error:", result.reason);
+      }
+    });
+  });
+
+// PROMISE.RACE - Erste die finished wird
+Promise.race([
+  fetch('/api/server1'),
+  fetch('/api/server2'),
+  fetch('/api/server3')
+])
+  .then(result => {
+    console.log("Erste Response:", result);
+  });
+
+// PROMISE.ANY - Erste die RESOLVED wird
+Promise.any([
+  fetch('/api/backup1'),
+  fetch('/api/backup2'),
+  fetch('/api/backup3')
+])
+  .then(result => {
+    console.log("Erste erfolgreiche:", result);
+  })
+  .catch(() => {
+    console.log("Alle failed!");
+  });
+
+// TIMEOUT Promise
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+timeout(2000).then(() => {
+  console.log("2 Sekunden vergangen");
+});
+
+// RETRY LOGIC
+async function fetchWithRetry(url, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await fetch(url);
+      return await response.json();
+    } catch (error) {
+      if (i === retries - 1) throw error;
+      console.log(\`Retry \${i + 1}/\${retries}\`);
+      await timeout(1000 * (i + 1)); // Exponential backoff
+    }
+  }
+}`,
+            description: 'Promises repräsentieren zukünftige Werte von asynchronen Operationen. 3 States: Pending (wartet), Fulfilled (erfolgreich), Rejected (Fehler). .then() für Success, .catch() für Errors, .finally() immer. Promise.all() für parallel, Promise.race() für fastest. Chaining mit return in .then().',
+            usage: '.then() für Success Handler. .catch() für Error Handler. .finally() für Cleanup. Promise.all() wartet auf alle (parallel). Promise.race() nimmt erste. Promise.allSettled() wartet auf alle, ignoriert Errors. Chaining: return in .then() für nächstes .then().',
+            bestPractices: [
+              '✅ Immer .catch() am Ende der Chain',
+              '✅ Return in .then() für Chaining',
+              '✅ Promise.all() für parallele Requests',
+              '✅ .finally() für Cleanup (Loading etc.)',
+              '✅ Promise.allSettled() wenn alle Resultate wichtig',
+              '❌ Nested Promises (Callback Hell)',
+              '❌ catch() vergessen (Unhandled Rejection)',
+              '❌ Return vergessen in .then() Chain'
+            ],
+            commonMistakes: [
+              '❌ Kein catch(): Unhandled Promise Rejection',
+              '❌ Nested .then(): .then(() => { promise.then() }) // Callback Hell',
+              '❌ Return vergessen: .then(x => { getValue(x) }) // undefined!',
+              '❌ Promise.all() stoppt bei EINEM Fehler',
+              '❌ new Promise für bereits existierende Promises'
+            ],
+            relatedTopics: ['Async/Await', 'Callbacks', 'Event Loop', 'Fetch API', 'Error Handling'],
+            challenge: '💪 Erstelle Promise die nach 2s resolved. Chain 3 .then()s. Nutze Promise.all() mit 3 Promises. Error Handling!'
           },
           {
-            title: 'Async/Await',
-            code: `async function fetchUser(id) {
+            title: 'Async/Await - Moderne Syntax',
+            code: `// ASYNC FUNCTION - Returnt immer Promise
+async function fetchUser(id) {
+  // await pausiert Funktion bis Promise resolved
+  const response = await fetch(\`/api/users/\${id}\`);
+  const user = await response.json();
+  return user; // Automatisch in Promise gewrappt
+}
+
+// Usage - ZWEI Wege:
+// 1. Mit await (in async Function)
+async function main() {
+  const user = await fetchUser(1);
+  console.log(user);
+}
+
+// 2. Mit .then() (außerhalb async)
+fetchUser(1).then(user => console.log(user));
+
+// ERROR HANDLING mit try-catch
+async function getUserData(id) {
   try {
     const response = await fetch(\`/api/users/\${id}\`);
+    
+    if (!response.ok) {
+      throw new Error(\`HTTP Error: \${response.status}\`);
+    }
+    
     const user = await response.json();
     return user;
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Fehler beim Laden:", error);
+    throw error; // Weitergeben oder
+    // return null; // Default zurückgeben
+  } finally {
+    console.log("Request abgeschlossen");
+  }
+}
+
+// PARALLEL REQUESTS mit Promise.all
+async function loadDashboard() {
+  try {
+    // ❌ SEQUENTIELL - langsam!
+    const user = await fetch('/api/user').then(r => r.json());
+    const posts = await fetch('/api/posts').then(r => r.json());
+    const comments = await fetch('/api/comments').then(r => r.json());
+    
+    // ✅ PARALLEL - schnell!
+    const [user, posts, comments] = await Promise.all([
+      fetch('/api/user').then(r => r.json()),
+      fetch('/api/posts').then(r => r.json()),
+      fetch('/api/comments').then(r => r.json())
+    ]);
+    
+    return { user, posts, comments };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// AWAIT IN LOOPS
+async function processUsers(userIds) {
+  // ❌ SEQUENTIELL - langsam
+  for (const id of userIds) {
+    const user = await fetchUser(id);
+    console.log(user);
+  }
+  
+  // ✅ PARALLEL - schnell
+  const users = await Promise.all(
+    userIds.map(id => fetchUser(id))
+  );
+  console.log(users);
+}
+
+// TOP-LEVEL AWAIT (Modern, nur in ES Modules)
+// Außerhalb von async function!
+const data = await fetch('/api/data').then(r => r.json());
+
+// ASYNC IIFE - Immediately Invoked
+(async () => {
+  const user = await fetchUser(1);
+  console.log(user);
+})();
+
+// TIMEOUT mit async/await
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function example() {
+  console.log("Start");
+  await delay(2000);
+  console.log("2 Sekunden später");
+}
+
+// ASYNC ITERATION
+async function* asyncGenerator() {
+  yield await Promise.resolve(1);
+  yield await Promise.resolve(2);
+  yield await Promise.resolve(3);
+}
+
+for await (const num of asyncGenerator()) {
+  console.log(num); // 1, 2, 3
+}
+
+// ERROR HANDLING - Multiple try-catch
+async function complexOperation() {
+  let user, posts;
+  
+  try {
+    user = await fetchUser(1);
+  } catch (error) {
+    console.error("User fetch failed:", error);
+    user = null;
+  }
+  
+  try {
+    posts = await fetchPosts(user?.id);
+  } catch (error) {
+    console.error("Posts fetch failed:", error);
+    posts = [];
+  }
+  
+  return { user, posts };
+}
+
+// RETURN aus async Function
+async function getValue() {
+  return 42; // Wird zu Promise.resolve(42)
+}
+getValue().then(val => console.log(val)); // 42`,
+            description: 'async/await ist syntaktischer Zucker für Promises. async macht Function zur async Function (returnt Promise). await pausiert Funktion bis Promise resolved. try-catch für Error Handling. await nur in async Functions (oder top-level in Modules). Promise.all() für parallele Operationen. await in Loops ist sequentiell (langsam)!',
+            usage: 'async function für asynchronen Code. await für Promise-Werte. try-catch für Errors. Promise.all() + await für Parallelität. Top-level await in Modules. IIFE für sofortiges await. Nicht await in Loops (außer absichtlich sequentiell). Immer Error Handling!',
+            bestPractices: [
+              '✅ async/await statt .then() Chains (lesbarer)',
+              '✅ try-catch für Error Handling',
+              '✅ Promise.all() + await für Parallelität',
+              '✅ await nur in async Functions',
+              '✅ return direkt (wird auto in Promise gewrappt)',
+              '❌ await in Loops (sequentiell, langsam)',
+              '❌ try-catch vergessen (Unhandled Rejection)',
+              '❌ Vergessen dass async Function Promise returnt'
+            ],
+            commonMistakes: [
+              '❌ await außerhalb async: SyntaxError',
+              '❌ await in Loop: sequentiell statt parallel',
+              '❌ Kein try-catch: Unhandled Promise Rejection',
+              '❌ .then() auf await: const x = await promise.then() // Doppelt',
+              '❌ Vergessen async zu markieren: await in normaler Function'
+            ],
+            performanceTips: [
+              'Promise.all() für parallele Requests (3x schneller)',
+              'await in Loops ist sequentiell (n * time)',
+              'Top-level await blockiert Module Loading',
+              'Nicht zu viele parallele Requests (Rate Limiting)'
+            ],
+            relatedTopics: ['Promises', 'Try-Catch', 'Event Loop', 'Parallel vs Sequential', 'Error Handling'],
+            challenge: '💪 Async Function: 1) Lade 3 Users parallel, 2) Error Handling mit try-catch, 3) Return combined data'
+          }
+        ]
+      },
+      dom: {
+        name: 'DOM Manipulation',
+        items: [
+          {
+            title: 'DOM Basics - HTML manipulieren',
+            code: `// ELEMENTE AUSWÄHLEN
+// getElementById - Ein Element
+const heading = document.getElementById('title');
+
+// querySelector - Erstes Element (CSS Selektoren!)
+const firstButton = document.querySelector('.btn');
+const mainNav = document.querySelector('#main-nav');
+const firstListItem = document.querySelector('ul li');
+
+// querySelectorAll - Alle Elemente (NodeList)
+const allButtons = document.querySelectorAll('.btn');
+const allLinks = document.querySelectorAll('a');
+
+// Alte Methoden (weniger flexibel)
+const byClass = document.getElementsByClassName('card');
+const byTag = document.getElementsByTagName('p');
+
+// ELEMENT ERSTELLEN
+const newDiv = document.createElement('div');
+const newPara = document.createElement('p');
+const newText = document.createTextNode('Hello World');
+
+// INHALT ÄNDERN
+const element = document.querySelector('#output');
+
+// textContent - Nur Text
+element.textContent = 'Neuer Text';
+
+// innerHTML - HTML String (⚠️ XSS Gefahr!)
+element.innerHTML = '<strong>Bold Text</strong>';
+
+// innerText - Sichtbarer Text (langsamer)
+element.innerText = 'Text';
+
+// ATTRIBUTE ÄNDERN
+const link = document.querySelector('a');
+link.href = 'https://example.com';
+link.title = 'Visit Example';
+link.setAttribute('target', '_blank');
+link.removeAttribute('title');
+
+// getAttribute - Wert lesen
+const url = link.getAttribute('href');
+
+// CLASSES MANIPULIEREN
+const box = document.querySelector('.box');
+
+box.classList.add('active'); // Hinzufügen
+box.classList.remove('hidden'); // Entfernen
+box.classList.toggle('visible'); // Toggle
+box.classList.contains('active'); // Prüfen - true/false
+box.classList.replace('old', 'new'); // Ersetzen
+
+// STYLES ÄNDERN (Inline Styles)
+element.style.color = 'red';
+element.style.backgroundColor = 'yellow';
+element.style.fontSize = '20px';
+element.style.display = 'none'; // Verstecken
+
+// Computed Styles lesen
+const styles = window.getComputedStyle(element);
+console.log(styles.color); // rgb(255, 0, 0)
+
+// ELEMENTE HINZUFÜGEN
+const parent = document.querySelector('#container');
+const child = document.createElement('div');
+child.textContent = 'Neues Child Element';
+
+parent.appendChild(child); // Am Ende
+parent.insertBefore(child, parent.firstChild); // Am Anfang
+parent.append(child); // Modern - auch Text
+parent.prepend(child); // Modern - Am Anfang
+
+// ELEMENTE ENTFERNEN
+const toRemove = document.querySelector('.delete-me');
+toRemove.remove(); // Modern
+// oder
+toRemove.parentNode.removeChild(toRemove); // Alt
+
+// TRAVERSING - Navigation
+const current = document.querySelector('.current');
+
+current.parentElement; // Parent
+current.children; // Alle direkten Children
+current.firstElementChild; // Erstes Child
+current.lastElementChild; // Letztes Child
+current.nextElementSibling; // Nächstes Geschwister
+current.previousElementSibling; // Vorheriges Geschwister
+
+// KLONEN
+const original = document.querySelector('.original');
+const clone = original.cloneNode(true); // true = deep (inkl. Children)
+document.body.appendChild(clone);`,
+            description: 'DOM (Document Object Model) ist die JavaScript-Repräsentation von HTML. querySelector() für Selektion (CSS Selektoren). textContent für Text, innerHTML für HTML. classList für Classes. createElement() + appendChild() zum Hinzufügen. remove() zum Löschen. style für Inline Styles.',
+            usage: 'querySelector() statt getElementById (flexibler). textContent statt innerHTML (sicherer). classList.toggle() für UI States. appendChild()/remove() für dynamische Inhalte. parentElement/children für Navigation. cloneNode() für Templates.',
+            bestPractices: [
+              '✅ querySelector() statt getElementsBy* (moderner)',
+              '✅ textContent für Text (schneller, sicherer)',
+              '✅ classList statt className (einfacher)',
+              '✅ remove() statt removeChild() (kürzer)',
+              '✅ Cache DOM Queries in Variablen',
+              '❌ innerHTML mit User Input (XSS Gefahr!)',
+              '❌ Zu viele DOM Manipulationen in Loops'
+            ],
+            commonMistakes: [
+              '❌ querySelectorAll returnt NodeList (kein Array!)',
+              '❌ innerHTML + User Input = XSS Sicherheitslücke',
+              '❌ style.background-color (falsch) - camelCase: backgroundColor',
+              '❌ DOM Queries in Loops (langsam)',
+              '❌ remove() auf null Element - vorher checken!'
+            ],
+            performanceTips: [
+              'Cache selectors: const el = query() ONCE',
+              'DocumentFragment für viele Elemente',
+              'textContent ist schneller als innerHTML',
+              'classList ist schneller als className manipulation'
+            ],
+            relatedTopics: ['Events', 'querySelector', 'classList', 'innerHTML vs textContent'],
+            challenge: '💪 Erstelle: 1) Button mit JavaScript, 2) Füge CSS Class hinzu, 3) Append zu body, 4) Ändere Text bei Click'
+          },
+          {
+            title: 'Event Handling',
+            code: `// EVENT LISTENER HINZUFÜGEN
+const button = document.querySelector('#myButton');
+
+// addEventListener - Modern & Best Practice
+button.addEventListener('click', function(event) {
+  console.log('Button geklickt!');
+  console.log('Event:', event);
+  console.log('Target:', event.target);
+});
+
+// Arrow Function
+button.addEventListener('click', (e) => {
+  console.log('Geklickt!', e);
+});
+
+// WICHTIGE EVENTS
+// Mouse Events
+element.addEventListener('click', handler); // Click
+element.addEventListener('dblclick', handler); // Doppelclick
+element.addEventListener('mouseenter', handler); // Maus drüber
+element.addEventListener('mouseleave', handler); // Maus weg
+element.addEventListener('mousemove', handler); // Maus bewegt
+
+// Keyboard Events
+document.addEventListener('keydown', (e) => {
+  console.log('Taste gedrückt:', e.key);
+  if (e.key === 'Enter') console.log('Enter!');
+  if (e.ctrlKey && e.key === 's') {
+    e.preventDefault(); // Standard Save verhindern
+    console.log('Custom Save!');
+  }
+});
+
+document.addEventListener('keyup', handler); // Taste losgelassen
+
+// Form Events
+const form = document.querySelector('#myForm');
+const input = document.querySelector('#email');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault(); // Form Submit verhindern
+  console.log('Form submitted!');
+  const formData = new FormData(form);
+  console.log(formData.get('email'));
+});
+
+input.addEventListener('input', (e) => {
+  console.log('Typing...', e.target.value);
+});
+
+input.addEventListener('change', (e) => {
+  console.log('Value changed:', e.target.value);
+});
+
+input.addEventListener('focus', () => console.log('Focused'));
+input.addEventListener('blur', () => console.log('Lost focus'));
+
+// Window Events
+window.addEventListener('load', () => {
+  console.log('Page fully loaded');
+});
+
+window.addEventListener('resize', () => {
+  console.log('Window resized:', window.innerWidth);
+});
+
+window.addEventListener('scroll', () => {
+  console.log('Scrolling...', window.scrollY);
+});
+
+// EVENT OBJECT
+button.addEventListener('click', (event) => {
+  // Wichtige Properties
+  event.type; // "click"
+  event.target; // Element das Event ausgelöst hat
+  event.currentTarget; // Element mit Listener
+  event.clientX; // Maus X Position
+  event.clientY; // Maus Y Position
+  event.key; // Taste (bei Keyboard Events)
+  event.ctrlKey; // Ctrl gedrückt?
+  event.shiftKey; // Shift gedrückt?
+  
+  // Wichtige Methods
+  event.preventDefault(); // Default Verhalten verhindern
+  event.stopPropagation(); // Event Bubbling stoppen
+});
+
+// EVENT DELEGATION - Für dynamische Elemente!
+const list = document.querySelector('#list');
+
+// ❌ Funktioniert nicht für neue Items:
+// document.querySelectorAll('li').forEach(li => {
+//   li.addEventListener('click', handler);
+// });
+
+// ✅ Event Delegation:
+list.addEventListener('click', (e) => {
+  if (e.target.tagName === 'LI') {
+    console.log('List item clicked:', e.target.textContent);
+    e.target.classList.toggle('completed');
+  }
+});
+
+// EVENT LISTENER ENTFERNEN
+function handleClick() {
+  console.log('Clicked!');
+}
+
+button.addEventListener('click', handleClick);
+button.removeEventListener('click', handleClick);
+
+// ONCE - Nur einmal ausführen
+button.addEventListener('click', handler, { once: true });
+
+// THROTTLE - Nicht zu oft ausführen
+function throttle(func, delay) {
+  let timeout;
+  return function(...args) {
+    if (!timeout) {
+      func.apply(this, args);
+      timeout = setTimeout(() => timeout = null, delay);
+    }
+  };
+}
+
+window.addEventListener('scroll', throttle(() => {
+  console.log('Scrolling...');
+}, 500)); // Max alle 500ms
+
+// DEBOUNCE - Erst nach Pause ausführen
+function debounce(func, delay) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+input.addEventListener('input', debounce((e) => {
+  console.log('Search:', e.target.value);
+}, 300)); // Nach 300ms Pause`,
+            description: 'Events sind User-Interaktionen. addEventListener() fügt Event Listener hinzu. Wichtige Events: click, keydown, submit, input, scroll, resize. Event Object hat target (Element), preventDefault() (Default stoppen), stopPropagation() (Bubbling stoppen). Event Delegation für dynamische Elemente. Throttle/Debounce für Performance.',
+            usage: 'addEventListener() mit Funktionsreferenz. e.preventDefault() bei Forms. Event Delegation bei Listen. Throttle bei scroll/resize. Debounce bei input/search. removeEventListener() mit gleicher Funktion. { once: true } für einmalige Events.',
+            bestPractices: [
+              '✅ addEventListener() statt onclick',
+              '✅ Event Delegation für dynamische Inhalte',
+              '✅ preventDefault() bei Forms',
+              '✅ Throttle/Debounce bei scroll/input',
+              '✅ removeEventListener() bei Cleanup',
+              '❌ onclick = func (überschreibt vorherige)',
+              '❌ Zu viele Event Listener (Memory Leak)',
+              '❌ Arrow Functions wenn removeEventListener() nötig'
+            ],
+            commonMistakes: [
+              '❌ removeEventListener mit Arrow Function (funktioniert nicht)',
+              '❌ Event Listener in Loops ohne Delegation',
+              '❌ preventDefault() vergessen bei Forms',
+              '❌ Kein throttle bei scroll/resize (Performance)',
+              '❌ event.target vs event.currentTarget verwechseln'
+            ],
+            relatedTopics: ['DOM', 'Event Bubbling', 'Event Delegation', 'Throttle/Debounce'],
+            challenge: '💪 Todo List: 1) Click Event mit Event Delegation, 2) Form submit mit preventDefault, 3) Input mit debounce'
+          }
+        ]
+      },
+      advanced: {
+        name: 'Advanced Concepts',
+        items: [
+          {
+            title: 'Scope & Closures',
+            code: `// SCOPE - Wo Variablen sichtbar sind
+
+// GLOBAL SCOPE
+const globalVar = "Ich bin überall sichtbar";
+
+function anyFunction() {
+  console.log(globalVar); // ✅ Funktioniert
+}
+
+// FUNCTION SCOPE
+function myFunction() {
+  const functionVar = "Nur in dieser Function";
+  console.log(functionVar); // ✅ Funktioniert
+}
+// console.log(functionVar); // ❌ ReferenceError
+
+// BLOCK SCOPE (let, const)
+{
+  const blockVar = "Nur in diesem Block";
+  let alsoBlock = "Auch nur hier";
+}
+// console.log(blockVar); // ❌ ReferenceError
+
+if (true) {
+  const insideIf = "Nur im if";
+}
+// console.log(insideIf); // ❌ ReferenceError
+
+// CLOSURE - Function merkt sich Outer Scope!
+function makeCounter() {
+  let count = 0; // Private Variable!
+  
+  return function() {
+    count++; // Zugriff auf outer count!
+    return count;
+  };
+}
+
+const counter = makeCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+// count ist PRIVAT - nicht von außen zugänglich!
+
+// PRAKTISCHES CLOSURE BEISPIEL
+function createUser(name) {
+  // Private Variables
+  let _password = ''; // _ = convention für private
+  
+  return {
+    getName() {
+      return name;
+    },
+    setPassword(newPassword) {
+      if (newPassword.length >= 8) {
+        _password = newPassword;
+        return true;
+      }
+      return false;
+    },
+    checkPassword(attempt) {
+      return attempt === _password;
+    }
+  };
+}
+
+const user = createUser('Max');
+console.log(user.getName()); // "Max"
+user.setPassword('secure123');
+console.log(user.checkPassword('secure123')); // true
+// console.log(user._password); // undefined - PRIVAT!
+
+// CLOSURE in LOOPS - Klassischer Fehler!
+// ❌ FALSCH:
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i); // 3, 3, 3 (nicht 0, 1, 2!)
+  }, 1000);
+}
+
+// ✅ LÖSUNG 1: let statt var
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(i); // 0, 1, 2 ✓
+  }, 1000);
+}
+
+// ✅ LÖSUNG 2: IIFE
+for (var i = 0; i < 3; i++) {
+  (function(i) {
+    setTimeout(() => {
+      console.log(i); // 0, 1, 2 ✓
+    }, 1000);
+  })(i);
+}
+
+// MODULE PATTERN - Private + Public
+const calculator = (function() {
+  // Private
+  let history = [];
+  
+  function log(operation) {
+    history.push(operation);
+  }
+  
+  // Public API
+  return {
+    add(a, b) {
+      const result = a + b;
+      log(\`\${a} + \${b} = \${result}\`);
+      return result;
+    },
+    getHistory() {
+      return [...history]; // Copy!
+    }
+  };
+})();
+
+console.log(calculator.add(5, 3)); // 8
+console.log(calculator.getHistory()); // ["5 + 3 = 8"]
+// console.log(calculator.history); // undefined - PRIVAT!
+
+// LEXICAL SCOPE - Inner hat Zugriff auf Outer
+function outer() {
+  const outerVar = "Outer";
+  
+  function inner() {
+    const innerVar = "Inner";
+    console.log(outerVar); // ✅ Zugriff auf outer
+    console.log(innerVar); // ✅ Zugriff auf own
+  }
+  
+  inner();
+  // console.log(innerVar); // ❌ Kein Zugriff auf inner
+}`,
+            description: 'Scope definiert wo Variablen sichtbar sind. Global Scope (überall), Function Scope (nur in Function), Block Scope (nur in {}). Closures: Inner Functions merken sich Outer Scope! Perfekt für Private Variables, Module Pattern, Callbacks. let/const haben Block Scope, var hat Function Scope.',
+            usage: 'Closures für Private Variables (Encapsulation). Module Pattern für Public/Private API. let statt var in Loops. IIFE für sofortigen Scope. Lexical Scope: Inner sieht Outer. Factory Functions returnen Objects mit Closures.',
+            bestPractices: [
+              '✅ let/const statt var (Block Scope)',
+              '✅ Closures für Private Variables',
+              '✅ Module Pattern für APIs',
+              '✅ IIFE für Isolation',
+              '✅ Factory Functions für Object Creation',
+              '❌ Globale Variablen vermeiden',
+              '❌ var in Loops (Closure Problem)'
+            ],
+            commonMistakes: [
+              '❌ var in Loops: closure merkt sich var (nicht let)',
+              '❌ Closure Memory Leaks bei DOM Elements',
+              '❌ this in Closures falsch (Arrow Functions!)',
+              '❌ Unnötige Closures (Performance)'
+            ],
+            relatedTopics: ['Functions', 'Hoisting', 'IIFE', 'Module Pattern', 'Memory Management'],
+            challenge: '💪 Erstelle: 1) Factory Function mit private counter, 2) increment/decrement Methods, 3) getValue() public'
+          },
+          {
+            title: 'Error Handling',
+            code: `// TRY-CATCH - Fehler abfangen
+try {
+  // Code der fehlschlagen könnte
+  const data = JSON.parse('invalid json');
+} catch (error) {
+  // Fehler behandeln
+  console.error('Fehler:', error.message);
+  console.error('Stack:', error.stack);
+} finally {
+  // Wird IMMER ausgeführt (optional)
+  console.log('Cleanup Code');
+}
+
+// EIGENE FEHLER WERFEN
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error('Division durch 0 nicht möglich!');
+  }
+  return a / b;
+}
+
+try {
+  console.log(divide(10, 0));
+} catch (error) {
+  console.error(error.message);
+}
+
+// CUSTOM ERROR CLASSES
+class ValidationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
+class NetworkError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.name = 'NetworkError';
+    this.statusCode = statusCode;
+  }
+}
+
+// Verwendung
+function validateEmail(email) {
+  if (!email.includes('@')) {
+    throw new ValidationError('Ungültige Email');
+  }
+  return true;
+}
+
+try {
+  validateEmail('invalid-email');
+} catch (error) {
+  if (error instanceof ValidationError) {
+    console.error('Validation:', error.message);
+  } else {
+    console.error('Anderer Fehler:', error);
+  }
+}
+
+// ASYNC ERROR HANDLING
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new NetworkError(
+        'Request failed',
+        response.status
+      );
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof NetworkError) {
+      console.error(\`HTTP \${error.statusCode}: \${error.message}\`);
+    } else if (error instanceof SyntaxError) {
+      console.error('Invalid JSON:', error.message);
+    } else {
+      console.error('Unknown error:', error);
+    }
+    throw error; // Weitergeben oder
+    // return null; // Default Value
+  }
+}
+
+// PROMISE ERROR HANDLING
+fetch('/api/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => {
+    console.error('Fehler:', error);
+  })
+  .finally(() => {
+    console.log('Cleanup');
+  });
+
+// UNHANDLED REJECTION HANDLER
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled Promise Rejection:', event.reason);
+  event.preventDefault(); // Verhindert Console Error
+});
+
+// GLOBAL ERROR HANDLER
+window.addEventListener('error', (event) => {
+  console.error('Global Error:', event.error);
+  // Error Tracking (z.B. Sentry)
+  return true; // Verhindert Default
+});
+
+// ERROR BOUNDARIES (React-like)
+class SafeComponent {
+  constructor(render) {
+    this.render = render;
+  }
+  
+  execute() {
+    try {
+      return this.render();
+    } catch (error) {
+      console.error('Component Error:', error);
+      return '<div>Error occurred</div>';
+    }
+  }
+}
+
+// RETRY LOGIC
+async function fetchWithRetry(url, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await fetch(url);
+      return await response.json();
+    } catch (error) {
+      console.log(\`Versuch \${i + 1} fehlgeschlagen\`);
+      
+      if (i === retries - 1) {
+        throw new Error(\`Failed after \${retries} attempts\`);
+      }
+      
+      // Exponential Backoff
+      await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)));
+    }
+  }
+}
+
+// VALIDATION HELPER
+function validateUser(user) {
+  const errors = [];
+  
+  if (!user.name) errors.push('Name required');
+  if (!user.email) errors.push('Email required');
+  if (user.age && user.age < 18) errors.push('Must be 18+');
+  
+  if (errors.length > 0) {
+    throw new ValidationError(errors.join(', '));
+  }
+  
+  return true;
+}`,
+            description: 'Error Handling verhindert App-Crashes. try-catch fängt Errors ab. throw new Error() wirft Errors. Custom Error Classes (extends Error) für spezifische Fehler. async/await mit try-catch. Promise .catch(). finally für Cleanup. instanceof für Error-Typen. Global Handlers für unhandled errors.',
+            usage: 'try-catch um riskanten Code. throw für Validation. Custom Errors (ValidationError, NetworkError). async mit try-catch. Promise mit .catch(). finally für Cleanup (DB close, Loading hide). Retry Logic mit Loop. Error Logging/Tracking.',
+            bestPractices: [
+              '✅ try-catch um async/await',
+              '✅ Custom Error Classes für Clarity',
+              '✅ finally für Cleanup',
+              '✅ instanceof für Error Typen',
+              '✅ Error Logging/Monitoring',
+              '✅ Spezifische Error Messages',
+              '❌ Empty catch blocks',
+              '❌ Errors verschlucken ohne Logging'
+            ],
+            commonMistakes: [
+              '❌ catch ohne Error Handling (silent fail)',
+              '❌ throw ohne try-catch (uncaught error)',
+              '❌ async ohne try-catch (unhandled rejection)',
+              '❌ finally mit return (überschreibt try return)',
+              '❌ Zu generische Error Messages'
+            ],
+            relatedTopics: ['Try-Catch', 'Async/Await', 'Promises', 'Custom Errors', 'Error Logging'],
+            challenge: '💪 Erstelle: 1) fetchUser() mit Custom Error, 2) Retry Logic 3x, 3) Logging aller Errors'
+          }
+        ]
+      },
+      strings: {
+        name: 'Strings & Numbers',
+        items: [
+          {
+            title: 'String Methods',
+            code: `const text = "  Hello World  ";
+
+// LÄNGE
+console.log(text.length); // 15
+
+// GROSS/KLEIN
+console.log(text.toLowerCase()); // "  hello world  "
+console.log(text.toUpperCase()); // "  HELLO WORLD  "
+
+// TRIMMEN - Whitespace entfernen
+console.log(text.trim()); // "Hello World"
+console.log(text.trimStart()); // "Hello World  "
+console.log(text.trimEnd()); // "  Hello World"
+
+// SUCHEN
+console.log(text.includes("World")); // true
+console.log(text.includes("world")); // false (case-sensitive!)
+console.log(text.startsWith("  Hello")); // true
+console.log(text.endsWith("World  ")); // true
+
+// INDEX FINDEN
+console.log(text.indexOf("World")); // 8
+console.log(text.indexOf("xyz")); // -1 (nicht gefunden)
+console.log(text.lastIndexOf("o")); // 9 (letztes o)
+
+// SUBSTRING EXTRAHIEREN
+const str = "JavaScript";
+console.log(str.slice(0, 4)); // "Java" (start, end)
+console.log(str.slice(-6)); // "Script" (von hinten)
+console.log(str.substring(4, 10)); // "Script"
+console.log(str.substr(4, 6)); // "Script" (start, length) - deprecated!
+
+// ERSETZEN
+const message = "Hello World";
+console.log(message.replace("World", "JS")); // "Hello JS"
+console.log(message.replaceAll("l", "L")); // "HeLLo WorLd"
+
+// Mit RegEx
+const email = "user@example.com";
+console.log(email.replace(/@.*/, "@gmail.com")); // "user@gmail.com"
+
+// SPLIT - String zu Array
+const csv = "Max,25,Berlin";
+console.log(csv.split(",")); // ["Max", "25", "Berlin"]
+
+const sentence = "Hello World";
+console.log(sentence.split(" ")); // ["Hello", "World"]
+console.log(sentence.split("")); // ["H", "e", "l", "l", "o", ...]
+
+// REPEAT
+console.log("Ha".repeat(3)); // "HaHaHa"
+console.log("-".repeat(20)); // "--------------------"
+
+// PADSTART / PADEND
+const num = "5";
+console.log(num.padStart(3, "0")); // "005"
+console.log(num.padEnd(3, "0")); // "500"
+
+// CHARAT / CHARCODEAT
+console.log(str.charAt(0)); // "J"
+console.log(str.charCodeAt(0)); // 74 (Unicode)
+console.log(str[0]); // "J" (Modern)
+
+// TEMPLATE LITERALS
+const name = "Max";
+const age = 25;
+const greeting = \`Hallo \${name}, du bist \${age} Jahre alt\`;
+
+// Multiline
+const html = \`
+  <div>
+    <h1>\${name}</h1>
+    <p>Age: \${age}</p>
+  </div>
+\`;
+
+// Tagged Templates
+function highlight(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    return \`\${result}\${str}<mark>\${values[i] || ''}</mark>\`;
+  }, '');
+}
+const highlighted = highlight\`Name: \${name}, Age: \${age}\`;
+
+// STRING MATCHING
+const phone = "0123-456789";
+console.log(phone.match(/\\d+/g)); // ["0123", "456789"]
+
+// LOCALECOMPARE - Sortieren
+console.log("ä".localeCompare("z", "de")); // -1 (ä kommt vor z)`,
+            description: 'Strings sind Text-Daten. Wichtige Methods: toLowerCase/toUpperCase, trim, includes/startsWith/endsWith, indexOf, slice/substring, replace/replaceAll, split. Template Literals mit Backticks für Interpolation und Multiline. Strings sind immutable (jede Method returnt neuen String).',
+            usage: 'Template Literals \`${var}\` für String Interpolation. includes() statt indexOf() !== -1. trim() für User Input. split() für CSV/Parsing. replace/replaceAll für Text Replacement. slice() für Substrings. padStart() für Formatting.',
+            bestPractices: [
+              '✅ Template Literals statt + Concatenation',
+              '✅ includes() statt indexOf() !== -1',
+              '✅ replaceAll() statt replace() mit RegEx',
+              '✅ trim() bei User Input',
+              '✅ Strings sind immutable - returnen neuen String',
+              '❌ substr() ist deprecated',
+              '❌ Vergessen dass Strings immutable sind'
+            ],
+            commonMistakes: [
+              '❌ str.replace() ersetzt nur ERSTES Match (nutze replaceAll)',
+              '❌ Vergessen dass includes/startsWith case-sensitive sind',
+              '❌ charAt() vs [] - [] gibt undefined bei out-of-bounds',
+              '❌ slice() negative Indexes falsch verstehen'
+            ],
+            relatedTopics: ['Template Literals', 'RegEx', 'String Interpolation', 'Immutability'],
+            challenge: '💪 String "  hello world  ": 1) Trim, 2) Capitalize, 3) Replace "world" mit "JS", 4) Split zu Array'
+          },
+          {
+            title: 'Numbers & Math',
+            code: `// NUMBER METHODS
+const num = 42.6789;
+
+// RUNDEN
+console.log(Math.round(num)); // 43 (auf-/abrunden)
+console.log(Math.floor(num)); // 42 (abrunden)
+console.log(Math.ceil(num)); // 43 (aufrunden)
+console.log(Math.trunc(num)); // 42 (Dezimalen abschneiden)
+
+// FIXED DECIMALS
+console.log(num.toFixed(2)); // "42.68" (String!)
+console.log(parseFloat(num.toFixed(2))); // 42.68 (Number)
+
+// PRECISION
+console.log(num.toPrecision(4)); // "42.68" (4 Stellen gesamt)
+
+// TO STRING
+console.log(num.toString()); // "42.6789"
+console.log((255).toString(16)); // "ff" (Hexadezimal)
+console.log((8).toString(2)); // "1000" (Binär)
+
+// PARSING
+console.log(parseInt("42px")); // 42
+console.log(parseFloat("3.14abc")); // 3.14
+console.log(Number("42")); // 42 (strict!)
+console.log(Number("42px")); // NaN
+
+// NaN PRÜFEN
+console.log(isNaN("hello")); // true
+console.log(Number.isNaN("hello")); // false (!)
+console.log(Number.isNaN(NaN)); // true ✅
+
+// INFINITY
+console.log(1 / 0); // Infinity
+console.log(-1 / 0); // -Infinity
+console.log(Number.isFinite(42)); // true
+console.log(Number.isFinite(Infinity)); // false
+
+// INTEGER PRÜFEN
+console.log(Number.isInteger(42)); // true
+console.log(Number.isInteger(42.5)); // false
+
+// MATH KONSTANTEN
+console.log(Math.PI); // 3.141592653589793
+console.log(Math.E); // 2.718281828459045
+
+// MIN / MAX
+console.log(Math.min(5, 2, 9, 1)); // 1
+console.log(Math.max(5, 2, 9, 1)); // 9
+
+const nums = [5, 2, 9, 1];
+console.log(Math.max(...nums)); // 9 (mit Spread)
+
+// RANDOM
+console.log(Math.random()); // 0.xyz (0 bis <1)
+
+// Random Integer zwischen min und max
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+console.log(randomInt(1, 10)); // z.B. 7
+
+// POWER
+console.log(Math.pow(2, 3)); // 8 (2³)
+console.log(2 ** 3); // 8 (Modern - Exponent Operator)
+
+// WURZEL
+console.log(Math.sqrt(16)); // 4
+console.log(Math.cbrt(27)); // 3 (Kubikwurzel)
+
+// ABSOLUTE
+console.log(Math.abs(-42)); // 42
+
+// SIGN - Vorzeichen
+console.log(Math.sign(-42)); // -1
+console.log(Math.sign(42)); // 1
+console.log(Math.sign(0)); // 0
+
+// TRIGONOMETRIE
+console.log(Math.sin(Math.PI / 2)); // 1
+console.log(Math.cos(0)); // 1
+console.log(Math.tan(Math.PI / 4)); // 1
+
+// LOGARITHMEN
+console.log(Math.log(Math.E)); // 1 (ln)
+console.log(Math.log10(100)); // 2 (log₁₀)
+console.log(Math.log2(8)); // 3 (log₂)
+
+// NUMBER RANGE
+console.log(Number.MAX_VALUE); // 1.7976931348623157e+308
+console.log(Number.MIN_VALUE); // 5e-324
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+console.log(Number.MIN_SAFE_INTEGER); // -9007199254740991
+
+// SAFE INTEGER CHECK
+console.log(Number.isSafeInteger(42)); // true
+console.log(Number.isSafeInteger(9007199254740992)); // false
+
+// FLOAT PRECISION Problem!
+console.log(0.1 + 0.2); // 0.30000000000000004 ⚠️
+console.log(0.1 + 0.2 === 0.3); // false ⚠️
+
+// Lösung: toFixed
+console.log((0.1 + 0.2).toFixed(2)); // "0.30"
+console.log(parseFloat((0.1 + 0.2).toFixed(10))); // 0.3
+
+// BIGINT für große Zahlen
+const bigNum = 9007199254740991n;
+const bigNum2 = BigInt(9007199254740991);
+console.log(bigNum + 1n); // 9007199254740992n`,
+            description: 'Numbers sind Zahlen (Integer & Float sind gleich Type). Math Object für Berechnungen. Wichtige: Math.round/floor/ceil, Math.random, Math.min/max, Math.pow/sqrt. toFixed() für Dezimalstellen. parseInt/parseFloat für Parsing. Number.isNaN/isInteger/isFinite für Checks. Float Precision Problem bei Dezimalzahlen!',
+            usage: 'Math.round/floor/ceil für Runden. Math.random() + Math.floor für Random Integers. toFixed() für Currency/Display. Number.isNaN() statt isNaN(). parseInt() mit Radix. Number() für strict Parsing. BigInt für Zahlen > MAX_SAFE_INTEGER.',
+            bestPractices: [
+              '✅ Number.isNaN() statt isNaN()',
+              '✅ toFixed() für Dezimalen, dann parseFloat()',
+              '✅ ** statt Math.pow() (Modern)',
+              '✅ Number() statt parseInt für strict',
+              '✅ Spread mit Math.max/min für Arrays',
+              '❌ 0.1 + 0.2 === 0.3 (Float Precision!)',
+              '❌ parseInt ohne Radix bei Octal/Hex'
+            ],
+            commonMistakes: [
+              '❌ Float Precision: 0.1 + 0.2 !== 0.3',
+              '❌ isNaN("42") ist true, aber Number.isNaN("42") ist false',
+              '❌ parseInt("08") = 0 in alten Browsern (Octal)',
+              '❌ Math.random() * 10 gibt 0-9.999, nicht 0-10',
+              '❌ toFixed() returnt String, nicht Number'
+            ],
+            relatedTopics: ['Math Object', 'Number Methods', 'Type Conversion', 'BigInt', 'Float Precision'],
+            challenge: '💪 Erstelle: 1) Random Integer 1-100 Function, 2) Runde 3.14159 auf 2 Dezimalen, 3) Check ob 42.5 Integer'
+          }
+        ]
+      },
+      dataStructures: {
+        name: 'Data Structures',
+        items: [
+          {
+            title: 'Map & Set',
+            code: `// MAP - Key-Value Store (besseres Object!)
+const map = new Map();
+
+// SET - Key und Value
+map.set('name', 'Max');
+map.set('age', 25);
+map.set(42, 'number key'); // Keys können ALLES sein!
+map.set({key: 'obj'}, 'object key');
+
+// GET - Value lesen
+console.log(map.get('name')); // "Max"
+console.log(map.get('unknown')); // undefined
+
+// HAS - Prüfen
+console.log(map.has('name')); // true
+console.log(map.has('email')); // false
+
+// DELETE
+map.delete('age');
+
+// SIZE
+console.log(map.size); // 3
+
+// CLEAR - Alles löschen
+// map.clear();
+
+// ITERIEREN
+for (const [key, value] of map) {
+  console.log(\`\${key}: \${value}\`);
+}
+
+// Keys/Values/Entries
+for (const key of map.keys()) {
+  console.log(key);
+}
+
+for (const value of map.values()) {
+  console.log(value);
+}
+
+for (const [key, value] of map.entries()) {
+  console.log(key, value);
+}
+
+// forEach
+map.forEach((value, key) => {
+  console.log(\`\${key} = \${value}\`);
+});
+
+// MAP aus Array
+const arr = [['name', 'Max'], ['age', 25]];
+const map2 = new Map(arr);
+
+// MAP zu Array
+const entries = [...map]; // oder Array.from(map)
+
+// MAP vs OBJECT
+// Map: Alle Types als Keys, Size Property, besser für Add/Delete
+// Object: Nur String/Symbol Keys, einfachere Syntax
+
+// SET - Unique Values (keine Duplikate!)
+const set = new Set();
+
+// ADD
+set.add(1);
+set.add(2);
+set.add(2); // Wird ignoriert (Duplikat)
+set.add('text');
+set.add({key: 'value'}); // Objects sind immer unique
+
+console.log(set.size); // 4
+
+// HAS
+console.log(set.has(1)); // true
+console.log(set.has(3)); // false
+
+// DELETE
+set.delete(2);
+
+// ITERIEREN
+for (const value of set) {
+  console.log(value);
+}
+
+set.forEach(value => {
+  console.log(value);
+});
+
+// SET aus Array (Duplikate entfernen!)
+const numbers = [1, 2, 2, 3, 3, 3, 4];
+const unique = [...new Set(numbers)]; // [1, 2, 3, 4]
+
+// PRAKTISCHE ANWENDUNGEN
+
+// 1. Array Duplikate entfernen
+function removeDuplicates(arr) {
+  return [...new Set(arr)];
+}
+
+// 2. Union - Vereinigung
+const setA = new Set([1, 2, 3]);
+const setB = new Set([3, 4, 5]);
+const union = new Set([...setA, ...setB]); // Set(5) {1, 2, 3, 4, 5}
+
+// 3. Intersection - Schnittmenge
+const intersection = new Set(
+  [...setA].filter(x => setB.has(x))
+); // Set(1) {3}
+
+// 4. Difference - Differenz
+const difference = new Set(
+  [...setA].filter(x => !setB.has(x))
+); // Set(2) {1, 2}
+
+// 5. Cache mit Map
+class Cache {
+  constructor() {
+    this.cache = new Map();
+  }
+  
+  set(key, value, ttl = 60000) {
+    this.cache.set(key, {
+      value,
+      expires: Date.now() + ttl
+    });
+  }
+  
+  get(key) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (Date.now() > item.expires) {
+      this.cache.delete(key);
+      return null;
+    }
+    
+    return item.value;
+  }
+}
+
+// WEAKMAP & WEAKSET - Garbage Collection friendly
+const weakMap = new WeakMap();
+let obj = {key: 'value'};
+
+weakMap.set(obj, 'data');
+// Wenn obj = null gesetzt wird, wird Entry automatisch entfernt!
+
+// WeakMap: Keys müssen Objects sein, keine Iteration
+// Nützlich für Private Data, Metadata`,
+            description: 'Map ist Key-Value Store (besser als Object). Alle Types als Keys möglich. Methods: set/get/has/delete. size Property. Iteration mit for...of. Set ist Collection unique Values. add/has/delete Methods. Duplikate werden automatisch entfernt. [...new Set(arr)] entfernt Array-Duplikate. WeakMap/WeakSet für Memory Management.',
+            usage: 'Map statt Object wenn: Non-String Keys, frequent add/delete, need size. Set für Unique Values: Duplikate entfernen, Union/Intersection. WeakMap für Object Metadata ohne Memory Leaks. [...new Set()] für unique Arrays.',
+            bestPractices: [
+              '✅ Map für Non-String Keys',
+              '✅ Set für Unique Collections',
+              '✅ [...new Set(arr)] für Unique Arrays',
+              '✅ WeakMap für Object Metadata',
+              '✅ Map für frequent add/delete',
+              '❌ Object wenn Map besser passt',
+              '❌ Set mit Objects (jedes Object ist unique)'
+            ],
+            commonMistakes: [
+              '❌ map[key] statt map.get(key) nutzen',
+              '❌ Set mit Objects: Jedes {} ist unique',
+              '❌ WeakMap Keys müssen Objects sein',
+              '❌ set.size ist Property, nicht Method',
+              '❌ Vergessen dass Set keine Indexes hat'
+            ],
+            relatedTopics: ['Objects', 'Arrays', 'Iteration', 'WeakMap', 'Memory Management'],
+            challenge: '💪 Erstelle: 1) Map mit User Data, 2) Set aus Array [1,1,2,2,3], 3) Union zweier Sets'
+          },
+          {
+            title: 'Dates & Time',
+            code: `// DATE ERSTELLEN
+const now = new Date(); // Jetzt
+const specific = new Date('2024-12-25'); // String
+const fromValues = new Date(2024, 11, 25); // Jahr, Monat (0-11!), Tag
+const fromTimestamp = new Date(1704067200000); // Timestamp
+
+// AKTUELLE ZEIT
+console.log(Date.now()); // Timestamp in ms
+console.log(new Date().getTime()); // Gleich
+
+// GET METHODS
+const date = new Date('2024-12-25T15:30:00');
+
+console.log(date.getFullYear()); // 2024
+console.log(date.getMonth()); // 11 (0-11! Dezember = 11)
+console.log(date.getDate()); // 25 (Tag im Monat)
+console.log(date.getDay()); // 3 (Wochentag, 0=Sonntag)
+
+console.log(date.getHours()); // 15
+console.log(date.getMinutes()); // 30
+console.log(date.getSeconds()); // 0
+console.log(date.getMilliseconds()); // 0
+
+// SET METHODS
+date.setFullYear(2025);
+date.setMonth(0); // Januar
+date.setDate(1);
+date.setHours(12, 0, 0, 0); // H, M, S, MS
+
+// FORMATTING
+console.log(date.toString());
+// "Wed Jan 01 2025 12:00:00 GMT+0100"
+
+console.log(date.toDateString()); // "Wed Jan 01 2025"
+console.log(date.toTimeString()); // "12:00:00 GMT+0100"
+
+console.log(date.toISOString()); 
+// "2025-01-01T11:00:00.000Z" (UTC!)
+
+console.log(date.toLocaleDateString('de-DE'));
+// "1.1.2025"
+
+console.log(date.toLocaleTimeString('de-DE'));
+// "12:00:00"
+
+console.log(date.toLocaleString('de-DE'));
+// "1.1.2025, 12:00:00"
+
+// Mit Options
+console.log(date.toLocaleDateString('de-DE', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}));
+// "Mittwoch, 1. Januar 2025"
+
+// DATUM VERGLEICHEN
+const date1 = new Date('2024-01-01');
+const date2 = new Date('2024-12-31');
+
+console.log(date1 < date2); // true
+console.log(date1.getTime() === date2.getTime()); // false
+
+// DIFFERENZ BERECHNEN
+const diff = date2 - date1; // Millisekunden
+const days = diff / (1000 * 60 * 60 * 24); // Tage
+console.log(days); // 365
+
+// DATUM MANIPULIEREN
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+const tomorrow = addDays(new Date(), 1);
+const lastWeek = addDays(new Date(), -7);
+
+// RELATIVE TIME
+function timeAgo(date) {
+  const seconds = Math.floor((Date.now() - date) / 1000);
+  
+  const intervals = {
+    Jahr: 31536000,
+    Monat: 2592000,
+    Woche: 604800,
+    Tag: 86400,
+    Stunde: 3600,
+    Minute: 60
+  };
+  
+  for (const [name, value] of Object.entries(intervals)) {
+    const count = Math.floor(seconds / value);
+    if (count >= 1) {
+      return \`vor \${count} \${name}\${count > 1 ? 'en' : ''}\`;
+    }
+  }
+  
+  return 'gerade eben';
+}
+
+console.log(timeAgo(new Date(Date.now() - 3600000)));
+// "vor 1 Stunde"
+
+// TIMER & DELAYS
+// setTimeout - Einmalig
+const timeoutId = setTimeout(() => {
+  console.log('Nach 2 Sekunden');
+}, 2000);
+
+clearTimeout(timeoutId); // Abbrechen
+
+// setInterval - Wiederholt
+const intervalId = setInterval(() => {
+  console.log('Jede Sekunde');
+}, 1000);
+
+clearInterval(intervalId); // Stoppen
+
+// Promise-based Delay
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function example() {
+  console.log('Start');
+  await delay(2000);
+  console.log('2 Sekunden später');
+}
+
+// COUNTDOWN
+function countdown(seconds) {
+  let remaining = seconds;
+  
+  const timer = setInterval(() => {
+    console.log(remaining);
+    remaining--;
+    
+    if (remaining < 0) {
+      clearInterval(timer);
+      console.log('Fertig!');
+    }
+  }, 1000);
+}`,
+            description: 'Date Object für Datum/Zeit. new Date() für jetzt. Date.now() für Timestamp. get Methods (getFullYear, getMonth, getDate, getHours, etc.). set Methods zum Ändern. toLocaleDateString/toLocaleTimeString für Formatting. Monat ist 0-indexed (0=Januar). Vergleich mit < > oder getTime(). setTimeout/setInterval für Timer.',
+            usage: 'Date.now() für Timestamps. toLocaleString() für User-Friendly Dates. getTime() für Vergleiche/Differenzen. setDate(getDate() + days) für Date Math. setTimeout für Delays. setInterval für Wiederholung. clearTimeout/clearInterval zum Stoppen.',
+            bestPractices: [
+              '✅ toLocaleString() mit Locale',
+              '✅ toISOString() für APIs',
+              '✅ getTime() für Vergleiche',
+              '✅ clearTimeout/clearInterval immer aufrufen',
+              '✅ Date Libraries (date-fns, dayjs) für komplexe Operationen',
+              '❌ Monat vergessen (0-indexed)',
+              '❌ Direkt Date Objects vergleichen (nutze getTime)'
+            ],
+            commonMistakes: [
+              '❌ getMonth() ist 0-11, nicht 1-12',
+              '❌ getDay() gibt Wochentag (0-6), nicht Tag im Monat',
+              '❌ Date Objects mit == vergleichen (nutze getTime())',
+              '❌ clearInterval vergessen (Memory Leak)',
+              '❌ Timezones nicht beachten'
+            ],
+            relatedTopics: ['Timestamps', 'setTimeout', 'setInterval', 'Date Libraries', 'Timezones'],
+            challenge: '💪 Erstelle: 1) Function die Tage bis Weihnachten zählt, 2) Format Date als "DD.MM.YYYY", 3) timeAgo Function'
+          }
+        ]
+      },
+      modules: {
+        name: 'Modules & APIs',
+        items: [
+          {
+            title: 'ES6 Modules - Import/Export',
+            code: `// === FILE: math.js ===
+
+// NAMED EXPORTS
+export const PI = 3.14159;
+export const E = 2.71828;
+
+export function add(a, b) {
+  return a + b;
+}
+
+export function multiply(a, b) {
+  return a * b;
+}
+
+// Oder gesammelt exportieren
+const square = x => x * x;
+const cube = x => x ** 3;
+
+export { square, cube };
+
+// Export mit Alias
+const subtract = (a, b) => a - b;
+export { subtract as minus };
+
+// === FILE: user.js ===
+
+// DEFAULT EXPORT - Nur einer pro File!
+export default class User {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  greet() {
+    return \`Hello, \${this.name}\`;
+  }
+}
+
+// Oder
+class Product {
+  // ...
+}
+export default Product;
+
+// DEFAULT + NAMED zusammen
+export const API_URL = 'https://api.example.com';
+export default class API {
+  // ...
+}
+
+// === FILE: main.js ===
+
+// IMPORT - Named Imports
+import { add, multiply } from './math.js';
+console.log(add(2, 3)); // 5
+
+// Import mit Alias
+import { minus as subtract } from './math.js';
+
+// Import All
+import * as MathUtils from './math.js';
+console.log(MathUtils.add(2, 3));
+console.log(MathUtils.PI);
+
+// DEFAULT Import
+import User from './user.js';
+const user = new User('Max');
+
+// DEFAULT + NAMED
+import API, { API_URL } from './api.js';
+
+// DYNAMIC IMPORT - Lazy Loading!
+async function loadModule() {
+  const module = await import('./math.js');
+  console.log(module.add(2, 3));
+}
+
+// Conditional Import
+if (condition) {
+  const { feature } = await import('./feature.js');
+}
+
+// RE-EXPORT - Module weitergeben
+// === FILE: index.js ===
+export { add, multiply } from './math.js';
+export { default as User } from './user.js';
+
+// Alles exportieren
+export * from './math.js';
+
+// === HTML Integration ===
+// <script type="module" src="main.js"></script>
+
+// SIDE EFFECTS - Code wird ausgeführt
+import './polyfills.js'; // Kein Import, nur laden
+
+// === package.json (Node.js) ===
+/*
+{
+  "type": "module"
+}
+*/
+
+// COMMONJS (Node.js Old)
+// Export
+module.exports = { add, multiply };
+// oder
+exports.add = add;
+
+// Import
+const { add } = require('./math.js');
+const math = require('./math');`,
+            description: 'ES6 Modules für Code-Organisation. export für Public API. import zum Nutzen. Named Exports: export const/function. Default Export: export default (nur einer pro File). import { name } für Named. import Name für Default. import * as All für alle. Dynamic import() für Lazy Loading. type="module" in HTML.',
+            usage: 'Named Exports für Utilities. Default Export für Haupt-Class/Component. import * as für Namespacing. Dynamic import() für Code Splitting. Re-exports für Barrel Files (index.js). Side-Effect Imports für Setup Code.',
+            bestPractices: [
+              '✅ Named Exports für Utilities',
+              '✅ Default Export für Main Export',
+              '✅ Barrel Files (index.js) für Clean Imports',
+              '✅ Dynamic Import für Lazy Loading',
+              '✅ .js Extension in Imports',
+              '❌ Mix von CommonJS und ES Modules',
+              '❌ Circular Dependencies'
+            ],
+            commonMistakes: [
+              '❌ import User from "./user" ohne Default Export',
+              '❌ import { User } from "./user" bei Default Export',
+              '❌ File Extension vergessen: import from "./math"',
+              '❌ Circular Imports (A imports B, B imports A)',
+              '❌ type="module" in <script> vergessen'
+            ],
+            relatedTopics: ['Module Bundlers', 'Code Splitting', 'Tree Shaking', 'Dynamic Imports'],
+            challenge: '💪 Erstelle: 1) math.js mit Named Exports, 2) User.js mit Default, 3) Import beides in main.js'
+          },
+          {
+            title: 'Browser APIs - LocalStorage & Fetch',
+            code: `// LOCALSTORAGE - Persistent Storage
+// Speichern
+localStorage.setItem('username', 'Max');
+localStorage.setItem('theme', 'dark');
+
+// Lesen
+const username = localStorage.getItem('username'); // "Max"
+const theme = localStorage.getItem('theme'); // "dark"
+
+// Löschen
+localStorage.removeItem('username');
+
+// Alles löschen
+localStorage.clear();
+
+// Größe
+console.log(localStorage.length);
+
+// Key by Index
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i);
+  console.log(key, localStorage.getItem(key));
+}
+
+// Objects speichern (JSON!)
+const user = { name: 'Max', age: 25 };
+localStorage.setItem('user', JSON.stringify(user));
+
+const stored = JSON.parse(localStorage.getItem('user'));
+console.log(stored.name); // "Max"
+
+// SESSIONSTORAGE - Nur für Session
+sessionStorage.setItem('temp', 'value');
+// Wird gelöscht wenn Tab geschlossen wird
+
+// COOKIES - Mit Expiration
+document.cookie = "username=Max; max-age=86400"; // 1 Tag
+document.cookie = "theme=dark; expires=Thu, 01 Jan 2025 00:00:00 UTC";
+
+// Lesen
+console.log(document.cookie); // "username=Max; theme=dark"
+
+// Helper Functions
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  document.cookie = \`\${name}=\${value}; expires=\${date.toUTCString()}; path=/\`;
+}
+
+function getCookie(name) {
+  const cookies = document.cookie.split('; ');
+  const cookie = cookies.find(c => c.startsWith(name + '='));
+  return cookie ? cookie.split('=')[1] : null;
+}
+
+// FETCH API - HTTP Requests
+// GET Request
+fetch('https://api.example.com/users')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(\`HTTP \${response.status}\`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Fehler:', error);
+  });
+
+// Mit async/await
+async function getUsers() {
+  try {
+    const response = await fetch('https://api.example.com/users');
+    
+    if (!response.ok) {
+      throw new Error(\`HTTP \${response.status}\`);
+    }
+    
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Fehler:', error);
     throw error;
   }
 }
 
-// Usage
-const user = await fetchUser(1);`,
-            description: 'Modern async syntax with async/await',
-            usage: 'Cleaner syntax for promise-based code'
+// POST Request
+async function createUser(userData) {
+  const response = await fetch('https://api.example.com/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer token123'
+    },
+    body: JSON.stringify(userData)
+  });
+  
+  return response.json();
+}
+
+// PUT/PATCH/DELETE
+await fetch(\`https://api.example.com/users/\${id}\`, {
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(updatedData)
+});
+
+await fetch(\`https://api.example.com/users/\${id}\`, {
+  method: 'DELETE'
+});
+
+// FILE UPLOAD
+const formData = new FormData();
+formData.append('file', fileInput.files[0]);
+formData.append('title', 'My File');
+
+await fetch('/upload', {
+  method: 'POST',
+  body: formData // Kein Content-Type Header!
+});
+
+// ABORT REQUEST
+const controller = new AbortController();
+
+fetch('/api/data', {
+  signal: controller.signal
+})
+  .then(response => response.json())
+  .catch(error => {
+    if (error.name === 'AbortError') {
+      console.log('Request aborted');
+    }
+  });
+
+// Nach 5 Sekunden abbrechen
+setTimeout(() => controller.abort(), 5000);
+
+// PARALLEL REQUESTS
+const [users, posts, comments] = await Promise.all([
+  fetch('/api/users').then(r => r.json()),
+  fetch('/api/posts').then(r => r.json()),
+  fetch('/api/comments').then(r => r.json())
+]);
+
+// RESPONSE TYPES
+const jsonData = await response.json(); // JSON
+const textData = await response.text(); // Text
+const blobData = await response.blob(); // Binary
+const formData = await response.formData(); // FormData
+const arrayBuffer = await response.arrayBuffer(); // ArrayBuffer
+
+// RESPONSE PROPERTIES
+console.log(response.status); // 200
+console.log(response.statusText); // "OK"
+console.log(response.ok); // true (200-299)
+console.log(response.headers.get('Content-Type'));`,
+            description: 'localStorage für Persistent Storage (5-10MB). Key-Value Store, nur Strings. JSON.stringify/parse für Objects. sessionStorage nur für Session. Cookies mit Expiration. Fetch API für HTTP Requests. GET/POST/PUT/DELETE. async/await empfohlen. response.ok für Status Check. AbortController zum Abbrechen.',
+            usage: 'localStorage.setItem/getItem für User Preferences. JSON.stringify für Objects. fetch mit async/await. Response Status prüfen (!response.ok). Headers für Auth. FormData für File Uploads. Promise.all für Parallel Requests. AbortController für Timeout.',
+            bestPractices: [
+              '✅ JSON.stringify/parse für Objects',
+              '✅ try-catch bei localStorage (QuotaExceeded)',
+              '✅ response.ok prüfen',
+              '✅ async/await statt .then()',
+              '✅ AbortController für Timeouts',
+              '✅ Parallel Requests mit Promise.all',
+              '❌ Sensitive Data in localStorage',
+              '❌ response.json() ohne ok Check'
+            ],
+            commonMistakes: [
+              '❌ localStorage ohne JSON.stringify für Objects',
+              '❌ Keine Error Handling bei fetch',
+              '❌ response.json() ohne await',
+              '❌ Content-Type vergessen bei POST',
+              '❌ Sensitive Tokens in localStorage (nutze HttpOnly Cookies)'
+            ],
+            relatedTopics: ['HTTP', 'REST APIs', 'JSON', 'Cookies', 'Security', 'CORS'],
+            challenge: '💪 Erstelle: 1) Save/Load User zu localStorage, 2) fetch Users von API, 3) Error Handling'
           }
         ]
       }
