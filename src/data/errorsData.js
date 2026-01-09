@@ -1652,6 +1652,490 @@ add x y = x ++ y -- Error: (++) expects [a]`,
         relatedErrors: ['haskell-parse-1']
       }
     ]
+  },
+
+  react: {
+    id: 'react',
+    name: 'React',
+    icon: '⚛️',
+    color: '#61DAFB',
+    commonErrors: [
+      {
+        id: 'react-hooks-1',
+        title: 'React Hook useEffect has a missing dependency',
+        category: 'Hooks',
+        severity: 'medium',
+        description: 'ESLint warning when useEffect dependencies are incomplete',
+        errorMessage: 'React Hook useEffect has a missing dependency: \'fetchData\'. Either include it or remove the dependency array.',
+        commonCauses: ['Missing function in dependency array', 'Missing variable reference', 'Stale closure'],
+        solutions: [
+          {
+            approach: 'Add dependency',
+            code: `// ❌ Missing dependency
+useEffect(() => {
+  fetchData();
+}, []); // fetchData not in deps
+
+// ✅ Add to dependencies
+useEffect(() => {
+  fetchData();
+}, [fetchData]);`,
+            explanation: 'Include all referenced variables/functions'
+          },
+          {
+            approach: 'Use useCallback',
+            code: `const fetchData = useCallback(() => {
+  // fetch logic
+}, []);
+
+useEffect(() => {
+  fetchData();
+}, [fetchData]);`,
+            explanation: 'Memoize function with useCallback'
+          }
+        ],
+        prevention: ['Include all dependencies', 'Use useCallback for functions', 'Check ESLint warnings'],
+        relatedErrors: ['react-hooks-2']
+      },
+      {
+        id: 'react-hooks-2',
+        title: 'Cannot update component while rendering different component',
+        category: 'State',
+        severity: 'high',
+        description: 'State update during render causes infinite loop',
+        errorMessage: 'Warning: Cannot update a component while rendering a different component.',
+        commonCauses: ['setState in render', 'setState in function component body', 'Missing useEffect'],
+        solutions: [
+          {
+            approach: 'Move to useEffect',
+            code: `// ❌ setState during render
+function Component() {
+  const [count, setCount] = useState(0);
+  setCount(1); // Wrong!
+  return <div>{count}</div>;
+}
+
+// ✅ Use useEffect
+function Component() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    setCount(1);
+  }, []);
+  return <div>{count}</div>;
+}`,
+            explanation: 'Move state updates to useEffect or event handlers'
+          }
+        ],
+        prevention: ['Never call setState during render', 'Use useEffect for side effects', 'Update state in event handlers'],
+        relatedErrors: ['react-hooks-1']
+      },
+      {
+        id: 'react-key-1',
+        title: 'Each child in a list should have a unique "key" prop',
+        category: 'Lists',
+        severity: 'medium',
+        description: 'React needs keys to identify which items changed',
+        errorMessage: 'Warning: Each child in a list should have a unique "key" prop.',
+        commonCauses: ['Missing key prop', 'Using index as key', 'Duplicate keys'],
+        solutions: [
+          {
+            approach: 'Add unique key',
+            code: `// ❌ No key
+{items.map(item => <div>{item.name}</div>)}
+
+// ✅ Use unique ID
+{items.map(item => (
+  <div key={item.id}>{item.name}</div>
+))}`,
+            explanation: 'Always provide unique key for list items'
+          }
+        ],
+        prevention: ['Always add key prop to list items', 'Use unique IDs, not index', 'Ensure keys are stable'],
+        relatedErrors: []
+      },
+      {
+        id: 'react-memory-1',
+        title: 'Can\'t perform a React state update on unmounted component',
+        category: 'Memory',
+        severity: 'medium',
+        description: 'Memory leak from state update after unmount',
+        errorMessage: 'Warning: Can\'t perform a React state update on an unmounted component.',
+        commonCauses: ['Async operation after unmount', 'Missing cleanup', 'Uncancelled API call'],
+        solutions: [
+          {
+            approach: 'Cleanup in useEffect',
+            code: `useEffect(() => {
+  let isMounted = true;
+  
+  fetchData().then(data => {
+    if (isMounted) {
+      setData(data);
+    }
+  });
+  
+  return () => {
+    isMounted = false; // Cleanup
+  };
+}, []);`,
+            explanation: 'Track mounted state and cleanup'
+          }
+        ],
+        prevention: ['Always cleanup in useEffect return', 'Cancel async operations', 'Use AbortController for fetch'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  nodejs: {
+    id: 'nodejs',
+    name: 'Node.js',
+    icon: '🟢',
+    color: '#339933',
+    commonErrors: [
+      {
+        id: 'node-enoent-1',
+        title: 'ENOENT: no such file or directory',
+        category: 'File System',
+        severity: 'high',
+        description: 'File or directory not found',
+        errorMessage: 'Error: ENOENT: no such file or directory, open \'/path/to/file\'',
+        commonCauses: ['Wrong file path', 'File doesn\'t exist', 'Relative path issue', 'Missing directory'],
+        solutions: [
+          {
+            approach: 'Check file exists',
+            code: `const fs = require('fs');
+const path = require('path');
+
+const filePath = path.join(__dirname, 'data.json');
+
+if (fs.existsSync(filePath)) {
+  const data = fs.readFileSync(filePath, 'utf8');
+} else {
+  console.error('File not found');
+}`,
+            explanation: 'Always check if file exists before reading'
+          }
+        ],
+        prevention: ['Use absolute paths', 'Check file existence', 'Handle errors properly'],
+        relatedErrors: []
+      },
+      {
+        id: 'node-eaddrinuse-1',
+        title: 'EADDRINUSE: address already in use',
+        category: 'Network',
+        severity: 'high',
+        description: 'Port is already being used by another process',
+        errorMessage: 'Error: listen EADDRINUSE: address already in use :::3000',
+        commonCauses: ['Port already in use', 'Server not properly closed', 'Multiple instances running'],
+        solutions: [
+          {
+            approach: 'Find and kill process',
+            code: `# Find process on port 3000
+lsof -i :3000
+
+# Kill the process
+kill -9 <PID>
+
+# Or use different port
+const PORT = process.env.PORT || 3001;`,
+            explanation: 'Kill existing process or use different port'
+          }
+        ],
+        prevention: ['Properly close servers', 'Use environment variables for ports', 'Check running processes'],
+        relatedErrors: []
+      },
+      {
+        id: 'node-cors-1',
+        title: 'CORS policy: No \'Access-Control-Allow-Origin\' header',
+        category: 'Network',
+        severity: 'high',
+        description: 'Cross-Origin Resource Sharing not configured',
+        errorMessage: 'Access to fetch has been blocked by CORS policy',
+        commonCauses: ['Missing CORS headers', 'Wrong origin configured', 'Preflight request failed'],
+        solutions: [
+          {
+            approach: 'Enable CORS',
+            code: `const express = require('express');
+const cors = require('cors');
+const app = express();
+
+// Enable all CORS
+app.use(cors());
+
+// Or specific origin
+app.use(cors({
+  origin: 'https://example.com',
+  credentials: true
+}));`,
+            explanation: 'Use cors middleware to enable CORS'
+          }
+        ],
+        prevention: ['Configure CORS properly', 'Set allowed origins', 'Handle preflight requests'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  git: {
+    id: 'git',
+    name: 'Git',
+    icon: '📚',
+    color: '#F05032',
+    commonErrors: [
+      {
+        id: 'git-merge-conflict',
+        title: 'Merge conflict',
+        category: 'Version Control',
+        severity: 'medium',
+        description: 'Conflicting changes in same file',
+        errorMessage: 'CONFLICT (content): Merge conflict in file.js',
+        commonCauses: ['Same line edited', 'Overlapping changes', 'File moved and edited'],
+        solutions: [
+          {
+            approach: 'Resolve manually',
+            code: `# Check conflict
+git status
+
+# Edit file and remove markers:
+<<<<<<< HEAD
+Your changes
+=======
+Their changes
+>>>>>>> branch
+
+# After resolving
+git add file.js
+git commit -m "Resolve merge conflict"`,
+            explanation: 'Manually resolve conflicts and commit'
+          }
+        ],
+        prevention: ['Pull before push', 'Frequent small commits', 'Communicate with team'],
+        relatedErrors: []
+      },
+      {
+        id: 'git-detached-head',
+        title: 'You are in \'detached HEAD\' state',
+        category: 'Branches',
+        severity: 'medium',
+        description: 'Not on any branch',
+        errorMessage: 'HEAD detached at commit-hash',
+        commonCauses: ['Checked out commit directly', 'Checked out tag', 'Lost branch reference'],
+        solutions: [
+          {
+            approach: 'Create new branch',
+            code: `# Create branch from current state
+git switch -c new-branch-name
+
+# Or return to previous branch
+git switch main`,
+            explanation: 'Create branch to save work or switch back'
+          }
+        ],
+        prevention: ['Always work on branches', 'Don\'t checkout commits directly'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  docker: {
+    id: 'docker',
+    name: 'Docker',
+    icon: '🐳',
+    color: '#2496ED',
+    commonErrors: [
+      {
+        id: 'docker-port-1',
+        title: 'Port is already allocated',
+        category: 'Network',
+        severity: 'medium',
+        description: 'Container port conflicts with host',
+        errorMessage: 'Error response: Ports are not available: port is already allocated',
+        commonCauses: ['Port already in use', 'Container not stopped', 'Port mapping conflict'],
+        solutions: [
+          {
+            approach: 'Use different port',
+            code: `# Change host port
+docker run -p 3001:3000 myapp
+
+# Or stop existing container
+docker ps
+docker stop <container-id>`,
+            explanation: 'Map to different host port or stop conflicting container'
+          }
+        ],
+        prevention: ['Check running containers', 'Use unique port mappings', 'Stop unused containers'],
+        relatedErrors: []
+      },
+      {
+        id: 'docker-space-1',
+        title: 'No space left on device',
+        category: 'Storage',
+        severity: 'high',
+        description: 'Docker out of disk space',
+        errorMessage: 'Error: no space left on device',
+        commonCauses: ['Too many images', 'Large volumes', 'Build cache full'],
+        solutions: [
+          {
+            approach: 'Clean up Docker',
+            code: `# Remove unused containers, networks, images
+docker system prune -a
+
+# Remove volumes
+docker volume prune
+
+# Check disk usage
+docker system df`,
+            explanation: 'Remove unused Docker resources'
+          }
+        ],
+        prevention: ['Regular cleanup', 'Use .dockerignore', 'Multi-stage builds'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  database: {
+    id: 'database',
+    name: 'Database',
+    icon: '🗄️',
+    color: '#336791',
+    commonErrors: [
+      {
+        id: 'db-connection-1',
+        title: 'Connection refused',
+        category: 'Connection',
+        severity: 'high',
+        description: 'Cannot connect to database',
+        errorMessage: 'Error: connect ECONNREFUSED 127.0.0.1:5432',
+        commonCauses: ['Database not running', 'Wrong connection string', 'Firewall blocking', 'Wrong port'],
+        solutions: [
+          {
+            approach: 'Check connection',
+            code: `// Verify connection string
+const connectionString = process.env.DATABASE_URL;
+console.log('Connecting to:', connectionString);
+
+// Add error handling
+try {
+  await db.connect();
+  console.log('Connected to database');
+} catch (error) {
+  console.error('Database connection failed:', error);
+}`,
+            explanation: 'Verify connection string and add error handling'
+          }
+        ],
+        prevention: ['Check database is running', 'Verify connection string', 'Use environment variables'],
+        relatedErrors: []
+      },
+      {
+        id: 'db-syntax-1',
+        title: 'SQL syntax error',
+        category: 'Query',
+        severity: 'medium',
+        description: 'Invalid SQL query syntax',
+        errorMessage: 'You have an error in your SQL syntax',
+        commonCauses: ['Typo in SQL', 'Wrong SQL dialect', 'Reserved keyword', 'Missing quotes'],
+        solutions: [
+          {
+            approach: 'Fix syntax',
+            code: `// ❌ Wrong
+db.query('SELECT * FROM user WHERE id = 1');
+
+// ✅ Correct - use parameterized queries
+db.query('SELECT * FROM users WHERE id = $1', [userId]);`,
+            explanation: 'Use parameterized queries to prevent SQL injection'
+          }
+        ],
+        prevention: ['Use parameterized queries', 'Test queries separately', 'Use ORM'],
+        relatedErrors: []
+      },
+      {
+        id: 'db-duplicate-1',
+        title: 'Duplicate entry / UNIQUE constraint failed',
+        category: 'Constraints',
+        severity: 'medium',
+        description: 'Attempting to insert duplicate unique value',
+        errorMessage: 'ERROR: duplicate key value violates unique constraint',
+        commonCauses: ['Duplicate primary key', 'Duplicate unique field', 'Race condition'],
+        solutions: [
+          {
+            approach: 'Handle duplicate',
+            code: `// Check before insert
+const existing = await db.findOne({ email });
+if (existing) {
+  throw new Error('Email already exists');
+}
+
+// Or use UPSERT
+await db.query(
+  'INSERT INTO users (email) VALUES ($1) ON CONFLICT (email) DO UPDATE SET updated_at = NOW()',
+  [email]
+);`,
+            explanation: 'Check for existing record or use UPSERT'
+          }
+        ],
+        prevention: ['Check before insert', 'Use UPSERT', 'Handle errors gracefully'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  npm: {
+    id: 'npm',
+    name: 'NPM / Package Manager',
+    icon: '📦',
+    color: '#CB3837',
+    commonErrors: [
+      {
+        id: 'npm-enoent-1',
+        title: 'ENOENT: no such file or directory',
+        category: 'Installation',
+        severity: 'medium',
+        description: 'npm cannot find required files',
+        errorMessage: 'npm ERR! enoent ENOENT: no such file or directory',
+        commonCauses: ['Missing package.json', 'Corrupted node_modules', 'Permission issues'],
+        solutions: [
+          {
+            approach: 'Clean install',
+            code: `# Remove and reinstall
+rm -rf node_modules package-lock.json
+npm install
+
+# Or use npm ci for clean install
+npm ci`,
+            explanation: 'Remove node_modules and reinstall'
+          }
+        ],
+        prevention: ['Commit package-lock.json', 'Don\'t manually edit node_modules', 'Use npm ci in CI/CD'],
+        relatedErrors: []
+      },
+      {
+        id: 'npm-version-1',
+        title: 'Peer dependency version conflict',
+        category: 'Dependencies',
+        severity: 'medium',
+        description: 'Incompatible package versions',
+        errorMessage: 'npm ERR! peer dep missing or conflicting peer dependency',
+        commonCauses: ['Incompatible versions', 'Missing peer dependency', 'Version range mismatch'],
+        solutions: [
+          {
+            approach: 'Fix versions',
+            code: `# Install specific version
+npm install react@18.2.0
+
+# Or use --legacy-peer-deps
+npm install --legacy-peer-deps
+
+# Check peer dependencies
+npm list --depth=0`,
+            explanation: 'Install compatible versions or use legacy mode'
+          }
+        ],
+        prevention: ['Check compatibility', 'Lock versions', 'Read package requirements'],
+        relatedErrors: []
+      }
+    ]
   }
 };
 
