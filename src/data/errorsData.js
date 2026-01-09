@@ -2136,6 +2136,1218 @@ npm list --depth=0`,
         relatedErrors: []
       }
     ]
+  },
+
+  css: {
+    id: 'css',
+    name: 'CSS / Styling',
+    icon: '🎨',
+    color: '#1572B6',
+    commonErrors: [
+      {
+        id: 'css-flexbox-1',
+        title: 'Flexbox not working / Items not aligning',
+        category: 'Layout',
+        severity: 'medium',
+        description: 'Flexbox properties not applying correctly',
+        errorMessage: 'Items not aligning as expected',
+        commonCauses: ['Missing display: flex', 'Wrong flex direction', 'Conflicting properties'],
+        solutions: [
+          {
+            approach: 'Check flex container',
+            code: `/* ❌ Wrong - no display: flex */
+.container {
+  justify-content: center; /* Won't work! */
+}
+
+/* ✅ Correct */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Common flexbox patterns */
+.horizontal-center {
+  display: flex;
+  justify-content: center;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}`,
+            explanation: 'Always set display: flex on parent container'
+          }
+        ],
+        prevention: ['Set display: flex first', 'Check parent/child relationship', 'Use browser DevTools'],
+        relatedErrors: []
+      },
+      {
+        id: 'css-z-index-1',
+        title: 'z-index not working',
+        category: 'Positioning',
+        severity: 'low',
+        description: 'z-index property has no effect',
+        errorMessage: 'Element not appearing above others despite z-index',
+        commonCauses: ['Missing position property', 'Parent has lower z-index', 'No stacking context'],
+        solutions: [
+          {
+            approach: 'Add position property',
+            code: `/* ❌ Won't work - no position */
+.element {
+  z-index: 999; /* Has no effect! */
+}
+
+/* ✅ Correct - needs position */
+.element {
+  position: relative; /* or absolute, fixed, sticky */
+  z-index: 999;
+}
+
+/* Modal example */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}`,
+            explanation: 'z-index only works with positioned elements'
+          }
+        ],
+        prevention: ['Always set position with z-index', 'Check parent stacking context', 'Use DevTools'],
+        relatedErrors: []
+      },
+      {
+        id: 'css-overflow-1',
+        title: 'Content overflowing container',
+        category: 'Layout',
+        severity: 'medium',
+        description: 'Text or content breaking out of container',
+        errorMessage: 'Content extends beyond container boundaries',
+        commonCauses: ['Long words', 'No width constraint', 'Whitespace handling'],
+        solutions: [
+          {
+            approach: 'Add overflow handling',
+            code: `/* ❌ Problem - long text breaks container */
+.container {
+  width: 200px;
+}
+
+/* ✅ Solution 1: Word breaking */
+.container {
+  width: 200px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* ✅ Solution 2: Ellipsis for single line */
+.truncate {
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ✅ Solution 3: Scrollable */
+.scrollable {
+  width: 200px;
+  overflow: auto;
+}`,
+            explanation: 'Use overflow properties and word breaking'
+          }
+        ],
+        prevention: ['Set overflow property', 'Use word-wrap', 'Test with long content'],
+        relatedErrors: []
+      },
+      {
+        id: 'css-centering-1',
+        title: 'Cannot center div / element',
+        category: 'Layout',
+        severity: 'low',
+        description: 'Various centering methods not working',
+        errorMessage: 'Element not centered horizontally or vertically',
+        commonCauses: ['Wrong method for layout type', 'Missing width', 'Parent constraints'],
+        solutions: [
+          {
+            approach: 'Multiple centering methods',
+            code: `/* Method 1: Flexbox (recommended) */
+.parent {
+  display: flex;
+  justify-content: center; /* Horizontal */
+  align-items: center;     /* Vertical */
+}
+
+/* Method 2: Grid */
+.parent {
+  display: grid;
+  place-items: center; /* Both axes */
+}
+
+/* Method 3: Absolute positioning */
+.parent {
+  position: relative;
+}
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Method 4: Margin auto (horizontal only) */
+.child {
+  width: 200px;
+  margin: 0 auto;
+}`,
+            explanation: 'Choose appropriate centering method for your layout'
+          }
+        ],
+        prevention: ['Use flexbox for most cases', 'Check parent/child relationship', 'Test in DevTools'],
+        relatedErrors: ['css-flexbox-1']
+      }
+    ]
+  },
+
+  nextjs: {
+    id: 'nextjs',
+    name: 'Next.js',
+    icon: '▲',
+    color: '#000000',
+    commonErrors: [
+      {
+        id: 'nextjs-hydration-1',
+        title: 'Hydration failed / Text content does not match',
+        category: 'SSR',
+        severity: 'high',
+        description: 'Server-rendered HTML differs from client-side',
+        errorMessage: 'Warning: Text content did not match. Server: "..." Client: "..."',
+        commonCauses: ['Date/time differences', 'Random values', 'Browser-only APIs', 'Conditional rendering'],
+        solutions: [
+          {
+            approach: 'Use useEffect for client-only',
+            code: `// ❌ Wrong - causes hydration mismatch
+export default function Component() {
+  return <div>{new Date().toLocaleString()}</div>;
+}
+
+// ✅ Correct - use useEffect
+import { useState, useEffect } from 'react';
+
+export default function Component() {
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  if (!mounted) return null;
+  
+  return <div>{new Date().toLocaleString()}</div>;
+}
+
+// Or suppress hydration warning
+<div suppressHydrationWarning>
+  {new Date().toLocaleString()}
+</div>`,
+            explanation: 'Delay client-only content until after hydration'
+          }
+        ],
+        prevention: ['Avoid date/time in SSR', 'Use useEffect for client code', 'Check for window usage'],
+        relatedErrors: []
+      },
+      {
+        id: 'nextjs-api-1',
+        title: 'API route not found / 404',
+        category: 'API Routes',
+        severity: 'medium',
+        description: 'API route returns 404 error',
+        errorMessage: '404: API route not found',
+        commonCauses: ['Wrong file location', 'Incorrect naming', 'Missing export', 'Dynamic route mismatch'],
+        solutions: [
+          {
+            approach: 'Check file structure',
+            code: `// ✅ Correct API route structure (App Router)
+// app/api/users/route.ts
+export async function GET(request: Request) {
+  return Response.json({ users: [] });
+}
+
+// Access: /api/users
+
+// ✅ Dynamic route
+// app/api/users/[id]/route.ts
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  return Response.json({ user: params.id });
+}
+
+// Access: /api/users/123
+
+// ✅ Pages Router (older)
+// pages/api/users.ts
+export default function handler(req, res) {
+  res.status(200).json({ users: [] });
+}`,
+            explanation: 'Ensure correct file location and export format'
+          }
+        ],
+        prevention: ['Follow Next.js routing conventions', 'Check file naming', 'Verify exports'],
+        relatedErrors: []
+      },
+      {
+        id: 'nextjs-image-1',
+        title: 'Next/Image optimization failed',
+        category: 'Images',
+        severity: 'medium',
+        description: 'Image component errors or fails to load',
+        errorMessage: 'Invalid src prop / Image optimization failed',
+        commonCauses: ['External URL not configured', 'Invalid image format', 'Missing width/height'],
+        solutions: [
+          {
+            approach: 'Configure image domains',
+            code: `// next.config.js
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/images/**',
+      },
+    ],
+    // Or for older Next.js versions
+    domains: ['example.com', 'cdn.example.com'],
+  },
+};
+
+// Component usage
+import Image from 'next/image';
+
+export default function MyImage() {
+  return (
+    <Image
+      src="https://example.com/image.jpg"
+      alt="Description"
+      width={500}
+      height={300}
+      priority // For above-fold images
+    />
+  );
+}`,
+            explanation: 'Add external domains to next.config.js'
+          }
+        ],
+        prevention: ['Configure image domains', 'Always provide width/height', 'Use local images when possible'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  typescript: {
+    id: 'typescript-advanced',
+    name: 'TypeScript (Advanced)',
+    icon: '🔷',
+    color: '#3178C6',
+    commonErrors: [
+      {
+        id: 'ts-any-1',
+        title: 'Type "any" is not assignable to parameter',
+        category: 'Types',
+        severity: 'medium',
+        description: 'TypeScript strict mode prevents implicit any',
+        errorMessage: 'Parameter implicitly has an "any" type',
+        commonCauses: ['Missing type annotation', 'Strict mode enabled', 'Untyped library'],
+        solutions: [
+          {
+            approach: 'Add explicit types',
+            code: `// ❌ Implicit any
+function process(data) {
+  return data.value;
+}
+
+// ✅ Explicit type
+function process(data: { value: string }): string {
+  return data.value;
+}
+
+// ✅ With interface
+interface Data {
+  value: string;
+  count: number;
+}
+
+function process(data: Data): string {
+  return data.value;
+}
+
+// ✅ Generic type
+function process<T>(data: T): T {
+  return data;
+}`,
+            explanation: 'Always add type annotations in strict mode'
+          }
+        ],
+        prevention: ['Enable strict mode early', 'Type all parameters', 'Use interfaces'],
+        relatedErrors: []
+      },
+      {
+        id: 'ts-null-1',
+        title: 'Object is possibly "null" or "undefined"',
+        category: 'Null Safety',
+        severity: 'high',
+        description: 'TypeScript detects potential null/undefined access',
+        errorMessage: 'Object is possibly "null" or "undefined"',
+        commonCauses: ['Nullable type', 'Optional property', 'No null check'],
+        solutions: [
+          {
+            approach: 'Add null checks',
+            code: `// ❌ Potential null access
+function getName(user: User | null) {
+  return user.name; // Error!
+}
+
+// ✅ Null check
+function getName(user: User | null) {
+  if (user) {
+    return user.name;
+  }
+  return 'Unknown';
+}
+
+// ✅ Optional chaining
+function getName(user: User | null) {
+  return user?.name ?? 'Unknown';
+}
+
+// ✅ Non-null assertion (use carefully!)
+function getName(user: User | null) {
+  return user!.name; // Asserts user is not null
+}
+
+// ✅ Type guard
+function isUser(value: unknown): value is User {
+  return value !== null && typeof value === 'object';
+}`,
+            explanation: 'Always handle null/undefined cases'
+          }
+        ],
+        prevention: ['Use optional chaining', 'Add null checks', 'Use type guards'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  testing: {
+    id: 'testing',
+    name: 'Testing (Jest/Vitest)',
+    icon: '🧪',
+    color: '#C21325',
+    commonErrors: [
+      {
+        id: 'test-timeout-1',
+        title: 'Test timeout exceeded',
+        category: 'Async',
+        severity: 'medium',
+        description: 'Test takes longer than timeout limit',
+        errorMessage: 'Timeout - Async callback was not invoked within timeout',
+        commonCauses: ['Missing await', 'Infinite loop', 'Async not resolved', 'Network delay'],
+        solutions: [
+          {
+            approach: 'Fix async handling',
+            code: `// ❌ Missing await
+test('fetches data', () => {
+  fetchData(); // Not awaited!
+  expect(data).toBeDefined();
+});
+
+// ✅ Proper async/await
+test('fetches data', async () => {
+  const data = await fetchData();
+  expect(data).toBeDefined();
+});
+
+// ✅ Increase timeout for slow tests
+test('slow operation', async () => {
+  const result = await slowOperation();
+  expect(result).toBe(true);
+}, 10000); // 10 second timeout
+
+// ✅ Mock timers
+jest.useFakeTimers();
+test('delayed function', () => {
+  const callback = jest.fn();
+  setTimeout(callback, 1000);
+  
+  jest.advanceTimersByTime(1000);
+  expect(callback).toHaveBeenCalled();
+});`,
+            explanation: 'Always await async operations in tests'
+          }
+        ],
+        prevention: ['Use async/await', 'Mock slow operations', 'Set appropriate timeouts'],
+        relatedErrors: []
+      },
+      {
+        id: 'test-mock-1',
+        title: 'Mock function not called / wrong arguments',
+        category: 'Mocking',
+        severity: 'low',
+        description: 'Mock expectations fail',
+        errorMessage: 'Expected mock function to have been called',
+        commonCauses: ['Mock not set up', 'Wrong mock path', 'Assertion before call'],
+        solutions: [
+          {
+            approach: 'Proper mock setup',
+            code: `// ✅ Mock module
+jest.mock('./api', () => ({
+  fetchUser: jest.fn(),
+}));
+
+import { fetchUser } from './api';
+
+test('calls API', async () => {
+  const mockUser = { id: 1, name: 'John' };
+  (fetchUser as jest.Mock).mockResolvedValue(mockUser);
+  
+  const result = await fetchUser(1);
+  
+  expect(fetchUser).toHaveBeenCalledWith(1);
+  expect(result).toEqual(mockUser);
+});
+
+// ✅ Spy on method
+test('calls method', () => {
+  const spy = jest.spyOn(console, 'log');
+  
+  console.log('test');
+  
+  expect(spy).toHaveBeenCalledWith('test');
+  spy.mockRestore();
+});
+
+// ✅ Mock implementation
+const mockFn = jest.fn()
+  .mockReturnValueOnce('first')
+  .mockReturnValueOnce('second');
+
+expect(mockFn()).toBe('first');
+expect(mockFn()).toBe('second');`,
+            explanation: 'Set up mocks before using them'
+          }
+        ],
+        prevention: ['Mock before tests run', 'Check mock paths', 'Clear mocks between tests'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  deployment: {
+    id: 'deployment',
+    name: 'Deployment / Build',
+    icon: '🚀',
+    color: '#FF6B6B',
+    commonErrors: [
+      {
+        id: 'deploy-env-1',
+        title: 'Environment variables not defined',
+        category: 'Configuration',
+        severity: 'high',
+        description: 'Missing environment variables in production',
+        errorMessage: 'process.env.API_KEY is undefined',
+        commonCauses: ['Not set in hosting platform', 'Wrong variable name', 'Build time vs runtime'],
+        solutions: [
+          {
+            approach: 'Set environment variables',
+            code: `// ✅ Vercel - vercel.json
+{
+  "env": {
+    "API_KEY": "@api-key-secret"
+  }
+}
+
+// Or in Vercel dashboard: Settings > Environment Variables
+
+// ✅ Netlify - netlify.toml
+[build.environment]
+  API_KEY = "your-key"
+
+// Or in Netlify dashboard: Site settings > Environment variables
+
+// ✅ Next.js - expose to client
+// next.config.js
+module.exports = {
+  env: {
+    CUSTOM_KEY: process.env.CUSTOM_KEY,
+  },
+  // Or for Next.js 13+
+  publicRuntimeConfig: {
+    apiKey: process.env.API_KEY,
+  },
+};
+
+// Access in client
+const apiKey = process.env.NEXT_PUBLIC_API_KEY;`,
+            explanation: 'Set environment variables in hosting platform'
+          }
+        ],
+        prevention: ['Use .env.example', 'Document all required env vars', 'Validate on startup'],
+        relatedErrors: []
+      },
+      {
+        id: 'deploy-build-1',
+        title: 'Build failed / Out of memory',
+        category: 'Build',
+        severity: 'high',
+        description: 'Build process fails or runs out of memory',
+        errorMessage: 'JavaScript heap out of memory / Build failed',
+        commonCauses: ['Large bundle size', 'Memory leak', 'Heavy dependencies', 'Insufficient resources'],
+        solutions: [
+          {
+            approach: 'Optimize build',
+            code: `// ✅ Increase Node memory
+// package.json
+{
+  "scripts": {
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' next build"
+  }
+}
+
+// ✅ Optimize bundle
+// next.config.js
+module.exports = {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          vendor: {
+            name: 'vendor',
+            chunks: 'all',
+            test: /node_modules/,
+          },
+        },
+      };
+    }
+    return config;
+  },
+};
+
+// ✅ Dynamic imports
+const HeavyComponent = dynamic(
+  () => import('./HeavyComponent'),
+  { ssr: false }
+);
+
+// ✅ Analyze bundle
+npm install @next/bundle-analyzer
+npm run analyze`,
+            explanation: 'Increase memory and optimize bundle size'
+          }
+        ],
+        prevention: ['Monitor bundle size', 'Use dynamic imports', 'Remove unused dependencies'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  mongodb: {
+    id: 'mongodb',
+    name: 'MongoDB',
+    icon: '🍃',
+    color: '#47A248',
+    commonErrors: [
+      {
+        id: 'mongo-connect-1',
+        title: 'MongoNetworkError: connect ECONNREFUSED',
+        category: 'Connection',
+        severity: 'high',
+        description: 'Cannot connect to MongoDB server',
+        errorMessage: 'MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017',
+        commonCauses: ['MongoDB not running', 'Wrong connection string', 'Firewall blocking', 'Wrong port'],
+        solutions: [
+          {
+            approach: 'Start MongoDB and check connection',
+            code: `// Check if MongoDB is running
+// macOS/Linux
+sudo systemctl status mongod
+
+// Start MongoDB
+sudo systemctl start mongod
+
+// ✅ Proper connection with error handling
+import { MongoClient } from 'mongodb';
+
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+const client = new MongoClient(uri);
+
+async function connect() {
+  try {
+    await client.connect();
+    console.log('Connected to MongoDB');
+    const db = client.db('mydb');
+    return db;
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+    process.exit(1);
+  }
+}
+
+// ✅ Connection with retry
+async function connectWithRetry(retries = 5) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await client.connect();
+      return client.db('mydb');
+    } catch (error) {
+      if (i === retries - 1) throw error;
+      console.log(\`Retry \${i + 1}/\${retries}...\`);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  }
+}`,
+            explanation: 'Ensure MongoDB is running and connection string is correct'
+          }
+        ],
+        prevention: ['Verify MongoDB is running', 'Use connection pooling', 'Add retry logic'],
+        relatedErrors: []
+      },
+      {
+        id: 'mongo-duplicate-1',
+        title: 'E11000 duplicate key error',
+        category: 'Constraints',
+        severity: 'medium',
+        description: 'Attempting to insert duplicate unique value',
+        errorMessage: 'E11000 duplicate key error collection: mydb.users index: email_1',
+        commonCauses: ['Duplicate unique field', 'Existing record', 'Race condition'],
+        solutions: [
+          {
+            approach: 'Handle duplicates',
+            code: `// ✅ Check before insert
+const existing = await db.collection('users')
+  .findOne({ email: 'user@example.com' });
+
+if (existing) {
+  throw new Error('Email already exists');
+}
+
+await db.collection('users').insertOne({
+  email: 'user@example.com',
+  name: 'John'
+});
+
+// ✅ Use upsert
+await db.collection('users').updateOne(
+  { email: 'user@example.com' },
+  { 
+    $set: { name: 'John', updatedAt: new Date() },
+    $setOnInsert: { createdAt: new Date() }
+  },
+  { upsert: true }
+);
+
+// ✅ Catch duplicate error
+try {
+  await db.collection('users').insertOne({ email });
+} catch (error) {
+  if (error.code === 11000) {
+    console.log('Duplicate email');
+  } else {
+    throw error;
+  }
+}`,
+            explanation: 'Check for existing records or use upsert'
+          }
+        ],
+        prevention: ['Validate before insert', 'Use upsert', 'Handle race conditions'],
+        relatedErrors: []
+      },
+      {
+        id: 'mongo-timeout-1',
+        title: 'MongoServerSelectionError: connection timeout',
+        category: 'Performance',
+        severity: 'high',
+        description: 'Server selection timed out',
+        errorMessage: 'MongoServerSelectionError: connection timed out',
+        commonCauses: ['Network issues', 'Firewall', 'Wrong URI', 'Slow server'],
+        solutions: [
+          {
+            approach: 'Increase timeout and optimize',
+            code: `// ✅ Increase connection timeout
+const client = new MongoClient(uri, {
+  serverSelectionTimeoutMS: 10000, // 10 seconds
+  socketTimeoutMS: 45000,
+  connectTimeoutMS: 10000,
+});
+
+// ✅ Connection pool settings
+const client = new MongoClient(uri, {
+  maxPoolSize: 10,
+  minPoolSize: 5,
+  maxIdleTimeMS: 30000,
+});
+
+// ✅ Index for query performance
+await db.collection('users').createIndex({ email: 1 });
+
+// ✅ Optimize query with projection
+const user = await db.collection('users').findOne(
+  { email: 'user@example.com' },
+  { projection: { name: 1, email: 1, _id: 0 } }
+);`,
+            explanation: 'Configure timeouts and optimize queries'
+          }
+        ],
+        prevention: ['Set appropriate timeouts', 'Use indexes', 'Monitor performance'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  vscode: {
+    id: 'vscode',
+    name: 'VS Code',
+    icon: '💻',
+    color: '#007ACC',
+    commonErrors: [
+      {
+        id: 'vscode-eslint-1',
+        title: 'ESLint is disabled / not working',
+        category: 'Extensions',
+        severity: 'low',
+        description: 'ESLint extension not functioning',
+        errorMessage: 'ESLint is disabled or not detecting issues',
+        commonCauses: ['Extension not enabled', 'No config file', 'Wrong working directory'],
+        solutions: [
+          {
+            approach: 'Configure ESLint',
+            code: `// ✅ Install ESLint
+npm install --save-dev eslint
+
+// Initialize config
+npx eslint --init
+
+// .eslintrc.json
+{
+  "extends": ["eslint:recommended"],
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  }
+}
+
+// VS Code settings.json
+{
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
+}`,
+            explanation: 'Install and configure ESLint properly'
+          }
+        ],
+        prevention: ['Install ESLint extension', 'Create config file', 'Enable in settings'],
+        relatedErrors: []
+      },
+      {
+        id: 'vscode-terminal-1',
+        title: 'Integrated terminal not working',
+        category: 'Terminal',
+        severity: 'medium',
+        description: 'Terminal fails to open or execute commands',
+        errorMessage: 'The terminal process failed to launch',
+        commonCauses: ['Shell path incorrect', 'Permission issues', 'Corrupted settings'],
+        solutions: [
+          {
+            approach: 'Fix terminal settings',
+            code: `// VS Code settings.json
+
+// ✅ Windows - Use PowerShell
+{
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    }
+  }
+}
+
+// ✅ macOS/Linux - Use zsh or bash
+{
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "/bin/zsh",
+      "args": ["-l"]
+    }
+  }
+}
+
+// Reset terminal
+// Command Palette (Cmd/Ctrl+Shift+P)
+// > Terminal: Kill All Terminals`,
+            explanation: 'Configure correct shell path in settings'
+          }
+        ],
+        prevention: ['Use default shells', 'Check shell paths', 'Reset if needed'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  webpack: {
+    id: 'webpack',
+    name: 'Webpack / Bundlers',
+    icon: '📦',
+    color: '#8DD6F9',
+    commonErrors: [
+      {
+        id: 'webpack-module-1',
+        title: 'Module not found / Can\'t resolve',
+        category: 'Modules',
+        severity: 'high',
+        description: 'Webpack cannot find module',
+        errorMessage: 'Module not found: Error: Can\'t resolve \'./Component\'',
+        commonCauses: ['Wrong path', 'Missing extension', 'Case sensitivity', 'Missing dependency'],
+        solutions: [
+          {
+            approach: 'Fix module resolution',
+            code: `// ❌ Wrong - case sensitive
+import Component from './component'; // file is Component.js
+
+// ✅ Correct case
+import Component from './Component';
+
+// ✅ Add extension if needed
+import Component from './Component.jsx';
+
+// ✅ Webpack config - resolve extensions
+module.exports = {
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    alias: {
+      '@': path.resolve(__dirname, 'src/'),
+      'components': path.resolve(__dirname, 'src/components/')
+    }
+  }
+};
+
+// Usage with alias
+import Button from '@/components/Button';`,
+            explanation: 'Check file paths and configure webpack resolve'
+          }
+        ],
+        prevention: ['Use correct case', 'Configure extensions', 'Use path aliases'],
+        relatedErrors: []
+      },
+      {
+        id: 'webpack-memory-1',
+        title: 'JavaScript heap out of memory',
+        category: 'Performance',
+        severity: 'high',
+        description: 'Webpack build runs out of memory',
+        errorMessage: 'FATAL ERROR: Reached heap limit Allocation failed',
+        commonCauses: ['Large bundle', 'Memory leak', 'Too many files', 'Source maps'],
+        solutions: [
+          {
+            approach: 'Optimize build',
+            code: `// ✅ Increase memory
+// package.json
+{
+  "scripts": {
+    "build": "NODE_OPTIONS='--max-old-space-size=4096' webpack"
+  }
+}
+
+// ✅ Webpack optimization
+module.exports = {
+  mode: 'production',
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 200000,
+    },
+    runtimeChunk: 'single',
+  },
+  devtool: 'source-map', // Instead of 'eval-source-map'
+};
+
+// ✅ Use webpack-bundle-analyzer
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+plugins: [
+  new BundleAnalyzerPlugin()
+]`,
+            explanation: 'Increase Node memory and optimize webpack config'
+          }
+        ],
+        prevention: ['Monitor bundle size', 'Use code splitting', 'Optimize dependencies'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  linux: {
+    id: 'linux',
+    name: 'Linux / Bash',
+    icon: '🐧',
+    color: '#FCC624',
+    commonErrors: [
+      {
+        id: 'linux-permission-1',
+        title: 'Permission denied',
+        category: 'Permissions',
+        severity: 'medium',
+        description: 'Insufficient permissions to execute or access',
+        errorMessage: 'bash: ./script.sh: Permission denied',
+        commonCauses: ['Missing execute permission', 'Wrong file ownership', 'SELinux blocking'],
+        solutions: [
+          {
+            approach: 'Fix permissions',
+            code: `# ✅ Add execute permission
+chmod +x script.sh
+
+# ✅ Change file permissions
+chmod 755 script.sh  # Owner: rwx, Others: rx
+chmod 644 file.txt   # Owner: rw, Others: r
+
+# ✅ Change ownership
+sudo chown user:group file.txt
+
+# ✅ Recursively change directory
+sudo chmod -R 755 /var/www/html
+
+# Check current permissions
+ls -la
+
+# Output: -rwxr-xr-x = 755`,
+            explanation: 'Grant execute permission with chmod'
+          }
+        ],
+        prevention: ['Set correct permissions', 'Use chmod wisely', 'Check ownership'],
+        relatedErrors: []
+      },
+      {
+        id: 'linux-command-1',
+        title: 'Command not found',
+        category: 'PATH',
+        severity: 'medium',
+        description: 'Command not in PATH or not installed',
+        errorMessage: 'bash: command: command not found',
+        commonCauses: ['Not installed', 'Not in PATH', 'Typo', 'Wrong shell'],
+        solutions: [
+          {
+            approach: 'Install or fix PATH',
+            code: `# ✅ Check if installed
+which node
+command -v node
+
+# ✅ Install package
+# Ubuntu/Debian
+sudo apt update
+sudo apt install nodejs
+
+# CentOS/RHEL
+sudo yum install nodejs
+
+# macOS
+brew install node
+
+# ✅ Add to PATH
+export PATH=$PATH:/usr/local/bin
+
+# Permanent (add to ~/.bashrc or ~/.zshrc)
+echo 'export PATH=$PATH:/usr/local/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# ✅ Use full path
+/usr/local/bin/node script.js`,
+            explanation: 'Install package or add to PATH'
+          }
+        ],
+        prevention: ['Verify installation', 'Check PATH', 'Use package managers'],
+        relatedErrors: []
+      },
+      {
+        id: 'linux-disk-1',
+        title: 'No space left on device',
+        category: 'Storage',
+        severity: 'high',
+        description: 'Disk is full',
+        errorMessage: 'No space left on device',
+        commonCauses: ['Disk full', 'Large log files', 'Too many files', 'Docker images'],
+        solutions: [
+          {
+            approach: 'Free up space',
+            code: `# ✅ Check disk usage
+df -h
+
+# ✅ Find large files
+du -sh /* | sort -hr | head -10
+du -h --max-depth=1 / | sort -hr
+
+# ✅ Clean package cache
+# Ubuntu/Debian
+sudo apt clean
+sudo apt autoremove
+
+# ✅ Clean Docker
+docker system prune -a
+docker volume prune
+
+# ✅ Clean logs
+sudo journalctl --vacuum-time=7d
+sudo find /var/log -type f -name "*.log" -delete
+
+# ✅ Find and delete old files
+find /tmp -type f -mtime +7 -delete`,
+            explanation: 'Remove unnecessary files and clean caches'
+          }
+        ],
+        prevention: ['Monitor disk usage', 'Rotate logs', 'Clean regularly'],
+        relatedErrors: []
+      }
+    ]
+  },
+
+  aws: {
+    id: 'aws',
+    name: 'AWS',
+    icon: '☁️',
+    color: '#FF9900',
+    commonErrors: [
+      {
+        id: 'aws-credentials-1',
+        title: 'Unable to locate credentials',
+        category: 'Authentication',
+        severity: 'high',
+        description: 'AWS credentials not configured',
+        errorMessage: 'Unable to locate credentials. You can configure credentials by running "aws configure"',
+        commonCauses: ['Credentials not set', 'Wrong profile', 'Expired credentials'],
+        solutions: [
+          {
+            approach: 'Configure AWS credentials',
+            code: `# ✅ Configure default credentials
+aws configure
+# AWS Access Key ID: YOUR_KEY
+# AWS Secret Access Key: YOUR_SECRET
+# Default region: us-east-1
+# Default output: json
+
+# ✅ Use environment variables
+export AWS_ACCESS_KEY_ID=YOUR_KEY
+export AWS_SECRET_ACCESS_KEY=YOUR_SECRET
+export AWS_DEFAULT_REGION=us-east-1
+
+# ✅ In code - use AWS SDK
+import { S3Client } from '@aws-sdk/client-s3';
+
+const client = new S3Client({
+  region: 'us-east-1',
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+# ✅ Use named profile
+aws configure --profile myprofile
+# Use profile
+aws s3 ls --profile myprofile`,
+            explanation: 'Configure AWS credentials properly'
+          }
+        ],
+        prevention: ['Use aws configure', 'Store in environment variables', 'Use IAM roles'],
+        relatedErrors: []
+      },
+      {
+        id: 'aws-s3-1',
+        title: 'Access Denied - S3 bucket',
+        category: 'Permissions',
+        severity: 'high',
+        description: 'Insufficient permissions for S3 operation',
+        errorMessage: 'Access Denied (Service: S3, Status Code: 403)',
+        commonCauses: ['Missing IAM permissions', 'Bucket policy', 'Public access blocked'],
+        solutions: [
+          {
+            approach: 'Fix S3 permissions',
+            code: `// ✅ IAM Policy for S3 access
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": "arn:aws:s3:::my-bucket/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::my-bucket"
+    }
+  ]
+}
+
+// ✅ Bucket Policy for public read
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::my-bucket/*"
+    }
+  ]
+}
+
+# ✅ Make bucket public
+aws s3api put-public-access-block \\
+  --bucket my-bucket \\
+  --public-access-block-configuration \\
+  "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"`,
+            explanation: 'Configure IAM and bucket policies'
+          }
+        ],
+        prevention: ['Set proper IAM policies', 'Configure bucket policies', 'Check CORS settings'],
+        relatedErrors: []
+      }
+    ]
   }
 };
 
