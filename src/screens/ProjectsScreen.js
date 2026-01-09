@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,19 +6,58 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { colors, spacing, borderRadius } from '../constants/theme';
 import { getAllProjects } from '../data/projectsData';
-import NativeAdView from '../components/NativeAdView';
 
 export default function ProjectsScreen({ navigation }) {
   const { t } = useTranslation();
-  const allProjects = getAllProjects();
+  const [allProjects, setAllProjects] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredProjects, setFilteredProjects] = useState(allProjects);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Load projects safely with extensive error handling
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        console.log('ProjectsScreen: Starting to load projects...');
+        
+        // Try to get projects
+        const projects = getAllProjects();
+        
+        console.log('ProjectsScreen: Projects loaded:', projects?.length || 0);
+        
+        if (!projects || !Array.isArray(projects)) {
+          throw new Error('Projects data is invalid or not an array');
+        }
+        
+        if (projects.length === 0) {
+          console.warn('ProjectsScreen: No projects found');
+        }
+        
+        setAllProjects(projects);
+        setFilteredProjects(projects);
+        setIsLoading(false);
+        console.log('ProjectsScreen: Successfully loaded projects');
+      } catch (err) {
+        console.error('ProjectsScreen: Error loading projects:', err);
+        setError(err?.message || 'Failed to load projects');
+        setIsLoading(false);
+        
+        // Set empty array as fallback
+        setAllProjects([]);
+        setFilteredProjects([]);
+      }
+    };
+    
+    loadProjects();
+  }, []);
 
   const difficulties = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
@@ -64,6 +103,48 @@ export default function ProjectsScreen({ navigation }) {
         return colors.primary;
     }
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container} edges={['bottom']}>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading projects...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <SafeAreaView style={styles.container} edges={['bottom']}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorIcon}>⚠️</Text>
+          <Text style={styles.errorTitle}>Error Loading Projects</Text>
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity
+            style={styles.retryButton}
+            onPress={() => {
+              setIsLoading(true);
+              setError(null);
+              try {
+                const projects = getAllProjects();
+                setAllProjects(projects);
+                setFilteredProjects(projects);
+                setIsLoading(false);
+              } catch (err) {
+                setError(err.message);
+                setIsLoading(false);
+              }
+            }}
+          >
+            <Text style={styles.retryButtonText}>Retry</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container} edges={['bottom']}>
@@ -186,13 +267,6 @@ export default function ProjectsScreen({ navigation }) {
                     <Text style={styles.arrowText}>→</Text>
                   </View>
                 </TouchableOpacity>
-
-                {/* Native Ad after 4th project */}
-                {index === 3 && (
-                  <View style={{ marginVertical: spacing.md }}>
-                    <NativeAdView adUnitId="ca-app-pub-5526801232554836/9861336627" />
-                  </View>
-                )}
               </React.Fragment>
             ))
           ) : (
@@ -449,5 +523,50 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.textMuted,
     lineHeight: 20,
+  },
+  adContainer: {
+    marginVertical: spacing.md,
+    alignItems: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    fontSize: 16,
+    color: colors.textMuted,
+    marginTop: spacing.md,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.xl,
+  },
+  errorIcon: {
+    fontSize: 64,
+    marginBottom: spacing.md,
+  },
+  errorTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: spacing.sm,
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 14,
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+  },
+  retryButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.xl,
+    paddingVertical: spacing.md,
+    borderRadius: borderRadius.lg,
+  },
+  retryButtonText: {
+    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

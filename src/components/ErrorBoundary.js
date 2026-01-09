@@ -50,7 +50,8 @@ class ErrorBoundary extends React.Component {
               The app encountered an unexpected error
             </Text>
 
-            {__DEV__ && this.state.error && (
+            {/* Show error details in both DEV and PROD for debugging */}
+            {this.state.error && (
               <View style={styles.errorDetails}>
                 <Text style={styles.errorTitle}>Error Details:</Text>
                 <Text style={styles.errorMessage}>{this.state.error.toString()}</Text>
@@ -58,7 +59,9 @@ class ErrorBoundary extends React.Component {
                 {this.state.errorInfo && (
                   <>
                     <Text style={styles.errorTitle}>Component Stack:</Text>
-                    <Text style={styles.errorStack}>{this.state.errorInfo.componentStack}</Text>
+                    <Text style={styles.errorStack} numberOfLines={10}>
+                      {this.state.errorInfo.componentStack}
+                    </Text>
                   </>
                 )}
               </View>
