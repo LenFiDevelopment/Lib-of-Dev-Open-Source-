@@ -6,7 +6,7 @@ export const languages = {
     name: 'JavaScript',
     icon: '🟨',
     color: '#F7DF1E',
-    description: 'Die Programmiersprache des Webs - läuft im Browser und auf Servern (Node.js). Dynamisch typisiert, event-driven und perfekt für interaktive Websites, APIs und Full-Stack Development.',
+    description: 'The programming language of the web - runs in browsers and on servers (Node.js). Dynamically typed, event-driven, and perfect for interactive websites, APIs, and full-stack development.',
     categories: {
       basics: {
         name: 'Basics & Syntax',
@@ -15,13 +15,13 @@ export const languages = {
             title: 'Variables',
             code: `// 3 Arten Variablen zu deklarieren
 
-// 1. const - Kann NICHT neu zugewiesen werden (empfohlen!)
+// 1. const - CANNOT be reassigned (recommended!)
 const userName = "Max Mustermann";
 const PI = 3.14159;
 const isLoggedIn = true;
 // userName = "Neuer Name"; // ❌ Fehler: Assignment to constant variable
 
-// 2. let - Kann neu zugewiesen werden
+// 2. let - Can be reassigned
 let counter = 0;
 counter = 1; // ✅ Funktioniert
 counter++; // ✅ Auch okay
@@ -41,7 +41,7 @@ var oldStyle = "legacy"; // ❌ Nicht empfohlen
 
 // Mehrere Variablen gleichzeitig
 const firstName = "Max", lastName = "Mustermann", age = 25;`,
-            description: 'Variablen sind Container für Daten. In JavaScript gibt es 3 Arten: const (konstant), let (veränderbar) und var (veraltet). const solltest du IMMER als Standard nutzen - nur wenn du wirklich neu zuweisen musst, nimm let.',
+            description: 'Variables are containers for data. JavaScript has 3 types: const (constant), let (changeable), and var (deprecated). Always use const as default - only use let when you really need to reassign.',
             usage: 'Nutze const für alles was sich nicht ändert (90% der Fälle). let nur wenn du wirklich reassignen musst (z.B. Counter in Loops). var ist veraltet wegen Function Scope statt Block Scope.',
             bestPractices: [
               '✅ Immer const als Standard verwenden',
@@ -126,7 +126,7 @@ typeof undefined; // "undefined"
 typeof null; // "object" ⚠️ JavaScript Bug!
 typeof {}; // "object"
 typeof []; // "object" ⚠️ Use Array.isArray([])`,
-            description: 'JavaScript hat 8 Datentypen: String (Text), Number (Zahlen), Boolean (true/false), Undefined (nicht zugewiesen), Null (leer), Symbol (unique IDs), BigInt (große Zahlen) und Object (komplexe Daten). Die ersten 7 sind "Primitives" (unveränderlich), Object ist komplex.',
+            description: 'JavaScript has 8 data types: String (text), Number (numbers), Boolean (true/false), Undefined (not assigned), Null (empty), Symbol (unique IDs), BigInt (large numbers), and Object (complex data). The first 7 are "Primitives" (immutable), Object is complex.',
             usage: 'Strings für Text, Numbers für Mathematik, Booleans für Bedingungen, Objects für strukturierte Daten. typeof prüft den Typ. Wichtig: JavaScript ist dynamisch typisiert - Variablen können ihren Typ ändern!',
             bestPractices: [
               '✅ Template Literals \`${var}\` statt String Concatenation',
@@ -163,7 +163,7 @@ function greet(name) {
 }
 console.log(greet("Max")); // "Hallo, Max!"
 
-// Hoisting: Function Declarations können VOR ihrer Definition aufgerufen werden
+// Hoisting: Function declarations can be called BEFORE their definition
 sayHi(); // ✅ Funktioniert!
 function sayHi() {
   console.log("Hi!");
@@ -252,7 +252,7 @@ function* numberGenerator() {
 const gen = numberGenerator();
 console.log(gen.next().value); // 1
 console.log(gen.next().value); // 2`,
-            description: 'Funktionen sind wiederverwendbare Code-Blöcke. Es gibt viele Arten: Function Declarations (klassisch), Arrow Functions (modern), Async Functions (für Promises), Callbacks (als Argumente), Higher Order Functions (returnen Functions). Arrow Functions haben kein eigenes "this".',
+            description: 'Functions are reusable code blocks. There are many types: Function Declarations (classic), Arrow Functions (modern), Async Functions (for Promises), Callbacks (as arguments), Higher Order Functions (return functions). Arrow Functions have no own "this".',
             usage: 'Function Declarations für Methoden mit "this". Arrow Functions für Callbacks und wenn du lexical "this" brauchst. Async Functions für API Calls. Default Parameters für optionale Argumente. Rest Parameters für variable Anzahl.',
             bestPractices: [
               '✅ Arrow Functions für Callbacks: array.map(x => x * 2)',
@@ -360,7 +360,7 @@ const obj2 = { ...obj1, c: 3 }; // { a: 1, b: 2, c: 3 }
 console.log(typeof 42); // "number"
 console.log(typeof "text"); // "string"
 console.log(typeof true); // "boolean"`,
-            description: 'Operatoren führen Operationen auf Werten aus. Arithmetisch (+, -, *, /, %), Vergleiche (===, !==, <, >), Logisch (&&, ||, !), Assignment (=, +=). Wichtig: === statt == nutzen für Type-Safe Vergleiche! Moderne Operatoren: ?? (Nullish Coalescing), ?. (Optional Chaining).',
+            description: 'Operators perform operations on values. Arithmetic (+, -, *, /, %), Comparison (===, !==, <, >), Logical (&&, ||, !), Assignment (=, +=). Important: Use === instead of == for type-safe comparisons! Modern operators: ?? (Nullish Coalescing), ?. (Optional Chaining).',
             usage: '=== für Vergleiche (nicht ==). && für "UND", || für "ODER". ?? statt || wenn 0 oder "" valide sind. ?. für sichere Property-Zugriffe. Ternary ?: für kurze if-else. Spread ... zum Kopieren/Mergen.',
             bestPractices: [
               '✅ Immer === und !== nutzen (strict equality)',
@@ -426,12 +426,12 @@ switch (day) {
 
 const value = 0;
 if (value) {
-  console.log("Truthy"); // Wird NICHT ausgeführt
+  console.log("Truthy"); // Will NOT be executed
 }
 
 const name = "Max";
 if (name) {
-  console.log("Name existiert"); // Wird ausgeführt
+  console.log("Name existiert"); // Will be executed
 }
 
 // GUARD CLAUSES - Early Return Pattern
@@ -462,7 +462,7 @@ const username = user?.name ?? "Anonymous";
 if (user?.address?.city === "Berlin") {
   console.log("Berliner!");
 }`,
-            description: 'Bedingungen steuern den Programmfluss. if/else für normale Checks, ternary (? :) für kurze Bedingungen, switch für viele Fälle. Wichtig: Truthy/Falsy Werte kennen! Falsy: false, 0, "", null, undefined, NaN. Guard Clauses (early returns) machen Code lesbarer.',
+            description: 'Conditionals control program flow. if/else for normal checks, ternary (? :) for short conditions, switch for many cases. Important: Know truthy/falsy values! Falsy: false, 0, "", null, undefined, NaN. Guard clauses (early returns) make code more readable.',
             usage: 'if/else für komplexe Logik. Ternary für kurze Zuweisungen. switch wenn viele Fälle. Guard Clauses (early return) vermeiden Verschachtelung. Optional Chaining (?.) für sichere Property-Checks.',
             bestPractices: [
               '✅ Guard Clauses (early returns) statt tiefer Verschachtelung',
@@ -510,7 +510,7 @@ while (count < 5) {
 // DO-WHILE - Läuft mindestens 1x
 let num = 10;
 do {
-  console.log(num); // Wird 1x ausgeführt
+  console.log(num); // Executed 1x
   num++;
 } while (num < 5);
 
@@ -585,7 +585,7 @@ while (true) {
   counter++;
   if (counter >= 5) break; // Wichtig!
 }`,
-            description: 'Schleifen wiederholen Code. for für feste Anzahl, while für Bedingung, for...of für Arrays/Strings, for...in für Objects. Moderne Alternative: Array-Methoden (map, filter, forEach)! break beendet Loop, continue überspringt Iteration. for...of ist besser als for...in für Arrays.',
+            description: 'Loops repeat code. for for fixed count, while for condition, for...of for Arrays/Strings, for...in for Objects. Modern alternative: Array methods (map, filter, forEach)! break ends loop, continue skips iteration. for...of is better than for...in for arrays.',
             usage: 'for für klassische Counter-Loops. for...of für Arrays (besser als for i). while für unbekannte Anzahl. Array-Methoden (map, filter) sind moderner und lesbarer! break zum Abbrechen, continue zum Überspringen.',
             bestPractices: [
               '✅ Array-Methoden (map, filter) statt for-Loops',
@@ -674,7 +674,7 @@ const index = nums.findIndex(n => n > 10); // 1
 const copy = [...fruits]; // Spread
 const copy2 = fruits.slice(); // slice ohne Argumente
 const copy3 = Array.from(fruits);`,
-            description: 'Arrays sind Listen von Werten. Zugriff via Index (0-basiert). Länge mit .length. Hinzufügen: push (Ende), unshift (Anfang). Entfernen: pop (Ende), shift (Anfang). Wichtig: Arrays sind Objekte, Kopien mit [...arr] oder slice() machen!',
+            description: 'Arrays are lists of values. Access via index (0-based). Length with .length. Add: push (end), unshift (start). Remove: pop (end), shift (start). Important: Arrays are objects, make copies with [...arr] or slice()!',
             usage: 'push/pop für Stack (LIFO). shift/unshift für Queue (FIFO). includes() zum Prüfen. indexOf() für Position. [...arr] für Shallow Copy. Nie arr[arr.length] = x nutzen, besser push().',
             bestPractices: [
               '✅ [...arr] oder slice() für Kopien (immutable)',
@@ -773,7 +773,7 @@ nums.reverse();
 
 // Immutable reverse
 const reversed = [...nums].reverse();`,
-            description: 'Array-Methoden sind das Herzstück moderner JavaScript-Entwicklung! map() transformiert, filter() filtert, reduce() aggregiert. forEach() iteriert ohne Return. find() sucht erstes Match. some()/every() prüfen Bedingungen. Wichtig: map/filter/reduce returnen NEUE Arrays (immutable)!',
+            description: 'Array methods are the heart of modern JavaScript development! map() transforms, filter() filters, reduce() aggregates. forEach() iterates without return. find() searches first match. some()/every() check conditions. Important: map/filter/reduce return NEW arrays (immutable)!',
             usage: 'map() für Transformationen (Daten ändern). filter() für Subsets (Elemente entfernen). reduce() für Aggregationen (sum, product, objects bauen). Chaining kombiniert mehrere Operations. find() statt filter()[0]. some()/every() für Boolean-Checks.',
             bestPractices: [
               '✅ map/filter/reduce sind immutable (gut!)',
@@ -859,7 +859,7 @@ function printFirst([first, second]) {
   console.log(\`Erste: \${first}, Zweite: \${second}\`);
 }
 printFirst(fruits); // "Erste: Apple, Zweite: Banana"`,
-            description: 'Destructuring extrahiert Werte aus Arrays in Variablen. Spread (...) breitet Array aus. Rest (...rest) sammelt restliche Elemente. Swapping ohne temp Variable möglich. Spread kopiert Arrays (shallow!), merged Arrays, konvertiert Iterables. Set entfernt Duplikate.',
+            description: 'Destructuring extracts values from arrays into variables. Spread (...) spreads array. Rest (...rest) collects remaining elements. Swapping without temp variable possible. Spread copies arrays (shallow!), merges arrays, converts iterables. Set removes duplicates.',
             usage: 'Destructuring für kompakte Variablen-Zuweisungen. Rest für "alle anderen". Spread für Kopien, Merging, Function Args. [...new Set(arr)] entfernt Duplikate. Swapping: [a, b] = [b, a]. String zu Array: [...str].',
             bestPractices: [
               '✅ [...arr] für Shallow Copies',
@@ -979,7 +979,7 @@ console.log(company.employees[0].name); // "Max"
 // Optional Chaining (?.)
 console.log(company.address?.city); // "Berlin"
 console.log(company.location?.city); // undefined (kein Error!)`,
-            description: 'Objects sind Key-Value Paare (Eigenschaften). Zugriff mit . (dot) oder ["key"] (bracket). Methods sind Funktionen in Objects. this referenziert das Object. Computed Properties: [key]. Property Shorthand wenn Variable = Property Name. Optional Chaining (?.) für sichere Zugriffe.',
+            description: 'Objects are key-value pairs (properties). Access with . (dot) or ["key"] (bracket). Methods are functions in objects. this references the object. Computed Properties: [key]. Property Shorthand when variable = property name. Optional Chaining (?.) for safe access.',
             usage: 'Dot Notation für statische Keys. Bracket für dynamische Keys oder Spaces. Methods mit function() für this-Zugriff. Arrow Functions haben kein eigenes this! Optional Chaining (?.) verhindert "Cannot read property of undefined" Errors.',
             bestPractices: [
               '✅ Dot notation: obj.key (lesbar)',
@@ -1086,7 +1086,7 @@ console.log(user); // { name: "Max", city: "Berlin" }
 // IN OPERATOR
 console.log("name" in user); // true
 console.log("age" in user); // false`,
-            description: 'Object.keys/values/entries() für Iteration. Object.assign() oder {...spread} zum Mergen. Shallow Copy default! Deep Copy mit structuredClone() oder JSON.parse(JSON.stringify()). freeze() macht immutable. seal() verhindert neue Properties. Object.is() für sichere Vergleiche.',
+            description: 'Object.keys/values/entries() for iteration. Object.assign() or {...spread} for merging. Shallow copy by default! Deep copy with structuredClone() or JSON.parse(JSON.stringify()). freeze() makes immutable. seal() prevents new properties. Object.is() for safe comparisons.',
             usage: 'Object.keys() für Iteration. {...spread} für Merging/Copying. structuredClone() für Deep Copies. Object.freeze() für Immutability. Object.entries() + for...of zum Iterieren. Object.fromEntries() zum Transformieren von Arrays zu Objects.',
             bestPractices: [
               '✅ {...obj} für Shallow Copies',
@@ -1116,7 +1116,7 @@ console.log("age" in user); // false`,
             title: 'Classes - OOP in JavaScript',
             code: `// CLASS DECLARATION
 class Person {
-  // Constructor - wird beim "new" aufgerufen
+  // Constructor - called with "new"
   constructor(name, age) {
     this.name = name; // Instance Property
     this.age = age;
@@ -1230,7 +1230,7 @@ class Config {
     this.apiKey = "secret-key-123";
   }
 }`,
-            description: 'Classes sind Templates für Objects. constructor() wird bei "new" aufgerufen. Methods sind Funktionen. Getter/Setter mit get/set. Static Methods gehören zur Class, nicht zur Instance. extends für Vererbung. super() ruft Parent auf. Private Fields mit #. instanceof prüft Type.',
+            description: 'Classes are templates for objects. constructor() is called at "new". Methods are functions. Getter/Setter with get/set. Static methods belong to class, not instance. extends for inheritance. super() calls parent. Private fields with #. instanceof checks type.',
             usage: 'Classes für OOP (Objects mit gleicher Struktur). extends für Vererbung. super() in Child Constructor. Static für Utility Functions. Private # für Encapsulation. Getter/Setter für computed Properties. instanceof für Type Checks.',
             bestPractices: [
               '✅ Classes für wiederverwendbare Object Types',
@@ -1336,7 +1336,7 @@ Promise.allSettled([promise1, promise2, promise3])
     });
   });
 
-// PROMISE.RACE - Erste die finished wird
+// PROMISE.RACE - First one that finishes
 Promise.race([
   fetch('/api/server1'),
   fetch('/api/server2'),
@@ -1346,7 +1346,7 @@ Promise.race([
     console.log("Erste Response:", result);
   });
 
-// PROMISE.ANY - Erste die RESOLVED wird
+// PROMISE.ANY - First one that RESOLVES
 Promise.any([
   fetch('/api/backup1'),
   fetch('/api/backup2'),
@@ -1381,7 +1381,7 @@ async function fetchWithRetry(url, retries = 3) {
     }
   }
 }`,
-            description: 'Promises repräsentieren zukünftige Werte von asynchronen Operationen. 3 States: Pending (wartet), Fulfilled (erfolgreich), Rejected (Fehler). .then() für Success, .catch() für Errors, .finally() immer. Promise.all() für parallel, Promise.race() für fastest. Chaining mit return in .then().',
+            description: 'Promises represent future values from asynchronous operations. 3 States: Pending (waiting), Fulfilled (success), Rejected (error). .then() for success, .catch() for errors, .finally() always. Promise.all() for parallel, Promise.race() for fastest. Chaining with return in .then().',
             usage: '.then() für Success Handler. .catch() für Error Handler. .finally() für Cleanup. Promise.all() wartet auf alle (parallel). Promise.race() nimmt erste. Promise.allSettled() wartet auf alle, ignoriert Errors. Chaining: return in .then() für nächstes .then().',
             bestPractices: [
               '✅ Immer .catch() am Ende der Chain',
@@ -1410,7 +1410,7 @@ async function fetchUser(id) {
   // await pausiert Funktion bis Promise resolved
   const response = await fetch(\`/api/users/\${id}\`);
   const user = await response.json();
-  return user; // Automatisch in Promise gewrappt
+  return user; // Automatically wrapped in Promise
 }
 
 // Usage - ZWEI Wege:
@@ -1534,17 +1534,17 @@ async function complexOperation() {
 
 // RETURN aus async Function
 async function getValue() {
-  return 42; // Wird zu Promise.resolve(42)
+  return 42; // Becomes Promise.resolve(42)
 }
 getValue().then(val => console.log(val)); // 42`,
-            description: 'async/await ist syntaktischer Zucker für Promises. async macht Function zur async Function (returnt Promise). await pausiert Funktion bis Promise resolved. try-catch für Error Handling. await nur in async Functions (oder top-level in Modules). Promise.all() für parallele Operationen. await in Loops ist sequentiell (langsam)!',
+            description: 'async/await is syntactic sugar for Promises. async makes function async (returns Promise). await pauses function until Promise resolved. try-catch for error handling. await only in async functions (or top-level in modules). Promise.all() for parallel operations. await in loops is sequential (slow)!',
             usage: 'async function für asynchronen Code. await für Promise-Werte. try-catch für Errors. Promise.all() + await für Parallelität. Top-level await in Modules. IIFE für sofortiges await. Nicht await in Loops (außer absichtlich sequentiell). Immer Error Handling!',
             bestPractices: [
               '✅ async/await statt .then() Chains (lesbarer)',
               '✅ try-catch für Error Handling',
               '✅ Promise.all() + await für Parallelität',
               '✅ await nur in async Functions',
-              '✅ return direkt (wird auto in Promise gewrappt)',
+              '✅ return directly (auto wrapped in Promise)',
               '❌ await in Loops (sequentiell, langsam)',
               '❌ try-catch vergessen (Unhandled Rejection)',
               '❌ Vergessen dass async Function Promise returnt'
@@ -1665,7 +1665,7 @@ current.previousElementSibling; // Vorheriges Geschwister
 const original = document.querySelector('.original');
 const clone = original.cloneNode(true); // true = deep (inkl. Children)
 document.body.appendChild(clone);`,
-            description: 'DOM (Document Object Model) ist die JavaScript-Repräsentation von HTML. querySelector() für Selektion (CSS Selektoren). textContent für Text, innerHTML für HTML. classList für Classes. createElement() + appendChild() zum Hinzufügen. remove() zum Löschen. style für Inline Styles.',
+            description: 'DOM (Document Object Model) is the JavaScript representation of HTML. querySelector() for selection (CSS selectors). textContent for text, innerHTML for HTML. classList for classes. createElement() + appendChild() for adding. remove() for deleting. style for inline styles.',
             usage: 'querySelector() statt getElementById (flexibler). textContent statt innerHTML (sicherer). classList.toggle() für UI States. appendChild()/remove() für dynamische Inhalte. parentElement/children für Navigation. cloneNode() für Templates.',
             bestPractices: [
               '✅ querySelector() statt getElementsBy* (moderner)',
@@ -1835,7 +1835,7 @@ function debounce(func, delay) {
 input.addEventListener('input', debounce((e) => {
   console.log('Search:', e.target.value);
 }, 300)); // Nach 300ms Pause`,
-            description: 'Events sind User-Interaktionen. addEventListener() fügt Event Listener hinzu. Wichtige Events: click, keydown, submit, input, scroll, resize. Event Object hat target (Element), preventDefault() (Default stoppen), stopPropagation() (Bubbling stoppen). Event Delegation für dynamische Elemente. Throttle/Debounce für Performance.',
+            description: 'Events are user interactions. addEventListener() adds event listeners. Important events: click, keydown, submit, input, scroll, resize. Event object has target (element), preventDefault() (stop default), stopPropagation() (stop bubbling). Event delegation for dynamic elements. Throttle/Debounce for performance.',
             usage: 'addEventListener() mit Funktionsreferenz. e.preventDefault() bei Forms. Event Delegation bei Listen. Throttle bei scroll/resize. Debounce bei input/search. removeEventListener() mit gleicher Funktion. { once: true } für einmalige Events.',
             bestPractices: [
               '✅ addEventListener() statt onclick',
@@ -1999,7 +1999,7 @@ function outer() {
   inner();
   // console.log(innerVar); // ❌ Kein Zugriff auf inner
 }`,
-            description: 'Scope definiert wo Variablen sichtbar sind. Global Scope (überall), Function Scope (nur in Function), Block Scope (nur in {}). Closures: Inner Functions merken sich Outer Scope! Perfekt für Private Variables, Module Pattern, Callbacks. let/const haben Block Scope, var hat Function Scope.',
+            description: 'Scope defines where variables are visible. Global scope (everywhere), Function scope (only in function), Block scope (only in {}). Closures: Inner functions remember outer scope! Perfect for private variables, module pattern, callbacks. let/const have block scope, var has function scope.',
             usage: 'Closures für Private Variables (Encapsulation). Module Pattern für Public/Private API. let statt var in Loops. IIFE für sofortigen Scope. Lexical Scope: Inner sieht Outer. Factory Functions returnen Objects mit Closures.',
             bestPractices: [
               '✅ let/const statt var (Block Scope)',
@@ -2030,7 +2030,7 @@ try {
   console.error('Fehler:', error.message);
   console.error('Stack:', error.stack);
 } finally {
-  // Wird IMMER ausgeführt (optional)
+  // ALWAYS executed (optional)
   console.log('Cleanup Code');
 }
 
@@ -2182,7 +2182,7 @@ function validateUser(user) {
   
   return true;
 }`,
-            description: 'Error Handling verhindert App-Crashes. try-catch fängt Errors ab. throw new Error() wirft Errors. Custom Error Classes (extends Error) für spezifische Fehler. async/await mit try-catch. Promise .catch(). finally für Cleanup. instanceof für Error-Typen. Global Handlers für unhandled errors.',
+            description: 'Error handling prevents app crashes. try-catch catches errors. throw new Error() throws errors. Custom error classes (extends Error) for specific errors. async/await with try-catch. Promise .catch(). finally for cleanup. instanceof for error types. Global handlers for unhandled errors.',
             usage: 'try-catch um riskanten Code. throw für Validation. Custom Errors (ValidationError, NetworkError). async mit try-catch. Promise mit .catch(). finally für Cleanup (DB close, Loading hide). Retry Logic mit Loop. Error Logging/Tracking.',
             bestPractices: [
               '✅ try-catch um async/await',
@@ -2301,7 +2301,7 @@ console.log(phone.match(/\\d+/g)); // ["0123", "456789"]
 
 // LOCALECOMPARE - Sortieren
 console.log("ä".localeCompare("z", "de")); // -1 (ä kommt vor z)`,
-            description: 'Strings sind Text-Daten. Wichtige Methods: toLowerCase/toUpperCase, trim, includes/startsWith/endsWith, indexOf, slice/substring, replace/replaceAll, split. Template Literals mit Backticks für Interpolation und Multiline. Strings sind immutable (jede Method returnt neuen String).',
+            description: 'Strings are text data. Important methods: toLowerCase/toUpperCase, trim, includes/startsWith/endsWith, indexOf, slice/substring, replace/replaceAll, split. Template literals with backticks for interpolation and multiline. Strings are immutable (every method returns new string).',
             usage: 'Template Literals \`${var}\` für String Interpolation. includes() statt indexOf() !== -1. trim() für User Input. split() für CSV/Parsing. replace/replaceAll für Text Replacement. slice() für Substrings. padStart() für Formatting.',
             bestPractices: [
               '✅ Template Literals statt + Concatenation',
@@ -2433,7 +2433,7 @@ console.log(parseFloat((0.1 + 0.2).toFixed(10))); // 0.3
 const bigNum = 9007199254740991n;
 const bigNum2 = BigInt(9007199254740991);
 console.log(bigNum + 1n); // 9007199254740992n`,
-            description: 'Numbers sind Zahlen (Integer & Float sind gleich Type). Math Object für Berechnungen. Wichtige: Math.round/floor/ceil, Math.random, Math.min/max, Math.pow/sqrt. toFixed() für Dezimalstellen. parseInt/parseFloat für Parsing. Number.isNaN/isInteger/isFinite für Checks. Float Precision Problem bei Dezimalzahlen!',
+            description: 'Numbers are numbers (Integer & Float are same type). Math object for calculations. Important: Math.round/floor/ceil, Math.random, Math.min/max, Math.pow/sqrt. toFixed() for decimals. parseInt/parseFloat for parsing. Number.isNaN/isInteger/isFinite for checks. Float precision problem with decimals!',
             usage: 'Math.round/floor/ceil für Runden. Math.random() + Math.floor für Random Integers. toFixed() für Currency/Display. Number.isNaN() statt isNaN(). parseInt() mit Radix. Number() für strict Parsing. BigInt für Zahlen > MAX_SAFE_INTEGER.',
             bestPractices: [
               '✅ Number.isNaN() statt isNaN()',
@@ -2527,7 +2527,7 @@ const set = new Set();
 // ADD
 set.add(1);
 set.add(2);
-set.add(2); // Wird ignoriert (Duplikat)
+set.add(2); // Ignored (duplicate)
 set.add('text');
 set.add({key: 'value'}); // Objects sind immer unique
 
@@ -2606,11 +2606,11 @@ const weakMap = new WeakMap();
 let obj = {key: 'value'};
 
 weakMap.set(obj, 'data');
-// Wenn obj = null gesetzt wird, wird Entry automatisch entfernt!
+// When obj = null is set, entry is automatically removed!
 
 // WeakMap: Keys müssen Objects sein, keine Iteration
 // Nützlich für Private Data, Metadata`,
-            description: 'Map ist Key-Value Store (besser als Object). Alle Types als Keys möglich. Methods: set/get/has/delete. size Property. Iteration mit for...of. Set ist Collection unique Values. add/has/delete Methods. Duplikate werden automatisch entfernt. [...new Set(arr)] entfernt Array-Duplikate. WeakMap/WeakSet für Memory Management.',
+            description: 'Map is key-value store (better than Object). All types as keys possible. Methods: set/get/has/delete. size property. Iteration with for...of. Set is collection of unique values. add/has/delete methods. Duplicates automatically removed. [...new Set(arr)] removes array duplicates. WeakMap/WeakSet for memory management.',
             usage: 'Map statt Object wenn: Non-String Keys, frequent add/delete, need size. Set für Unique Values: Duplikate entfernen, Union/Intersection. WeakMap für Object Metadata ohne Memory Leaks. [...new Set()] für unique Arrays.',
             bestPractices: [
               '✅ Map für Non-String Keys',
@@ -2778,7 +2778,7 @@ function countdown(seconds) {
     }
   }, 1000);
 }`,
-            description: 'Date Object für Datum/Zeit. new Date() für jetzt. Date.now() für Timestamp. get Methods (getFullYear, getMonth, getDate, getHours, etc.). set Methods zum Ändern. toLocaleDateString/toLocaleTimeString für Formatting. Monat ist 0-indexed (0=Januar). Vergleich mit < > oder getTime(). setTimeout/setInterval für Timer.',
+            description: 'Date object for date/time. new Date() for now. Date.now() for timestamp. get methods (getFullYear, getMonth, getDate, getHours, etc.). set methods for changing. toLocaleDateString/toLocaleTimeString for formatting. Month is 0-indexed (0=January). Comparison with < > or getTime(). setTimeout/setInterval for timers.',
             usage: 'Date.now() für Timestamps. toLocaleString() für User-Friendly Dates. getTime() für Vergleiche/Differenzen. setDate(getDate() + days) für Date Math. setTimeout für Delays. setInterval für Wiederholung. clearTimeout/clearInterval zum Stoppen.',
             bestPractices: [
               '✅ toLocaleString() mit Locale',
@@ -2898,7 +2898,7 @@ export * from './math.js';
 // === HTML Integration ===
 // <script type="module" src="main.js"></script>
 
-// SIDE EFFECTS - Code wird ausgeführt
+// SIDE EFFECTS - Code is executed
 import './polyfills.js'; // Kein Import, nur laden
 
 // === package.json (Node.js) ===
@@ -2917,7 +2917,7 @@ exports.add = add;
 // Import
 const { add } = require('./math.js');
 const math = require('./math');`,
-            description: 'ES6 Modules für Code-Organisation. export für Public API. import zum Nutzen. Named Exports: export const/function. Default Export: export default (nur einer pro File). import { name } für Named. import Name für Default. import * as All für alle. Dynamic import() für Lazy Loading. type="module" in HTML.',
+            description: 'ES6 Modules for code organization. export for public API. import to use. Named exports: export const/function. Default export: export default (only one per file). import { name } for named. import Name for default. import * as All for all. Dynamic import() for lazy loading. type="module" in HTML.',
             usage: 'Named Exports für Utilities. Default Export für Haupt-Class/Component. import * as für Namespacing. Dynamic import() für Code Splitting. Re-exports für Barrel Files (index.js). Side-Effect Imports für Setup Code.',
             bestPractices: [
               '✅ Named Exports für Utilities',
@@ -2973,7 +2973,7 @@ console.log(stored.name); // "Max"
 
 // SESSIONSTORAGE - Nur für Session
 sessionStorage.setItem('temp', 'value');
-// Wird gelöscht wenn Tab geschlossen wird
+// Deleted when tab is closed
 
 // COOKIES - Mit Expiration
 document.cookie = "username=Max; max-age=86400"; // 1 Tag
@@ -3098,7 +3098,7 @@ console.log(response.status); // 200
 console.log(response.statusText); // "OK"
 console.log(response.ok); // true (200-299)
 console.log(response.headers.get('Content-Type'));`,
-            description: 'localStorage für Persistent Storage (5-10MB). Key-Value Store, nur Strings. JSON.stringify/parse für Objects. sessionStorage nur für Session. Cookies mit Expiration. Fetch API für HTTP Requests. GET/POST/PUT/DELETE. async/await empfohlen. response.ok für Status Check. AbortController zum Abbrechen.',
+            description: 'localStorage for persistent storage (5-10MB). Key-value store, strings only. JSON.stringify/parse for objects. sessionStorage only for session. Cookies with expiration. Fetch API for HTTP requests. GET/POST/PUT/DELETE. async/await recommended. response.ok for status check. AbortController for canceling.',
             usage: 'localStorage.setItem/getItem für User Preferences. JSON.stringify für Objects. fetch mit async/await. Response Status prüfen (!response.ok). Headers für Auth. FormData für File Uploads. Promise.all für Parallel Requests. AbortController für Timeout.',
             bestPractices: [
               '✅ JSON.stringify/parse für Objects',

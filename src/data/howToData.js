@@ -74,30 +74,30 @@ git push
 git checkout -b feature
 git push -u origin feature
 # Create PR on GitHub → Vercel creates preview URL`,
-          description: 'Deploye deine Website professionell auf Vercel mit automatischen GitHub-Deployments, Custom Domain und SSL. Perfekt für Portfolios, Blogs und Web-Apps. Vercel erkennt Next.js, React, Vite automatisch und optimiert die Builds.',
-          usage: 'Von der lokalen Entwicklung zur Live-Website mit Custom Domain in unter einer Stunde. Jeder Git Push wird automatisch deployed. Ideal für Projekte die schnell online gehen sollen.',
+          description: 'Deploy your website professionally on Vercel with automatic GitHub deployments, custom domain and SSL. Perfect for portfolios, blogs and web apps. Vercel automatically detects Next.js, React, Vite and optimizes builds.',
+          usage: 'From local development to live website with custom domain in under an hour. Every git push is automatically deployed. Ideal for projects that need to go online quickly.',
           technologies: ['VS Code', 'GitHub', 'Vercel', 'DNS', 'React', 'Vite', 'Next.js', 'SSL/TLS'],
           bestPractices: [
-            '✅ Immer lokal testen (npm run build) vor dem Pushen',
-            '✅ Environment Variables für alle Secrets verwenden',
-            '✅ GitHub Integration für automatische Deployments',
-            '✅ Custom Domain mit SSL für Professionalität',
-            '✅ Preview Deployments zum sicheren Testen',
-            '❌ NIE .env Dateien committen',
-            '❌ Keine API Keys im Code hardcoden'
+            '✅ Always test locally (npm run build) before pushing',
+            '✅ Use Environment Variables for all secrets',
+            '✅ GitHub integration for automatic deployments',
+            '✅ Custom domain with SSL for professionalism',
+            '✅ Preview deployments for safe testing',
+            '❌ NEVER commit .env files',
+            '❌ Don\'t hardcode API keys in code'
           ],
           relatedTopics: ['Git', 'CI/CD', 'DNS Management', 'React', 'SSL Certificates'],
-          estimatedTime: '30-60 Minuten',
+          estimatedTime: '30-60 minutes',
           troubleshooting: [
-            { problem: 'Build schlägt fehl', solution: 'Build Logs in Vercel Dashboard prüfen. Lokal mit "npm run build" testen. Node.js Version in package.json unter "engines" angeben.' },
-            { problem: 'Domain funktioniert nicht', solution: 'DNS Propagation dauert bis zu 48h. Mit "nslookup domain.com" prüfen. Browser Cache leeren.' },
-            { problem: 'Environment Variables fehlen', solution: 'In Vercel Dashboard hinzufügen. NEXT_PUBLIC_ Prefix für Client-Side. Nach Hinzufügen neu deployen.' }
+            { problem: 'Build fails', solution: 'Check build logs in Vercel Dashboard. Test locally with "npm run build". Specify Node.js version in package.json under "engines".' },
+            { problem: 'Domain not working', solution: 'DNS propagation takes up to 48h. Check with "nslookup domain.com". Clear browser cache.' },
+            { problem: 'Environment variables missing', solution: 'Add in Vercel Dashboard. NEXT_PUBLIC_ prefix for client-side. Redeploy after adding.' }
           ],
           tips: [
-            '💡 Vercel bietet kostenlosen Hobby Plan mit 100 GB Bandwidth/Monat',
-            '💡 SSL Zertifikate werden automatisch via Let\'s Encrypt bereitgestellt',
-            '💡 Preview Deployments bekommen unique URLs für jede Branch',
-            '💡 Core Web Vitals werden automatisch in Analytics getrackt'
+            '💡 Vercel offers free Hobby Plan with 100 GB bandwidth/month',
+            '💡 SSL certificates are automatically provided via Let\'s Encrypt',
+            '💡 Preview deployments get unique URLs for each branch',
+            '💡 Core Web Vitals are automatically tracked in Analytics'
           ]
         },
         {
@@ -187,29 +187,29 @@ git commit -m "Initial blog"
 git push
 
 # Vercel will auto-detect Next.js!`,
-          description: 'Erstelle einen modernen Blog mit Next.js und MDX. Schreibe Blog Posts in Markdown, binde React Components ein, füge Syntax Highlighting hinzu und deploye auf Vercel. MDX kombiniert Markdown mit JSX für interaktive Inhalte.',
-          usage: 'Perfekt für Tech-Blogs, Portfolios mit Blog-Sektion, Documentation Sites und Content-Plattformen. Write in Markdown, render as React. Unterstützt Code-Highlighting, Frontmatter Metadata und Custom Components.',
+          description: 'Create a modern blog with Next.js and MDX. Write blog posts in Markdown, embed React components, add syntax highlighting and deploy to Vercel. MDX combines Markdown with JSX for interactive content.',
+          usage: 'Perfect for tech blogs, portfolios with blog section, documentation sites and content platforms. Write in Markdown, render as React. Supports code highlighting, frontmatter metadata and custom components.',
           technologies: ['Next.js', 'MDX', 'Tailwind CSS', 'TypeScript', 'Rehype', 'Gray Matter'],
           bestPractices: [
-            '✅ Gray-matter für Frontmatter (title, date, author)',
-            '✅ Rehype plugins für Syntax Highlighting',
-            '✅ Static Generation für schnelle Ladezeiten',
-            '✅ Reading time estimation für bessere UX',
-            '✅ SEO metadata in jeder Page',
-            '❌ Keine großen Bilder ohne Optimierung'
+            '✅ Gray-matter for frontmatter (title, date, author)',
+            '✅ Rehype plugins for syntax highlighting',
+            '✅ Static generation for fast load times',
+            '✅ Reading time estimation for better UX',
+            '✅ SEO metadata on every page',
+            '❌ No large images without optimization'
           ],
           relatedTopics: ['Markdown', 'Static Site Generation', 'SEO', 'Content Management'],
-          estimatedTime: '2-3 Stunden',
+          estimatedTime: '2-3 hours',
           troubleshooting: [
-            { problem: 'MDX kompiliert nicht', solution: 'next.config.js prüfen: pageExtensions muss ["js", "jsx", "md", "mdx", "ts", "tsx"] enthalten' },
-            { problem: 'Syntax Highlighting fehlt', solution: 'rehype-highlight installieren und in MDX config einbinden. CSS für Highlighting importieren.' },
-            { problem: 'Frontmatter wird nicht geparst', solution: 'gray-matter nutzen: const { data, content } = matter(fileContents)' }
+            { problem: 'MDX doesn\'t compile', solution: 'Check next.config.js: pageExtensions must contain ["js", "jsx", "md", "mdx", "ts", "tsx"]' },
+            { problem: 'Syntax highlighting missing', solution: 'Install rehype-highlight and include in MDX config. Import CSS for highlighting.' },
+            { problem: 'Frontmatter not parsed', solution: 'Use gray-matter: const { data, content } = matter(fileContents)' }
           ],
           tips: [
-            '💡 MDX erlaubt React Components direkt in Markdown',
-            '💡 Nutze getStaticProps für Build-time Rendering',
-            '💡 RSS Feed mit next-rss-feed Package generieren',
-            '💡 Dark Mode mit next-themes Package einfach umsetzen'
+            '💡 MDX allows React components directly in Markdown',
+            '💡 Use getStaticProps for build-time rendering',
+            '💡 Generate RSS feed with next-rss-feed package',
+            '💡 Implement dark mode easily with next-themes package'
           ]
         },
         {
@@ -293,29 +293,29 @@ echo "www.yoursite.com" > public/CNAME
 # Type: CNAME
 # Name: www
 # Value: username.github.io`,
-          description: 'Hoste dein Portfolio kostenlos auf GitHub Pages. Perfekt für statische Websites, Portfolios und Project Showcases. Automatisches Deployment via gh-pages Package. Unterstützt Custom Domains und HTTPS.',
-          usage: 'Ideal für Developer-Portfolios, Project Pages und Landing Pages. Völlig kostenlos mit unbegrenzter Bandwidth. Deploye mit einem npm run deploy Command. Domain optional aber empfohlen für Professionalität.',
+          description: 'Host your portfolio for free on GitHub Pages. Perfect for static websites, portfolios and project showcases. Automatic deployment via gh-pages package. Supports custom domains and HTTPS.',
+          usage: 'Ideal for developer portfolios, project pages and landing pages. Completely free with unlimited bandwidth. Deploy with a single npm run deploy command. Domain optional but recommended for professionalism.',
           technologies: ['React', 'GitHub Pages', 'DNS', 'gh-pages', 'Create React App'],
           bestPractices: [
-            '✅ Homepage field in package.json korrekt setzen',
-            '✅ basename in Router für Subdomain',
-            '✅ Public folder für statische Assets',
-            '✅ 404.html für Single Page Apps',
-            '✅ CNAME file für Custom Domain',
-            '❌ Keine Secrets in Client-Side Code'
+            '✅ Set homepage field correctly in package.json',
+            '✅ basename in Router for subdomain',
+            '✅ Public folder for static assets',
+            '✅ 404.html for Single Page Apps',
+            '✅ CNAME file for custom domain',
+            '❌ No secrets in client-side code'
           ],
           relatedTopics: ['Static Hosting', 'DNS', 'React Router', 'Custom Domains'],
-          estimatedTime: '1-2 Stunden',
+          estimatedTime: '1-2 hours',
           troubleshooting: [
-            { problem: 'Site shows 404', solution: 'Homepage in package.json muss https://username.github.io/repo-name sein. Basename in Router setzen.' },
-            { problem: 'Custom domain nicht erreichbar', solution: 'CNAME file in public/ folder erstellen. Bei Registrar CNAME Record auf username.github.io setzen.' },
-            { problem: 'Assets laden nicht', solution: 'Relative Pfade verwenden. PUBLIC_URL Env Variable checken. Bilder in public/ folder legen.' }
+            { problem: 'Site shows 404', solution: 'Homepage in package.json must be https://username.github.io/repo-name. Set basename in Router.' },
+            { problem: 'Custom domain not reachable', solution: 'Create CNAME file in public/ folder. Set CNAME record at registrar to username.github.io.' },
+            { problem: 'Assets not loading', solution: 'Use relative paths. Check PUBLIC_URL env variable. Place images in public/ folder.' }
           ],
           tips: [
-            '💡 GitHub Pages ist komplett kostenlos für Public Repos',
-            '💡 HTTPS wird automatisch aktiviert nach Domain Setup',
-            '💡 Deployment dauert 1-2 Minuten nach npm run deploy',
-            '💡 Nutze GitHub Actions für automatische Deploys bei Push'
+            '💡 GitHub Pages is completely free for public repos',
+            '💡 HTTPS is automatically enabled after domain setup',
+            '💡 Deployment takes 1-2 minutes after npm run deploy',
+            '💡 Use GitHub Actions for automatic deploys on push'
           ]
         }
       ]
@@ -470,31 +470,31 @@ class IAPService {
 }
 
 export default new IAPService();`,
-          description: 'Implementiere In-App Purchases für iOS mit react-native-iap. Unterstützt Consumables (Coins), Non-Consumables (Premium Features), und Auto-Renewable Subscriptions (Monats-/Jahresabos). Wichtig: Receipt Validation auf Backend für Sicherheit.',
-          usage: 'Monetarisiere deine React Native iOS App. Verkaufe virtuelle Währung, Premium Features oder Abonnements. App Store nimmt 30% Gebühr. Sandbox Testing mit Test-Accounts. Receipt Validation verhindert Fraud.',
+          description: 'Implement In-App Purchases for iOS with react-native-iap. Supports Consumables (coins), Non-Consumables (premium features), and Auto-Renewable Subscriptions (monthly/yearly). Important: Receipt validation on backend for security.',
+          usage: 'Monetize your React Native iOS app. Sell virtual currency, premium features or subscriptions. App Store takes 30% fee. Sandbox testing with test accounts. Receipt validation prevents fraud.',
           technologies: ['React Native', 'iOS', 'StoreKit', 'react-native-iap', 'App Store Connect'],
           bestPractices: [
-            '✅ Receipts IMMER auf Backend verifizieren',
-            '✅ Transaktionen nach Erfolg finishen/consumen',
-            '✅ Restore Purchases Button implementieren',
-            '✅ Sandbox Accounts zum Testen nutzen',
-            '✅ Alle Error Cases behandeln',
-            '❌ NIE nur Client-side Verification',
-            '❌ Transaction niemals vergessen zu finishen'
+            '✅ ALWAYS verify receipts on backend',
+            '✅ Finish/consume transactions after success',
+            '✅ Implement Restore Purchases button',
+            '✅ Use sandbox accounts for testing',
+            '✅ Handle all error cases',
+            '❌ NEVER use only client-side verification',
+            '❌ Never forget to finish transaction'
           ],
           relatedTopics: ['React Native', 'Backend APIs', 'Payment Processing', 'App Store'],
-          estimatedTime: '4-6 Stunden',
+          estimatedTime: '4-6 hours',
           troubleshooting: [
-            { problem: 'Products nicht gefunden', solution: 'Product IDs in App Store Connect prüfen. Status muss "Ready to Submit" sein. Bis zu 24h Wartezeit nach Erstellung möglich.' },
-            { problem: 'Purchase schlägt fehl', solution: 'Sandbox Account in iOS Settings einloggen. Echten Account ausloggen. Bundle ID muss mit App Store Connect übereinstimmen.' },
-            { problem: 'Receipt Validation fehlt', solution: 'Backend Endpoint erstellen. Receipt an https://buy.itunes.apple.com/verifyReceipt senden (Sandbox: sandbox.itunes.apple.com).' }
+            { problem: 'Products not found', solution: 'Check product IDs in App Store Connect. Status must be "Ready to Submit". Up to 24h wait time after creation possible.' },
+            { problem: 'Purchase fails', solution: 'Login with sandbox account in iOS Settings. Logout real account. Bundle ID must match App Store Connect.' },
+            { problem: 'Receipt validation missing', solution: 'Create backend endpoint. Send receipt to https://buy.itunes.apple.com/verifyReceipt (Sandbox: sandbox.itunes.apple.com).' }
           ],
           tips: [
-            '💡 Consumables: Coins, Lives, Boosts (mehrfach kaufbar)',
-            '💡 Non-Consumables: Premium, Remove Ads (einmalig)',
-            '💡 Subscriptions: Auto-renewable, monatlich/jährlich',
-            '💡 30% App Store Fee bei allen Käufen',
-            '💡 Sandbox Testing in iOS Settings → App Store → Sandbox Account'
+            '💡 Consumables: Coins, Lives, Boosts (purchasable multiple times)',
+            '💡 Non-Consumables: Premium, Remove Ads (one-time)',
+            '💡 Subscriptions: Auto-renewable, monthly/yearly',
+            '💡 30% App Store fee on all purchases',
+            '💡 Sandbox testing in iOS Settings → App Store → Sandbox Account'
           ]
         },
         {
@@ -612,31 +612,31 @@ export const useRewardedAd = (onReward) => {
 - Rewarded ads have highest eCPM ($10-50)
 - Interstitials: $5-15 eCPM
 - Banners: $0.50-2 eCPM`,
-          description: 'Integriere Google AdMob in deine React Native App. Banner Ads (permanent), Interstitial Ads (Fullscreen zwischen Screens), Rewarded Ads (für Belohnungen). Mit react-native-google-mobile-ads. iOS & Android Support.',
-          usage: 'Monetarisiere deine App mit Werbung. Rewarded Ads haben höchsten eCPM ($10-50). Kombinierbar mit IAP. GDPR Consent für EU-User erforderlich. Test Ads während Development nutzen.',
+          description: 'Integrate Google AdMob into your React Native app. Banner ads (permanent), interstitial ads (fullscreen between screens), rewarded ads (for rewards). With react-native-google-mobile-ads. iOS & Android support.',
+          usage: 'Monetize your app with ads. Rewarded ads have highest eCPM ($10-50). Combinable with IAP. GDPR consent required for EU users. Use test ads during development.',
           technologies: ['React Native', 'AdMob', 'Google Ads', 'GDPR', 'react-native-google-mobile-ads'],
           bestPractices: [
-            '✅ Test Ads während Development (TestIds)',
-            '✅ Interstitials max 1x pro Minute',
-            '✅ GDPR Consent für EU implementieren',
-            '✅ Ads vorladen für instant Display',
-            '✅ Rewarded Ads für beste User Experience',
-            '❌ NIE eigene Ads klicken',
-            '❌ Nicht zu viele Ads (nervt User)'
+            '✅ Test ads during development (TestIds)',
+            '✅ Interstitials max 1x per minute',
+            '✅ Implement GDPR consent for EU',
+            '✅ Preload ads for instant display',
+            '✅ Rewarded ads for best user experience',
+            '❌ NEVER click your own ads',
+            '❌ Not too many ads (annoys users)'
           ],
           relatedTopics: ['App Monetization', 'GDPR', 'User Experience', 'Analytics'],
-          estimatedTime: '2-3 Stunden',
+          estimatedTime: '2-3 hours',
           troubleshooting: [
-            { problem: 'Ads laden nicht', solution: 'App IDs in app.json prüfen. Test IDs verwenden während Development. AdMob Account muss approved sein.' },
-            { problem: 'Ad Units nicht gefunden', solution: 'In AdMob Dashboard Ad Units erstellen. iOS und Android haben separate IDs. Copy Ad Unit ID korrekt.' },
-            { problem: 'Ads zeigen "No Fill"', solution: 'Normal in Development. Test Ads nutzen. In Production: Targeting optimieren, mehr Traffic generieren.' }
+            { problem: 'Ads not loading', solution: 'Check app IDs in app.json. Use test IDs during development. AdMob account must be approved.' },
+            { problem: 'Ad units not found', solution: 'Create ad units in AdMob Dashboard. iOS and Android have separate IDs. Copy ad unit ID correctly.' },
+            { problem: 'Ads show "No Fill"', solution: 'Normal in development. Use test ads. In production: optimize targeting, generate more traffic.' }
           ],
           tips: [
-            '💡 Rewarded Ads: Höchster eCPM ($10-50), beste UX',
-            '💡 Interstitials: Medium eCPM ($5-15), zwischen Screens',
-            '💡 Banners: Niedrigster eCPM ($0.50-2), permanent',
+            '💡 Rewarded ads: Highest eCPM ($10-50), best UX',
+            '💡 Interstitials: Medium eCPM ($5-15), between screens',
+            '💡 Banners: Lowest eCPM ($0.50-2), permanent',
             '💡 Test IDs: TestIds.BANNER, TestIds.INTERSTITIAL, TestIds.REWARDED',
-            '💡 Adaptive Banner passt sich Screen-Größe an'
+            '💡 Adaptive banner adjusts to screen size'
           ]
         },
         {
@@ -749,30 +749,30 @@ https://www.google.com/settings/ads
 - Media.net: Good AdSense alternative
 - Mediavine: Requires 50k monthly sessions
 - AdThrive: Requires 100k monthly sessions`,
-          description: 'Monetarisiere deine Website mit Google AdSense. Automatische oder manuelle Ad Placements, Responsive Ads und verschiedene Formate. Für Blogs, News Sites, Content Platforms. Approval dauert 1-2 Wochen.',
-          usage: 'Verdiene Geld mit deinem Website-Traffic. Nach Approval Ads in Next.js, React oder HTML einbinden. Optimal: 2-3 Ads pro Page. Best Placements: Above fold, nach erstem Absatz, Ende des Contents. Revenue hängt von Niche ab ($5-100 RPM).',
+          description: 'Monetize your website with Google AdSense. Automatic or manual ad placements, responsive ads and various formats. For blogs, news sites, content platforms. Approval takes 1-2 weeks.',
+          usage: 'Earn money with your website traffic. After approval, embed ads in Next.js, React or HTML. Optimal: 2-3 ads per page. Best placements: Above fold, after first paragraph, end of content. Revenue depends on niche ($5-100 RPM).',
           technologies: ['HTML', 'JavaScript', 'React', 'Next.js', 'AdSense', 'SEO'],
           bestPractices: [
-            '✅ Max 3 Ads pro Seite platzieren',
-            '✅ Responsive Ad Units nutzen',
-            '✅ Privacy Policy Page haben',
-            '✅ Core Web Vitals optimieren',
-            '✅ Original Content erstellen',
-            '❌ NIE eigene Ads klicken',
-            '❌ Keine Aufforderung zum Klicken',
-            '❌ Keine AdSense Competitor Ads parallel'
+            '✅ Place max 3 ads per page',
+            '✅ Use responsive ad units',
+            '✅ Have privacy policy page',
+            '✅ Optimize Core Web Vitals',
+            '✅ Create original content',
+            '❌ NEVER click your own ads',
+            '❌ No call-to-action for clicking',
+            '❌ No AdSense competitor ads in parallel'
           ],
-          estimatedTime: '1-2 Stunden Setup, 1-2 Wochen Approval',
+          estimatedTime: '1-2 hours setup, 1-2 weeks approval',
           troubleshooting: [
-            { problem: 'Application abgelehnt', solution: 'Mind. 10-20 quality Posts. Privacy Policy erstellen. HTTPS aktivieren. Original Content. 1-2 Monate alt sein.' },
-            { problem: 'Ads zeigen nicht', solution: 'Script im <head> eingebunden? Ad Code korrekt? 24h nach Approval warten. Cache leeren.' },
-            { problem: 'Revenue zu niedrig', solution: 'High-paying Niche wählen (Finance, Legal). Mehr Traffic. Bessere Ad Placements. Above-the-fold Ads.' }
+            { problem: 'Application rejected', solution: 'Min. 10-20 quality posts. Create privacy policy. Enable HTTPS. Original content. Be 1-2 months old.' },
+            { problem: 'Ads not showing', solution: 'Script in <head> included? Ad code correct? Wait 24h after approval. Clear cache.' },
+            { problem: 'Revenue too low', solution: 'Choose high-paying niche (Finance, Legal). More traffic. Better ad placements. Above-the-fold ads.' }
           ],
           tips: [
-            '💡 High-paying Niches: Finance ($20-80 RPM), Legal ($30-100), Tech ($10-30)',
-            '💡 Best Placements: Above fold, nach 1. Absatz, Content-Mitte, Ende',
-            '💡 Ezoic als Alternative: 50-200% mehr Revenue via AI-Optimization',
-            '💡 Privacy Policy required: Google AdSense + Cookie Consent'
+            '💡 High-paying niches: Finance ($20-80 RPM), Legal ($30-100), Tech ($10-30)',
+            '💡 Best placements: Above fold, after 1st paragraph, content middle, end',
+            '💡 Ezoic as alternative: 50-200% more revenue via AI optimization',
+            '💡 Privacy policy required: Google AdSense + Cookie Consent'
           ]
         }
       ]
@@ -781,16 +781,16 @@ https://www.google.com/settings/ads
       name: 'Backend Development',
       items: [
         {
-          title: 'REST API mit JWT Authentication',
-          code: `# Vollständige REST API mit JWT-Authentifizierung
+          title: 'REST API with JWT Authentication',
+          code: `# Complete REST API with JWT Authentication
 
-## 1. Projekt Setup
+## 1. Project Setup
 mkdir secure-api
 cd secure-api
 npm init -y
 npm install express jsonwebtoken bcrypt dotenv cors helmet express-validator
 
-## 2. Projektstruktur
+## 2. Project Structure
 secure-api/
 ├── src/
 │   ├── config/
@@ -1283,37 +1283,37 @@ export const getMe = async () => {
   const response = await axios.get(\`\${API_URL}/auth/me\`);
   return response.data.data;
 };`,
-          description: 'Erstelle eine sichere REST API mit JWT-Authentifizierung, Bcrypt Password-Hashing und Role-Based Access Control. Mit Express.js, MongoDB und Middleware für Sicherheit. Production-ready mit Rate Limiting und Input Validation.',
-          usage: 'Backend für Web/Mobile Apps. User Registration & Login mit JWT Tokens. Geschützte Routen mit Middleware. CRUD Operations für Ressourcen. Perfekt für SaaS, E-Commerce, Social Apps. Skalierbar und sicher.',
+          description: 'Create a secure REST API with JWT authentication, bcrypt password hashing and role-based access control. With Express.js, MongoDB and middleware for security. Production-ready with rate limiting and input validation.',
+          usage: 'Backend for web/mobile apps. User registration & login with JWT tokens. Protected routes with middleware. CRUD operations for resources. Perfect for SaaS, e-commerce, social apps. Scalable and secure.',
           technologies: ['Node.js', 'Express', 'JWT', 'Bcrypt', 'MongoDB', 'Mongoose', 'Helmet', 'CORS'],
           bestPractices: [
-            '✅ Passwörter immer hashen (Bcrypt mit 10-12 rounds)',
-            '✅ JWT Secrets in .env auslagern (32+ Zeichen)',
-            '✅ HTTP-Only Cookies für Token (alternativ zu Header)',
-            '✅ Rate Limiting implementieren (express-rate-limit)',
-            '✅ Input Validation (express-validator)',
-            '✅ Helmet.js für Security Headers',
-            '✅ CORS richtig konfigurieren',
-            '❌ Nie Passwörter im Klartext speichern',
-            '❌ Keine sensiblen Daten im JWT Payload',
-            '❌ Token nie in localStorage (XSS-Risiko)'
+            '✅ Always hash passwords (Bcrypt with 10-12 rounds)',
+            '✅ Externalize JWT secrets in .env (32+ characters)',
+            '✅ HTTP-Only Cookies for tokens (alternative to header)',
+            '✅ Implement rate limiting (express-rate-limit)',
+            '✅ Input validation (express-validator)',
+            '✅ Helmet.js for security headers',
+            '✅ Configure CORS correctly',
+            '❌ Never store passwords in plain text',
+            '❌ No sensitive data in JWT payload',
+            '❌ Never store tokens in localStorage (XSS risk)'
           ],
           relatedTopics: ['Node.js', 'Express', 'JWT', 'MongoDB', 'Security', 'Authentication'],
-          estimatedTime: '3-4 Stunden',
+          estimatedTime: '3-4 hours',
           troubleshooting: [
-            { problem: 'Token validation schlägt fehl', solution: 'JWT_SECRET prüfen. Token Format: "Bearer <token>". Expiration Zeit checken. jwt.verify() error handler hinzufügen.' },
-            { problem: 'CORS Errors', solution: 'cors() mit korrekten origins konfigurieren. credentials: true setzen für Cookies. Preflight requests (OPTIONS) erlauben.' },
-            { problem: 'MongoDB Connection fails', solution: 'DATABASE_URL prüfen. MongoDB Atlas: IP Whitelist. Connection String Format: mongodb+srv://user:pass@cluster.mongodb.net/db' },
-            { problem: 'Bcrypt zu langsam', solution: 'Rounds auf 10 setzen (Balance Speed/Security). Async verwenden: await bcrypt.hash(). Nicht in jedem Request hashen.' }
+            { problem: 'Token validation fails', solution: 'Check JWT_SECRET. Token format: "Bearer <token>". Check expiration time. Add jwt.verify() error handler.' },
+            { problem: 'CORS errors', solution: 'Configure cors() with correct origins. Set credentials: true for cookies. Allow preflight requests (OPTIONS).' },
+            { problem: 'MongoDB connection fails', solution: 'Check DATABASE_URL. MongoDB Atlas: IP whitelist. Connection string format: mongodb+srv://user:pass@cluster.mongodb.net/db' },
+            { problem: 'Bcrypt too slow', solution: 'Set rounds to 10 (balance speed/security). Use async: await bcrypt.hash(). Don\'t hash in every request.' }
           ],
           tips: [
-            '💡 JWT Expiration: Access Token 15min-1h, Refresh Token 7-30 Tage',
-            '💡 Refresh Tokens in DB speichern für Revocation',
-            '💡 Rate Limiting: 100 requests/15min per IP',
-            '💡 HTTPS in Production PFLICHT (Let\'s Encrypt kostenlos)',
-            '💡 Environment Variables mit dotenv laden',
-            '💡 Mongoose Models mit Schema Validation',
-            '💡 Error Handling Middleware am Ende der Route Chain'
+            '💡 JWT expiration: Access token 15min-1h, Refresh token 7-30 days',
+            '💡 Store refresh tokens in DB for revocation',
+            '💡 Rate limiting: 100 requests/15min per IP',
+            '💡 HTTPS in production MANDATORY (Let\'s Encrypt free)',
+            '💡 Load environment variables with dotenv',
+            '💡 Mongoose models with schema validation',
+            '💡 Error handling middleware at end of route chain'
           ]
         },
         {
@@ -1734,35 +1734,35 @@ Subscription: {
 
 // Beim createPost Mutation:
 pubsub.publish('POST_CREATED', { postCreated: post });`,
-          description: 'Erstelle eine moderne GraphQL API mit Apollo Server. Type-safe Schema, flexible Queries, Mutations, Subscriptions für Real-time. Mit MongoDB, JWT Authentication und DataLoader für Performance. Alternative zu REST mit weniger Requests.',
-          usage: 'Backend für moderne Web/Mobile Apps. Client fragt nur benötigte Daten ab. Real-time Updates via Subscriptions. Perfekt für komplexe Datenstrukturen, Mobile Apps mit schlechter Connection, Admin Dashboards. Type-safe mit Schema.',
+          description: 'Create a modern GraphQL API with Apollo Server. Type-safe schema, flexible queries, mutations, subscriptions for real-time. With MongoDB, JWT authentication and DataLoader for performance. Alternative to REST with fewer requests.',
+          usage: 'Backend for modern web/mobile apps. Client requests only needed data. Real-time updates via subscriptions. Perfect for complex data structures, mobile apps with poor connection, admin dashboards. Type-safe with schema.',
           technologies: ['GraphQL', 'Apollo Server', 'MongoDB', 'JWT', 'WebSockets', 'DataLoader', 'TypeScript'],
           bestPractices: [
-            '✅ Schema-First Design (TypeDefs before Code)',
-            '✅ Input Types für alle Mutations',
-            '✅ DataLoader gegen N+1 Query Problem',
-            '✅ Error Handling mit Apollo Extensions',
-            '✅ Pagination (Cursor-based) implementieren',
-            '✅ Query Complexity Limits setzen',
-            '✅ Caching mit Apollo Cache Control',
-            '❌ Keine overfetching/underfetching wie REST',
-            '❌ Nicht alle Queries ohne Auth erlauben'
+            '✅ Schema-first design (TypeDefs before code)',
+            '✅ Input types for all mutations',
+            '✅ DataLoader against N+1 query problem',
+            '✅ Error handling with Apollo extensions',
+            '✅ Implement pagination (cursor-based)',
+            '✅ Set query complexity limits',
+            '✅ Caching with Apollo Cache Control',
+            '❌ No overfetching/underfetching like REST',
+            '❌ Don\'t allow all queries without auth'
           ],
           relatedTopics: ['GraphQL', 'Apollo', 'Node.js', 'React', 'WebSockets', 'Real-time'],
-          estimatedTime: '4-5 Stunden',
+          estimatedTime: '4-5 hours',
           troubleshooting: [
-            { problem: 'Schema errors', solution: 'TypeDefs Syntax prüfen. Alle Types definieren. ! für required fields. Resolvers müssen alle Query/Mutation Namen matchen.' },
-            { problem: 'N+1 Query Problem', solution: 'DataLoader verwenden. Batched Queries. Caching aktivieren. Context mit DataLoader Instanzen teilen.' },
-            { problem: 'Subscriptions funktionieren nicht', solution: 'WebSocket Server aktivieren. PubSub Setup. Client muss WebSocket Link nutzen. Port freigeben.' }
+            { problem: 'Schema errors', solution: 'Check TypeDefs syntax. Define all types. ! for required fields. Resolvers must match all Query/Mutation names.' },
+            { problem: 'N+1 query problem', solution: 'Use DataLoader. Batched queries. Enable caching. Share context with DataLoader instances.' },
+            { problem: 'Subscriptions not working', solution: 'Enable WebSocket server. PubSub setup. Client must use WebSocket link. Open port.' }
           ],
           tips: [
-            '💡 GraphQL Playground für Testing: http://localhost:4000/graphql',
-            '💡 Apollo Studio für Monitoring und Analytics',
-            '💡 Code Generator für TypeScript Types aus Schema',
-            '💡 DataLoader cached automatisch innerhalb eines Requests',
-            '💡 Subscriptions für Chat, Notifications, Live Updates',
-            '💡 Query Complexity verhindert zu komplexe Queries',
-            '💡 Schema Stitching für Microservices'
+            '💡 GraphQL Playground for testing: http://localhost:4000/graphql',
+            '💡 Apollo Studio for monitoring and analytics',
+            '💡 Code generator for TypeScript types from schema',
+            '💡 DataLoader caches automatically within one request',
+            '💡 Subscriptions for chat, notifications, live updates',
+            '💡 Query complexity prevents too complex queries',
+            '💡 Schema stitching for microservices'
           ]
         }
       ]
@@ -1771,59 +1771,59 @@ pubsub.publish('POST_CREATED', { postCreated: post });`,
       name: 'Mobile Apps',
       items: [
         {
-          title: 'React Native App von Grund auf',
-          code: `# Vollständige React Native App erstellen
+          title: 'React Native App from Scratch',
+          code: `# Create Complete React Native App
 
-## 1. Entwicklungsumgebung einrichten
+## 1. Setup Development Environment
 
-### Option A: Expo (Empfohlen für Anfänger)
-# Expo CLI installieren
+### Option A: Expo (Recommended for Beginners)
+# Install Expo CLI
 npm install -g expo-cli
 
-# Neues Projekt erstellen
+# Create new project
 expo init MyApp
 cd MyApp
 
-# App starten
+# Start app
 expo start
 
-### Option B: React Native CLI (mehr Kontrolle)
+### Option B: React Native CLI (more control)
 # Installation (macOS)
 brew install node
 brew install watchman
 sudo gem install cocoapods
 
-# Android Studio installieren
-# Xcode installieren (nur macOS)
+# Install Android Studio
+# Install Xcode (macOS only)
 
 # React Native CLI
 npm install -g react-native-cli
 
-# Neues Projekt
+# New project
 npx react-native init MyApp
 cd MyApp
 
-# iOS starten (nur macOS)
+# Start iOS (macOS only)
 npx react-native run-ios
 
-# Android starten
+# Start Android
 npx react-native run-android
 
-## 2. Projektstruktur erstellen
+## 2. Create Project Structure
 MyApp/
 ├── src/
-│   ├── components/      # Wiederverwendbare Komponenten
-│   ├── screens/         # Bildschirme
+│   ├── components/      # Reusable components
+│   ├── screens/         # Screens
 │   ├── navigation/      # Navigation
 │   ├── services/        # API Calls
 │   ├── store/           # State Management
-│   ├── utils/           # Hilfsfunktionen
-│   ├── constants/       # Konstanten, Themes
-│   └── assets/          # Bilder, Fonts
+│   ├── utils/           # Helper functions
+│   ├── constants/       # Constants, Themes
+│   └── assets/          # Images, Fonts
 ├── App.js
 └── package.json
 
-## 3. Navigation einrichten
+## 3. Setup Navigation
 npm install @react-navigation/native
 npm install @react-navigation/native-stack
 npm install react-native-screens react-native-safe-area-context
@@ -1855,7 +1855,7 @@ export default function App() {
   );
 }
 
-## 4. Screens erstellen
+## 4. Create Screens
 
 // src/screens/HomeScreen.js
 import React, { useState } from 'react';
@@ -1893,7 +1893,7 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <TextInput
         style={styles.searchBar}
-        placeholder="Suchen..."
+        placeholder="Search..."
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
@@ -1958,14 +1958,14 @@ export default function DetailsScreen({ route, navigation }) {
       <View style={styles.content}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.description}>
-          Details zu {item.title}
+          Details about {item.title}
         </Text>
         
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.buttonText}>Zurück</Text>
+          <Text style={styles.buttonText}>Back</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -2044,7 +2044,7 @@ const todosSlice = createSlice({
 export const { addTodo, removeTodo, toggleTodo } = todosSlice.actions;
 export default todosSlice.reducer;
 
-// App.js - Store Provider hinzufügen
+// App.js - Add Store Provider
 import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 
@@ -2074,7 +2074,7 @@ const api = axios.create({
   },
 });
 
-// Request Interceptor (für Auth Token)
+// Request Interceptor (for Auth Token)
 api.interceptors.request.use(
   async (config) => {
     const token = await AsyncStorage.getItem('authToken');
@@ -2105,7 +2105,7 @@ export const deleteUser = (id) => api.delete(\`/users/\${id}\`);
 
 export default api;
 
-## 7. Lokale Datenspeicherung
+## 7. Local Data Storage
 npm install @react-native-async-storage/async-storage
 
 // src/utils/storage.js
@@ -2138,26 +2138,26 @@ export const removeData = async (key) => {
   }
 };
 
-## 8. Performance Optimierung
+## 8. Performance Optimization
 
-// useMemo für teure Berechnungen
+// useMemo for expensive calculations
 const expensiveValue = useMemo(() => {
   return items.filter(item => item.active).map(item => item.value);
 }, [items]);
 
-// useCallback für Callbacks
+// useCallback for callbacks
 const handlePress = useCallback(() => {
   console.log('Pressed');
 }, []);
 
-// React.memo für Komponenten
+// React.memo for components
 const ListItem = React.memo(({ item, onPress }) => (
   <TouchableOpacity onPress={() => onPress(item.id)}>
     <Text>{item.title}</Text>
   </TouchableOpacity>
 ));
 
-// FlatList Optimierungen
+// FlatList optimizations
 <FlatList
   data={items}
   renderItem={renderItem}
@@ -2217,44 +2217,44 @@ test('renders correctly', () => {
 test('search filter works', () => {
   const { getByPlaceholderText, getByText } = render(<HomeScreen />);
   
-  const searchInput = getByPlaceholderText('Suchen...');
+  const searchInput = getByPlaceholderText('Search...');
   fireEvent.changeText(searchInput, 'Item 1');
   
   expect(getByText('Item 1')).toBeTruthy();
 });`,
-          description: 'Erstelle eine vollständige React Native App mit Expo. Navigation, State Management, API Integration, Offline Storage und Publishing. Eine Codebase für iOS & Android. Mit TypeScript, React Navigation, AsyncStorage und Best Practices für Performance.',
-          usage: 'Entwickle native Mobile Apps für iOS und Android gleichzeitig. Perfekt für Cross-Platform Apps, MVPs, Startups. Hot Reload für schnelle Entwicklung. Over-the-Air Updates mit Expo. Native Performance ohne Objective-C/Swift/Java/Kotlin.',
+          description: 'Create a complete React Native app with Expo. Navigation, state management, API integration, offline storage and publishing. One codebase for iOS & Android. With TypeScript, React Navigation, AsyncStorage and best practices for performance.',
+          usage: 'Develop native mobile apps for iOS and Android simultaneously. Perfect for cross-platform apps, MVPs, startups. Hot reload for fast development. Over-the-air updates with Expo. Native performance without Objective-C/Swift/Java/Kotlin.',
           technologies: ['React Native', 'Expo', 'Redux Toolkit', 'React Navigation', 'AsyncStorage', 'TypeScript', 'Jest'],
           bestPractices: [
-            '✅ Expo für schnelleren Start (oder bare React Native)',
-            '✅ TypeScript für Type Safety',
-            '✅ React Navigation für Routing (Stack, Tab, Drawer)',
-            '✅ Redux Toolkit für Global State',
-            '✅ FlashList statt FlatList (10x Performance)',
-            '✅ React.memo für Component Optimization',
-            '✅ Error Boundaries implementieren',
-            '✅ Offline-First mit AsyncStorage',
-            '✅ react-native-fast-image für Bilder',
-            '❌ Zu viele re-renders vermeiden',
-            '❌ Große Bilder ohne Optimierung',
-            '❌ Inline Functions in renderItem'
+            '✅ Expo for faster start (or bare React Native)',
+            '✅ TypeScript for type safety',
+            '✅ React Navigation for routing (Stack, Tab, Drawer)',
+            '✅ Redux Toolkit for global state',
+            '✅ FlashList instead of FlatList (10x performance)',
+            '✅ React.memo for component optimization',
+            '✅ Implement error boundaries',
+            '✅ Offline-first with AsyncStorage',
+            '✅ react-native-fast-image for images',
+            '❌ Avoid too many re-renders',
+            '❌ No large images without optimization',
+            '❌ No inline functions in renderItem'
           ],
           relatedTopics: ['React Native', 'Expo', 'Mobile Development', 'Redux', 'Cross-Platform'],
-          estimatedTime: '6-8 Stunden für vollständige App',
+          estimatedTime: '6-8 hours for complete app',
           troubleshooting: [
-            { problem: 'Metro Bundler Fehler', solution: 'Cache leeren: npm start -- --reset-cache oder expo start -c. node_modules löschen und neu installieren.' },
-            { problem: 'iOS Build fails', solution: 'cd ios && pod install && cd ... Xcode öffnen und Clean Build Folder. CocoaPods Version prüfen.' },
-            { problem: 'Android Build fails', solution: 'cd android && ./gradlew clean. JDK Version prüfen (11 oder 17). Gradle Cache löschen.' },
-            { problem: 'Performance schlecht', solution: 'React DevTools Profiler nutzen. FlashList verwenden. useMemo/useCallback für teure Operations. Bilder optimieren.' }
+            { problem: 'Metro bundler errors', solution: 'Clear cache: npm start -- --reset-cache or expo start -c. Delete node_modules and reinstall.' },
+            { problem: 'iOS build fails', solution: 'cd ios && pod install && cd ... Open Xcode and Clean Build Folder. Check CocoaPods version.' },
+            { problem: 'Android build fails', solution: 'cd android && ./gradlew clean. Check JDK version (11 or 17). Delete Gradle cache.' },
+            { problem: 'Poor performance', solution: 'Use React DevTools Profiler. Use FlashList. useMemo/useCallback for expensive operations. Optimize images.' }
           ],
           tips: [
-            '💡 Expo Go App zum Testen auf echten Devices',
-            '💡 EAS Build für Production Builds (kostenlos)',
-            '💡 Over-the-Air Updates ohne App Store Review',
-            '💡 React Navigation Theming für Dark Mode',
-            '💡 Expo Notifications für Push Notifications',
-            '💡 Expo Camera/Location/Sensors für Native Features',
-            '💡 Hermes Engine für bessere Performance (default)'
+            '💡 Expo Go app for testing on real devices',
+            '💡 EAS Build for production builds (free)',
+            '💡 Over-the-air updates without App Store review',
+            '💡 React Navigation theming for dark mode',
+            '💡 Expo Notifications for push notifications',
+            '💡 Expo Camera/Location/Sensors for native features',
+            '💡 Hermes engine for better performance (default)'
           ]
         }
       ]

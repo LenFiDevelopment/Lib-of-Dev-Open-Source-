@@ -374,54 +374,63 @@ export default function HomeScreen({ navigation }) {
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>📖</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Comprehensive Syntax</Text>
+                <Text style={styles.featureTitle}>20+ Programming Languages</Text>
                 <Text style={styles.featureDescription}>
-                  Detailed references for 13 programming languages
+                  In-depth syntax, examples & best practices for JavaScript, Python, Java, TypeScript & more
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>💡</Text>
+              <Text style={styles.featureIcon}>💻</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Code Examples</Text>
+                <Text style={styles.featureTitle}>200+ Code Examples</Text>
                 <Text style={styles.featureDescription}>
-                  100+ copy-paste ready examples with explanations
+                  Copy-paste ready snippets with explanations and real-world use cases
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>🎓</Text>
+              <Text style={styles.featureIcon}>🎯</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Learning Paths & Resources</Text>
+                <Text style={styles.featureTitle}>Step-by-Step How-To Guides</Text>
                 <Text style={styles.featureDescription}>
-                  Structured guides, best practices, tools, and career advice
+                  Deploy websites, build APIs, monetize apps & publish to stores
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🎨</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>shadcn/ui & Design Systems</Text>
+                <Text style={styles.featureTitle}>UI Components & Design</Text>
                 <Text style={styles.featureDescription}>
-                  Learn modern UI frameworks like shadcn/ui, Tailwind CSS, and Radix UI
-                </Text>
-              </View>
-            </View>
-            <View style={styles.featureItem}>
-              <Text style={styles.featureIcon}>💡</Text>
-              <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Design Patterns</Text>
-                <Text style={styles.featureDescription}>
-                  Common patterns and best practices for clean code
+                  33+ interactive components with live previews & installation guides
                 </Text>
               </View>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🚀</Text>
               <View style={styles.featureContent}>
-                <Text style={styles.featureTitle}>Platform Guides</Text>
+                <Text style={styles.featureTitle}>Developer Tools</Text>
                 <Text style={styles.featureDescription}>
-                  Learn about Expo, Vercel, Cloudflare & more
+                  Master Expo, Vercel, shadcn/ui, Tailwind CSS, Radix UI & cloud platforms
+                </Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <Text style={styles.featureIcon}>🎓</Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>Learning Resources</Text>
+                <Text style={styles.featureDescription}>
+                  Tutorials, certifications, developer hints & career guidance
+                </Text>
+              </View>
+            </View>
+            <View style={styles.featureItem}>
+              <Text style={styles.featureIcon}>🤖</Text>
+              <View style={styles.featureContent}>
+                <Text style={styles.featureTitle}>AI Chat Assistant</Text>
+                <Text style={styles.featureDescription}>
+                  Get instant coding help powered by Groq AI - free & fast
                 </Text>
               </View>
             </View>

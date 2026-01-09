@@ -1,6 +1,6 @@
 {
   "name": "lib-of-dev-open-source",
-  "version": "2.0.4",
+  "version": "2.1.1",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",

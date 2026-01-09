@@ -53,16 +53,6 @@ export default function SpecializedTopicsScreen({ navigation }) {
           </Text>
         </View>
 
-        {/* New Topics Highlight */}
-        <View style={styles.highlightCard}>
-          <Text style={styles.highlightBadge}>✨ NEW</Text>
-          <Text style={styles.highlightTitle}>Home Server & How-To Projects</Text>
-          <Text style={styles.highlightText}>
-            🏠 Build your own home server with CasaOS, Nextcloud, and Cloudflare Tunnels
-            {`\n`}🎯 Complete project guides from deployment to production
-          </Text>
-        </View>
-
         <View style={styles.topicsGrid}>
           {topics.map(renderTopicCard)}
         </View>

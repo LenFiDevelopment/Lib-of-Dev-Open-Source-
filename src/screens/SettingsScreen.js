@@ -12,6 +12,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -51,6 +52,7 @@ export default function SettingsScreen() {
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [showProjectsModal, setShowProjectsModal] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [apiKeyInput, setApiKeyInput] = useState('');
   const [interests, setInterests] = useState({
@@ -273,31 +275,40 @@ export default function SettingsScreen() {
       // Mark as rated so we don't ask again
       await AsyncStorage.setItem(HAS_RATED_KEY, 'true');
       
-      // Try to use native store review first
-      const isAvailable = await StoreReview.isAvailableAsync();
+      // Directly open store URL for reliable behavior
+      const storeUrl = Platform.select({
+        ios: APP_STORE_URL,
+        android: PLAY_STORE_URL,
+      });
       
-      if (isAvailable) {
-        // Show native in-app review (preferred)
-        await StoreReview.requestReview();
-      } else {
-        // Fallback to opening store URL
-        const storeUrl = Platform.select({
-          ios: APP_STORE_URL,
-          android: PLAY_STORE_URL,
-        });
-        
-        if (storeUrl) {
+      if (storeUrl) {
+        const canOpen = await Linking.canOpenURL(storeUrl);
+        if (canOpen) {
           await Linking.openURL(storeUrl);
+        } else {
+          // Try native in-app review as fallback
+          const isAvailable = await StoreReview.isAvailableAsync();
+          if (isAvailable) {
+            await StoreReview.requestReview();
+          }
         }
       }
       
       // Show thank you message after a short delay
       setTimeout(() => {
         Alert.alert('', t('settings.thanksForRating'));
-      }, 1000);
+      }, 1500);
     } catch (error) {
       console.log('Error opening store review:', error);
-      Alert.alert(t('common.error'), t('settings.ratingNotAvailable'));
+      // Try native review as last resort
+      try {
+        const isAvailable = await StoreReview.isAvailableAsync();
+        if (isAvailable) {
+          await StoreReview.requestReview();
+        }
+      } catch (e) {
+        Alert.alert(t('common.error'), t('settings.ratingNotAvailable'));
+      }
     }
   };
 
@@ -365,6 +376,30 @@ export default function SettingsScreen() {
               </View>
             ))}
           </View>
+        </View>
+
+        {/* Weitere Apps Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>📱 More Apps</Text>
+          <Text style={styles.sectionDescription}>
+            More developer tools from the Lib of Dev universe
+          </Text>
+          
+          <TouchableOpacity 
+            style={styles.appTeaserCard}
+            onPress={() => setShowProjectsModal(true)}
+            activeOpacity={0.8}
+          >
+            <Image 
+              source={require('../../assets/libofdev-project.png')}
+              style={styles.appTeaserImage}
+              resizeMode="cover"
+            />
+            <View style={styles.appTeaserOverlay}>
+              <Text style={styles.appTeaserTitle}>Lib of Dev - Projects</Text>
+              <Text style={styles.appTeaserSubtitle}>Coming Soon</Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         {/* Links Section */}
@@ -516,35 +551,8 @@ export default function SettingsScreen() {
             <Text style={styles.aboutDescription}>
               {t('settings.appDescription')}
             </Text>
-          </View>
-        </View>
-
-        {/* Advertising Info Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>💰 Why Ads?</Text>
-          <View style={styles.aboutCard}>
-            <Text style={styles.aboutTitle}>
-              Supporting Free & Open Source Development
-            </Text>
             <Text style={styles.aboutDescription}>
-              This app is completely free and open source. We include minimal, 
-              non-intrusive ads to help fund the development and maintenance of 
-              this project and future features.
-            </Text>
-            <Text style={styles.aboutDescription}>
-              All revenue goes directly into:{"\n"}
-              • Adding new programming languages and tutorials{"\n"}
-              • Improving AI features and capabilities{"\n"}
-              • Maintaining servers and infrastructure{"\n"}
-              • Keeping the app updated with latest tech
-            </Text>
-            <Text style={styles.aboutDescription}>
-              We're committed to maintaining a great user experience with as few 
-              ads as possible. Your support by using this free app helps us continue 
-              providing quality content to developers worldwide.
-            </Text>
-            <Text style={styles.aboutHighlight}>
-              Thank you for your understanding! 🙏
+              This app is completely free and Open Source. Minimal ads help us fund development. Thanks for your support! 🙏
             </Text>
           </View>
         </View>
@@ -649,6 +657,54 @@ export default function SettingsScreen() {
             </TouchableOpacity>
           </TouchableOpacity>
         </KeyboardAvoidingView>
+      </Modal>
+
+      {/* Projects App Modal */}
+      <Modal
+        visible={showProjectsModal}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setShowProjectsModal(false)}
+      >
+        <View style={styles.projectsModalOverlay}>
+          <View style={styles.projectsModalContainer}>
+            <Text style={styles.projectsModalEmoji}>🚀</Text>
+            <Text style={styles.projectsModalTitle}>Lib of Dev - Projects</Text>
+            <Text style={styles.projectsModalSubtitle}>Coming Soon</Text>
+            
+            <View style={styles.projectsModalContent}>
+              <Text style={styles.projectsModalDescription}>
+                The ultimate companion app for your developer projects – from your first "Hello World" to professional IoT applications!
+              </Text>
+              
+              <View style={styles.projectsModalFeatures}>
+                <Text style={styles.projectsModalFeatureItem}>
+                  🎯 Projects for Beginner to High-End Developers
+                </Text>
+                <Text style={styles.projectsModalFeatureItem}>
+                  🔌 Control ESP32 & Arduino live
+                </Text>
+                <Text style={styles.projectsModalFeatureItem}>
+                  🌐 Real-time website integration
+                </Text>
+                <Text style={styles.projectsModalFeatureItem}>
+                  💬 Messaging server included
+                </Text>
+              </View>
+              
+              <Text style={styles.projectsModalFooter}>
+                Get ready for the next level! 🔥
+              </Text>
+            </View>
+            
+            <TouchableOpacity
+              style={styles.projectsModalButton}
+              onPress={() => setShowProjectsModal(false)}
+            >
+              <Text style={styles.projectsModalButtonText}>Schließen</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </Modal>
     </SafeAreaView>
   );
@@ -1041,5 +1097,114 @@ const styles = StyleSheet.create({
   },
   modalButtonTextSave: {
     color: colors.text,
+  },
+  appTeaserCard: {
+    backgroundColor: '#A0A0A0',
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    height: 180,
+    position: 'relative',
+    ...shadows.medium,
+  },
+  appTeaserImage: {
+    width: '100%',
+    height: '100%',
+    opacity: 0.3,
+  },
+  appTeaserOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(160, 160, 160, 0.7)',
+  },
+  appTeaserTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: spacing.xs,
+  },
+  appTeaserSubtitle: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    opacity: 0.9,
+  },
+  projectsModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.lg,
+  },
+  projectsModalContainer: {
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.xl,
+    padding: spacing.xl,
+    width: '100%',
+    maxWidth: 400,
+    alignItems: 'center',
+    ...shadows.large,
+  },
+  projectsModalEmoji: {
+    fontSize: 64,
+    marginBottom: spacing.md,
+  },
+  projectsModalTitle: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  projectsModalSubtitle: {
+    fontSize: 18,
+    color: colors.primary,
+    fontWeight: '600',
+    marginBottom: spacing.lg,
+  },
+  projectsModalContent: {
+    width: '100%',
+    marginBottom: spacing.lg,
+  },
+  projectsModalDescription: {
+    fontSize: 16,
+    color: colors.textMuted,
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+    lineHeight: 24,
+  },
+  projectsModalFeatures: {
+    width: '100%',
+    gap: spacing.sm,
+    marginBottom: spacing.lg,
+  },
+  projectsModalFeatureItem: {
+    fontSize: 15,
+    color: colors.text,
+    lineHeight: 22,
+    textAlign: 'center',
+  },
+  projectsModalFooter: {
+    fontSize: 16,
+    color: colors.primary,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  projectsModalButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.xl * 2,
+    paddingVertical: spacing.md,
+    borderRadius: borderRadius.lg,
+    ...shadows.medium,
+  },
+  projectsModalButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
 });

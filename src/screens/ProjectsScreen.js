@@ -76,6 +76,17 @@ export default function ProjectsScreen({ navigation }) {
           </Text>
         </View>
 
+        {/* Light Version Notice */}
+        <View style={styles.noticeCard}>
+          <Text style={styles.noticeIcon}>💡</Text>
+          <View style={styles.noticeContent}>
+            <Text style={styles.noticeTitle}>Light Version</Text>
+            <Text style={styles.noticeText}>
+              This is the light version. The best project tutorials are coming soon with the new app!
+            </Text>
+          </View>
+        </View>
+
         {/* Search Bar */}
         <View style={styles.searchContainer}>
           <TextInput
@@ -234,6 +245,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.textMuted,
     lineHeight: 22,
+  },
+  noticeCard: {
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    padding: spacing.md,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary,
+  },
+  noticeIcon: {
+    fontSize: 24,
+    marginRight: spacing.sm,
+  },
+  noticeContent: {
+    flex: 1,
+  },
+  noticeTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+  noticeText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 20,
   },
   searchContainer: {
     paddingHorizontal: spacing.lg,
