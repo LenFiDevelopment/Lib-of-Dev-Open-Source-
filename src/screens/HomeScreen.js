@@ -124,9 +124,9 @@ export default function HomeScreen({ navigation }) {
 
         {/* Info Banner */}
         <View style={styles.infoBanner}>
-          <Text style={styles.bannerIcon}>🚀</Text>
+          <Text style={styles.bannerIcon}>✨</Text>
           <Text style={styles.bannerText}>
-            <Text style={styles.bannerBold}>Continuously improving</Text> - New features & content added regularly
+            <Text style={styles.bannerBold}>Continuously improving</Text> - New features & content added regularly! Make sure to check for updates.
           </Text>
         </View>
 

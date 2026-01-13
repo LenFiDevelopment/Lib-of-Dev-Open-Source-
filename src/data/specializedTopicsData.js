@@ -897,6 +897,104 @@ sensor:
             usage: 'Track energy usage, identify issues, reduce electricity bills.',
             technologies: ['Energy', 'Monitoring', 'Smart Meter'],
           },
+          {
+            title: 'Climate Control (HVAC)',
+            code: `# automations.yaml
+- alias: 'Summer AC - Maintain Comfort'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.living_room_temperature
+      above: 24
+      for:
+        minutes: 5
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.living_room
+      data:
+        temperature: 22
+        hvac_mode: cool
+
+- alias: 'Winter Heating - Economy Mode'
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.outdoor_temperature
+      below: 5
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.living_room
+      data:
+        temperature: 20
+        hvac_mode: heat
+
+- alias: 'Away Mode - Energy Saving'
+  trigger:
+    - platform: state
+      entity_id: group.all_people
+      to: 'not_home'
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.living_room
+      data:
+        temperature: 16
+        hvac_mode: heat`,
+            description: 'Automated thermostat control for comfort and efficiency',
+            usage: 'Smart climate control, energy savings, comfort preferences.',
+            technologies: ['Climate', 'HVAC', 'Temperature'],
+          },
+          {
+            title: 'Security Alerts & Actions',
+            code: `# automations.yaml
+- alias: 'Front Door Opened - Alert'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: 'on'
+  action:
+    - service: notify.mobile_app
+      data:
+        message: "🚪 Front door opened!"
+        title: "Security Alert"
+    - service: light.turn_on
+      target:
+        entity_id: light.porch_light
+      data:
+        brightness: 255
+
+- alias: 'Night Mode - Arm Security'
+  trigger:
+    - platform: time
+      at: '23:00:00'
+  condition:
+    - condition: state
+      entity_id: group.all_people
+      state: 'home'
+  action:
+    - service: alarm_control_panel.arm_away
+      target:
+        entity_id: alarm_control_panel.home
+    - service: light.turn_off
+      target:
+        entity_id: group.all_lights
+
+- alias: 'Window Unlocked - Notification'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.window_sensor_bedroom
+      to: 'on'
+      for:
+        minutes: 1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: "Window Alert"
+        message: "Bedroom window has been open for 1 minute"`,
+            description: 'Security monitoring and automated responses',
+            usage: 'Home security, intruder detection, armed status management.',
+            technologies: ['Security', 'Alerts', 'Automation'],
+          },
         ],
       },
     },
@@ -1661,6 +1759,162 @@ ps aux --sort=-%mem | head`,
           },
         ],
       },
+      networking: {
+        name: 'Networking & Connectivity',
+        items: [
+          {
+            title: 'Network Configuration',
+            code: `# View network interfaces
+ip link show
+ip addr show
+
+# Configure static IP (Netplan - Ubuntu 18+)
+# /etc/netplan/01-netcfg.yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses:
+        - 192.168.1.100/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+
+# Apply changes
+sudo netplan apply
+
+# Test connectivity
+ping -c 4 8.8.8.8
+curl -I https://google.com`,
+            description: 'Configure network interfaces and connectivity',
+            usage: 'Set up static IPs, configure DNS, manage network adapters.',
+            technologies: ['Networking', 'Netplan', 'IP Configuration'],
+          },
+          {
+            title: 'Firewall Setup (UFW)',
+            code: `# Check firewall status
+sudo ufw status
+
+# Enable firewall
+sudo ufw enable
+
+# Disable firewall
+sudo ufw disable
+
+# Allow specific ports
+sudo ufw allow 22/tcp  # SSH
+sudo ufw allow 80/tcp  # HTTP
+sudo ufw allow 443/tcp # HTTPS
+
+# Deny port
+sudo ufw deny 23/tcp
+
+# Allow from specific IP
+sudo ufw allow from 192.168.1.50 to any port 22
+
+# List rules with numbers
+sudo ufw status numbered
+
+# Delete rule
+sudo ufw delete 3`,
+            description: 'Configure firewall rules with UFW',
+            usage: 'Control network traffic, secure the server, manage port access.',
+            technologies: ['UFW', 'Firewall', 'Security'],
+          },
+          {
+            title: 'Port Forwarding & NAT',
+            code: `# Forward external port to internal service
+# /etc/sysctl.conf - enable forwarding
+net.ipv4.ip_forward=1
+
+# Apply
+sudo sysctl -p
+
+# iptables NAT rule
+sudo iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 3000
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 192.168.1.100:8000
+
+# Save iptables rules (persistent)
+sudo apt install iptables-persistent
+sudo iptables-save > /etc/iptables/rules.v4`,
+            description: 'Forward ports and configure NAT',
+            usage: 'Expose internal services externally, load balancing.',
+            technologies: ['iptables', 'NAT', 'Port Forwarding'],
+          },
+        ],
+      },
+      security: {
+        name: 'Security & Access Control',
+        items: [
+          {
+            title: 'SSH Key Authentication',
+            code: `# Generate SSH key pair
+ssh-keygen -t ed25519 -C "user@example.com"
+
+# Copy to server
+ssh-copy-id -i ~/.ssh/id_ed25519.pub user@192.168.1.100
+
+# Or manual copy
+cat ~/.ssh/id_ed25519.pub | ssh user@192.168.1.100 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+
+# SSH config for easy access
+# ~/.ssh/config
+Host myserver
+    HostName 192.168.1.100
+    User myuser
+    IdentityFile ~/.ssh/id_ed25519
+    Port 2222
+
+# Connect
+ssh myserver
+
+# Disable password login on server
+sudo nano /etc/ssh/sshd_config
+# PasswordAuthentication no
+# PubkeyAuthentication yes
+sudo systemctl restart sshd`,
+            description: 'Set up SSH key-based authentication',
+            usage: 'Secure remote access, eliminate password vulnerabilities.',
+            technologies: ['SSH', 'Cryptography', 'Key Management'],
+          },
+          {
+            title: 'Fail2ban - Intrusion Prevention',
+            code: `# Install
+sudo apt install fail2ban
+
+# Copy default config
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo nano /etc/fail2ban/jail.local
+
+# Configuration example
+[DEFAULT]
+bantime = 3600
+findtime = 600
+maxretry = 5
+
+[sshd]
+enabled = true
+port = ssh,2222
+logpath = /var/log/auth.log
+
+# Start service
+sudo systemctl start fail2ban
+sudo systemctl enable fail2ban
+
+# Check status
+sudo fail2ban-client status
+sudo fail2ban-client status sshd
+
+# Unban IP
+sudo fail2ban-client set sshd unbanip 192.168.1.50`,
+            description: 'Protect against brute force attacks',
+            usage: 'Monitor logs, automatically block suspicious IPs.',
+            technologies: ['Fail2ban', 'Security', 'Intrusion Prevention'],
+          },
+        ],
+      },
     },
   },
 
@@ -1962,6 +2216,161 @@ async function uploadFile(file, bucketName) {
           },
         ],
       },
+      azure: {
+        name: 'Microsoft Azure',
+        items: [
+          {
+            title: 'Azure App Service Deployment',
+            code: `# Install Azure CLI
+npm install -g @azure/cli
+
+# Login to Azure
+az login
+
+# Create resource group
+az group create --name myResourceGroup --location eastus
+
+# Create App Service plan
+az appservice plan create \\
+  --name myAppServicePlan \\
+  --resource-group myResourceGroup \\
+  --sku B1 \\
+  --is-linux
+
+# Create web app
+az webapp create \\
+  --resource-group myResourceGroup \\
+  --plan myAppServicePlan \\
+  --name myUniqueSiteName \\
+  --runtime "NODE|18-lts"
+
+# Deploy from local git
+cd myapp
+git init
+git add .
+git commit -m "Initial commit"
+
+az webapp deployment source config-local-git \\
+  --name myUniqueSiteName \\
+  --resource-group myResourceGroup
+
+git remote add azure <deployment-url>
+git push azure main`,
+            description: 'Deploy Node.js app to Azure App Service',
+            usage: 'Full managed hosting, auto-scaling, built-in CI/CD.',
+            technologies: ['Azure App Service', 'Azure CLI', 'Node.js'],
+          },
+          {
+            title: 'Azure Functions',
+            code: `// Azure Functions - Serverless
+module.exports = async function (context, req) {
+    context.log('HTTP trigger function received a request.');
+
+    const name = (req.query.name || (req.body && req.body.name));
+    
+    if (name) {
+        context.res = {
+            status: 200,
+            body: \`Hello \${name}!\`
+        };
+    } else {
+        context.res = {
+            status: 400,
+            body: "Please pass a name on the query string or in the request body"
+        };
+    }
+};
+
+// function.json
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "\$return"
+    }
+  ]
+}`,
+            description: 'Serverless functions on Azure',
+            usage: 'Event-driven, auto-scaling, no server management.',
+            technologies: ['Azure Functions', 'Serverless', 'Node.js'],
+          },
+        ],
+      },
+      gcp: {
+        name: 'Google Cloud Platform',
+        items: [
+          {
+            title: 'Google Cloud Run Deployment',
+            code: `# Install Google Cloud SDK
+# https://cloud.google.com/sdk/docs/install
+
+# Initialize
+gcloud init
+
+# Create Dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 8080
+CMD ["node", "server.js"]
+
+# Build and deploy
+gcloud run deploy myapp \\
+  --source . \\
+  --platform managed \\
+  --region us-central1 \\
+  --allow-unauthenticated
+
+# View logs
+gcloud run logs read myapp --limit 50`,
+            description: 'Deploy containerized apps to Google Cloud Run',
+            usage: 'Fully managed, serverless containers, pay-per-use.',
+            technologies: ['Cloud Run', 'Docker', 'Google Cloud'],
+          },
+          {
+            title: 'Firestore Database',
+            code: `import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+
+const firebaseApp = initializeApp({
+  apiKey: 'YOUR_API_KEY',
+  projectId: 'your-project',
+  databaseURL: 'your-database-url',
+});
+
+const db = getFirestore(firebaseApp);
+
+// Add document
+async function addUser(userData) {
+  try {
+    const docRef = await addDoc(collection(db, 'users'), userData);
+    return docRef.id;
+  } catch (e) {
+    console.error('Error:', e);
+  }
+}
+
+// Query documents
+async function getUsers(ageRange) {
+  const q = query(collection(db, 'users'), where('age', '>=', ageRange));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map(doc => doc.data());
+}`,
+            description: 'Real-time NoSQL database on Google Cloud',
+            usage: 'Real-time sync, easy integration with Firebase, scalable.',
+            technologies: ['Firestore', 'Firebase', 'NoSQL'],
+          },
+        ],
+      },
     },
   },
 
@@ -2182,6 +2591,105 @@ test('increments counter on button click', () => {
             description: 'Test React components with user interactions',
             usage: 'Verify components render and behave correctly from user perspective.',
             technologies: ['React Testing Library', 'Jest', 'React'],
+          },
+        ],
+      },
+      e2e: {
+        name: 'E2E Testing (Playwright)',
+        items: [
+          {
+            title: 'Playwright Page Test',
+            code: `import { test, expect } from '@playwright/test';
+
+test('login and navigate to dashboard', async ({ page }) => {
+  // Navigate to login page
+  await page.goto('https://example.com/login');
+  
+  // Fill in credentials
+  await page.fill('input[name="email"]', 'user@example.com');
+  await page.fill('input[name="password"]', 'password123');
+  
+  // Click login button
+  await page.click('button:has-text("Login")');
+  
+  // Wait for navigation
+  await page.waitForURL('**/dashboard');
+  
+  // Verify dashboard elements
+  expect(await page.title()).toContain('Dashboard');
+  await expect(page.locator('text=Welcome back')).toBeVisible();
+});`,
+            description: 'End-to-end browser testing with Playwright',
+            usage: 'Test complete user workflows across the entire application.',
+            technologies: ['Playwright', 'E2E Testing', 'Browser Automation'],
+          },
+        ],
+      },
+      loadTesting: {
+        name: 'Load & Performance Testing',
+        items: [
+          {
+            title: 'Load Testing with k6',
+            code: `import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export const options = {
+  stages: [
+    { duration: '2m', target: 100 },  // Ramp up
+    { duration: '5m', target: 100 },  // Stay at 100
+    { duration: '2m', target: 0 },    // Ramp down
+  ],
+};
+
+export default function () {
+  // Test API endpoint
+  const res = http.get('https://api.example.com/users');
+  
+  // Verify response
+  check(res, {
+    'status is 200': (r) => r.status === 200,
+    'response time < 500ms': (r) => r.timings.duration < 500,
+    'body has users': (r) => r.body.includes('users'),
+  });
+  
+  sleep(1);
+}
+
+// Run: k6 run script.js`,
+            description: 'Load test APIs and web applications',
+            usage: 'Identify performance bottlenecks, test under high concurrent load.',
+            technologies: ['k6', 'Load Testing', 'Performance'],
+          },
+          {
+            title: 'Lighthouse Performance',
+            code: `// Using Lighthouse programmatically
+import lighthouse from 'lighthouse';
+import * as chromeLauncher from 'chrome-launcher';
+
+async function runLighthouse(url) {
+  const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
+  
+  const options = {
+    logLevel: 'info',
+    output: 'json',
+    port: chrome.port,
+  };
+  
+  const runnerResult = await lighthouse(url, options);
+  
+  console.log('Scores:');
+  console.log('Performance:', runnerResult.lhr.scores.performance * 100);
+  console.log('Accessibility:', runnerResult.lhr.scores.accessibility * 100);
+  console.log('Best Practices:', runnerResult.lhr.scores['best-practices'] * 100);
+  console.log('SEO:', runnerResult.lhr.scores.seo * 100);
+  
+  await chromeLauncher.kill(chrome.pid);
+}
+
+runLighthouse('https://example.com');`,
+            description: 'Measure web performance, accessibility, and SEO',
+            usage: 'Automated performance audits, CI/CD pipeline integration.',
+            technologies: ['Lighthouse', 'Performance', 'Chrome DevTools'],
           },
         ],
       },
