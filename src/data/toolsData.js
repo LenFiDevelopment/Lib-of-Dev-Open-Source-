@@ -483,6 +483,376 @@ wrangler pages publish dist`,
   },
 
   {
+    id: 'github-pages',
+    name: 'GitHub Pages',
+    category: 'Cloud & Hosting',
+    icon: '📄',
+    color: '#222222',
+    developer: 'GitHub',
+    platforms: ['Web'],
+    pricing: 'Free',
+    description: 'Free static site hosting directly from GitHub repositories.',
+    features: [
+      'Free hosting',
+      'Custom domains',
+      'Automatic SSL',
+      'Jekyll support',
+      'GitHub Actions integration',
+      'Version control',
+      'CDN delivery',
+      '1 GB storage',
+      '100 GB bandwidth/month'
+    ],
+    useCases: [
+      'Personal portfolios',
+      'Project documentation',
+      'Static blogs',
+      'Landing pages',
+      'Open source project sites',
+      'Simple websites'
+    ],
+    gettingStarted: `// Method 1: Direct deployment
+// 1. Create gh-pages branch
+git checkout -b gh-pages
+
+// 2. Push to GitHub
+git push origin gh-pages
+
+// 3. Enable in repo Settings > Pages
+
+// Method 2: GitHub Actions (/.github/workflows/deploy.yml)
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - run: npm install
+      - run: npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: \${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+
+// Custom domain (create CNAME file in root)
+www.yourdomain.com
+
+// DNS settings at domain registrar
+Type: CNAME
+Name: www
+Value: username.github.io`,
+    proTips: [
+      'Use GitHub Actions for automated deployments',
+      'Perfect for documentation sites with Jekyll',
+      'Free SSL certificates automatically',
+      'Custom domains supported at no cost',
+      'Ideal for open source project sites',
+      'Use .nojekyll file to bypass Jekyll processing'
+    ],
+    bestFor: ['Personal sites', 'Documentation', 'Open source projects'],
+    officialDocs: 'https://docs.github.com/pages',
+    tutorial: 'https://pages.github.com/'
+  },
+
+  {
+    id: 'cloudflare-pages',
+    name: 'Cloudflare Pages',
+    category: 'Cloud & Hosting',
+    icon: '☁️',
+    color: '#F38020',
+    developer: 'Cloudflare',
+    platforms: ['Web'],
+    pricing: 'Free / Pro ($20/month)',
+    description: 'JAMstack platform built on Cloudflare global network with unlimited bandwidth.',
+    features: [
+      'Unlimited bandwidth (Free)',
+      'Git integration',
+      'Instant rollbacks',
+      'Preview deployments',
+      'Custom domains & SSL',
+      'Edge functions',
+      'Web analytics',
+      'Access control',
+      '500 builds/month (Free)',
+      'Automatic minification'
+    ],
+    useCases: [
+      'Static sites',
+      'React/Vue/Angular apps',
+      'Next.js sites',
+      'Documentation',
+      'Blogs',
+      'Landing pages'
+    ],
+    gettingStarted: `// Deploy via Wrangler CLI
+npm install -g wrangler
+wrangler pages publish dist
+
+// Or connect Git repository in dashboard
+// 1. Go to cloudflare.com/pages
+// 2. Connect GitHub/GitLab repository
+// 3. Configure build settings:
+//    Build command: npm run build
+//    Build output: dist
+// 4. Deploy automatically on git push
+
+// wrangler.toml configuration
+name = "my-site"
+compatibility_date = "2024-01-13"
+
+[site]
+bucket = "./dist"
+
+// Environment variables
+wrangler pages secret put API_KEY
+
+// Custom domain
+wrangler pages custom-domain add www.example.com`,
+    proTips: [
+      'Unlimited bandwidth even on free plan',
+      'Global CDN with 275+ locations',
+      'Use Pages Functions for serverless backend',
+      'Automatic image optimization available',
+      'Web analytics included',
+      'Preview URLs for every branch'
+    ],
+    bestFor: ['High-traffic sites', 'Global apps', 'Static sites'],
+    officialDocs: 'https://developers.cloudflare.com/pages',
+    tutorial: 'https://developers.cloudflare.com/pages/get-started'
+  },
+
+  {
+    id: 'surge',
+    name: 'Surge.sh',
+    category: 'Cloud & Hosting',
+    icon: '🌊',
+    color: '#000000',
+    developer: 'Surge',
+    platforms: ['Web'],
+    pricing: 'Free / Professional ($30/month)',
+    description: 'Simple, single-command static web publishing for front-end developers.',
+    features: [
+      'One-command deployment',
+      'Custom domains',
+      'Free SSL',
+      'CLI-based',
+      'Clean URLs',
+      'Cross-origin resource sharing',
+      'Custom 404 pages',
+      'Password protection',
+      'Instant deployment',
+      'Zero configuration'
+    ],
+    useCases: [
+      'Quick prototypes',
+      'Static sites',
+      'Frontend projects',
+      'Demo sites',
+      'Client previews',
+      'Landing pages'
+    ],
+    gettingStarted: `// Install Surge
+npm install -g surge
+
+// Deploy in one command
+cd my-project
+surge
+
+// Deploy to custom domain
+surge --domain myapp.surge.sh
+
+// Deploy specific folder
+surge dist/
+
+// Custom domain setup
+surge dist/ www.yourdomain.com
+
+// CNAME configuration
+// Add CNAME record:
+// Name: www
+// Value: na-west1.surge.sh
+
+// password protect site (SURGE_LOGIN file)
+username:password
+
+// Custom 404 (create 404.html)
+<!DOCTYPE html>
+<html>
+  <head><title>404</title></head>
+  <body><h1>Page Not Found</h1></body>
+</html>`,
+    proTips: [
+      'Perfect for quick frontend demos',
+      'No build step configuration needed',
+      'Deploy from any folder instantly',
+      'Great for client preview links',
+      'Use .surgeignore to exclude files',
+      'Professional plan adds SSL for custom domains'
+    ],
+    bestFor: ['Quick deployments', 'Demos', 'Simple sites'],
+    officialDocs: 'https://surge.sh/help',
+    tutorial: 'https://surge.sh/help/getting-started-with-surge'
+  },
+
+  {
+    id: 'render-static',
+    name: 'Render (Static Sites)',
+    category: 'Cloud & Hosting',
+    icon: '🎨',
+    color: '#46E3B7',
+    developer: 'Render',
+    platforms: ['Web'],
+    pricing: 'Free / Starter ($7/month) / Pro',
+    description: 'Fast static site hosting with global CDN and automatic deployments.',
+    features: [
+      'Automatic deployments from Git',
+      'Free SSL certificates',
+      'Global CDN',
+      'Custom domains',
+      'Preview environments',
+      'Custom headers & redirects',
+      'Pull request previews',
+      'DDoS protection',
+      'Unlimited bandwidth',
+      'Automatic image optimization'
+    ],
+    useCases: [
+      'Static websites',
+      'Documentation sites',
+      'Blogs',
+      'Portfolios',
+      'JAMstack apps',
+      'Marketing sites'
+    ],
+    gettingStarted: `// Deploy via render.yaml
+services:
+  - type: web
+    name: my-site
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+// Custom redirects (_redirects file)
+/old-page  /new-page  301
+/*  /index.html  200
+
+// Custom headers (_headers file)
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  
+// Environment variables (dashboard or render.yaml)
+envVars:
+  - key: API_URL
+    value: https://api.example.com`,
+    proTips: [
+      'Free tier includes custom domains & SSL',
+      'Automatic deploys from Git',
+      'Pull request previews for testing',
+      'Global CDN included',
+      'Support for monorepos',
+      'Automatic image optimization'
+    ],
+    bestFor: ['Static sites', 'Documentation', 'JAMstack'],
+    officialDocs: 'https://render.com/docs/static-sites',
+    tutorial: 'https://render.com/docs/deploy-create-react-app'
+  },
+
+  {
+    id: 'gitlab-pages',
+    name: 'GitLab Pages',
+    category: 'Cloud & Hosting',
+    icon: '🦊',
+    color: '#FC6D26',
+    developer: 'GitLab',
+    platforms: ['Web'],
+    pricing: 'Free',
+    description: 'Static site hosting integrated with GitLab repositories and CI/CD.',
+    features: [
+      'Free hosting',
+      'Custom domains',
+      'Free SSL',
+      'GitLab CI/CD integration',
+      'Access control',
+      'Multiple sites per project',
+      'Custom 404 pages',
+      'Any static site generator'
+    ],
+    useCases: [
+      'Project documentation',
+      'Personal websites',
+      'Product pages',
+      'Company sites',
+      'Blogs',
+      'Portfolios'
+    ],
+    gettingStarted: `// .gitlab-ci.yml configuration
+pages:
+  stage: deploy
+  script:
+    - npm install
+    - npm run build
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
+// For Jekyll sites
+pages:
+  image: ruby:2.7
+  stage: deploy
+  script:
+    - gem install bundler
+    - bundle install
+    - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+
+// Custom domain setup
+// 1. Create file: public/CNAME
+www.yourdomain.com
+
+// 2. DNS settings
+Type: A
+Name: @
+Value: 35.185.44.232
+
+Type: CNAME
+Name: www
+Value: username.gitlab.io`,
+    proTips: [
+      'Integrated with GitLab CI/CD',
+      'Support for private pages with access control',
+      'Multiple Pages sites per group/user',
+      'Works with any static site generator',
+      'Free SSL for custom domains',
+      'Can host from any branch'
+    ],
+    bestFor: ['GitLab users', 'Private documentation', 'Team sites'],
+    officialDocs: 'https://docs.gitlab.com/ee/user/project/pages/',
+    tutorial: 'https://docs.gitlab.com/ee/user/project/pages/getting_started_part_one.html'
+  },
+
+  {
     id: 'netlify',
     name: 'Netlify',
     category: 'Cloud & Hosting',
@@ -565,6 +935,783 @@ exports.handler = async (event, context) => {
     bestFor: ['JAMstack sites', 'Static site generators', 'Frontend deployments'],
     officialDocs: 'https://docs.netlify.com/',
     tutorial: 'https://docs.netlify.com/get-started/'
+  },
+
+  {
+    id: 'neocities',
+    name: 'Neocities',
+    category: 'Cloud & Hosting',
+    icon: '🌈',
+    color: '#FF69B4',
+    developer: 'Neocities',
+    platforms: ['Web'],
+    pricing: 'Free / Supporter ($5/month)',
+    description: 'Simple static web hosting with retro web vibes - great for learning HTML/CSS.',
+    features: [
+      'Free hosting',
+      'Web-based editor',
+      'Custom domains',
+      'FTP/SCP access',
+      'Community features',
+      '1 GB storage (Free)',
+      'No ads',
+      'Fast CDN',
+      'Version history (Supporter)'
+    ],
+    useCases: [
+      'Personal websites',
+      'Learning web development',
+      'Portfolio sites',
+      'Simple blogs',
+      'Art projects',
+      'Retro-style sites'
+    ],
+    gettingStarted: `// Deploy via Web Interface
+// 1. Sign up at neocities.org
+// 2. Use web editor or upload files
+// 3. Site live at username.neocities.org
+
+// Deploy via CLI
+npm install -g neocities
+neocities login
+
+// Upload files
+neocities upload index.html
+neocities upload -d dist/
+
+// Custom domain (Supporter plan)
+// Add CNAME record at DNS provider
+// Type: CNAME
+// Name: www
+// Value: username.neocities.org`,
+    proTips: [
+      'Perfect for learning static HTML/CSS',
+      'Great for personal creative projects',
+      'Simple and beginner-friendly',
+      'Active community for feedback',
+      'No build tools required',
+      'Supporter plan adds custom domains'
+    ],
+    bestFor: ['Beginners', 'Simple sites', 'Learning HTML'],
+    officialDocs: 'https://neocities.org/tutorials',
+    tutorial: 'https://neocities.org/tutorials'
+  },
+
+  {
+    id: 'infinityfree',
+    name: 'InfinityFree',
+    category: 'Cloud & Hosting',
+    icon: '∞',
+    color: '#0066CC',
+    developer: 'InfinityFree',
+    platforms: ['Web'],
+    pricing: 'Free / Premium ($2.99/month)',
+    description: 'Basic free web hosting with PHP and MySQL support for simple websites.',
+    features: [
+      'Unlimited bandwidth',
+      'Unlimited disk space',
+      'PHP support',
+      'MySQL databases',
+      'FTP access',
+      'Free subdomains',
+      'Custom domains',
+      'cPanel',
+      'Softaculous installer',
+      'No ads'
+    ],
+    useCases: [
+      'Basic websites',
+      'PHP projects',
+      'WordPress sites',
+      'Learning hosting',
+      'Small business sites',
+      'Simple web apps'
+    ],
+    gettingStarted: `// Setup
+// 1. Sign up at infinityfree.com
+// 2. Create account (get free subdomain or use custom domain)
+// 3. Upload files via FTP or File Manager
+
+// FTP Configuration
+Host: ftpupload.net
+Username: epiz_xxxxx
+Password: your_password
+Port: 21
+
+// MySQL Database
+// Create database in cPanel
+// Use in your PHP:
+$host = "sql000.infinityfree.com";
+$user = "epiz_xxxxx";
+$pass = "your_password";
+$db = "epiz_xxxxx_database";
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+// Custom domain
+// Add DNS records at your domain provider:
+Type: A
+Name: @
+Value: [IP from InfinityFree]`,
+    proTips: [
+      'Good for learning PHP/MySQL',
+      'Has usage limits (hits per hour)',
+      'Not suitable for production apps',
+      'Use for small personal projects',
+      'Softaculous for easy app installation',
+      'Consider premium for better performance'
+    ],
+    bestFor: ['Learning', 'Basic PHP sites', 'Small projects'],
+    officialDocs: 'https://forum.infinityfree.net/',
+    tutorial: 'https://infinityfree.net/support'
+  },
+
+  // ==================== BACKEND HOSTING ====================
+
+  {
+    id: 'render-backend',
+    name: 'Render (Backend)',
+    category: 'Cloud & Hosting',
+    icon: '🚀',
+    color: '#46E3B7',
+    developer: 'Render',
+    platforms: ['Cloud'],
+    pricing: 'Free / Starter ($7/month) / Pro',
+    description: 'Full-stack cloud platform for backends, databases, and cron jobs. Free tier apps sleep after inactivity.',
+    features: [
+      'Automatic deployments from Git',
+      'Free SSL',
+      'Private services',
+      'PostgreSQL databases',
+      'Redis instances',
+      'Cron jobs',
+      'Background workers',
+      'Environment groups',
+      'Health checks',
+      'Auto-scaling (paid)',
+      'Zero-downtime deploys (paid)',
+      'DDoS protection'
+    ],
+    useCases: [
+      'Node.js backends',
+      'Python APIs',
+      'Ruby apps',
+      'Go services',
+      'Cron jobs',
+      'Background workers',
+      'Full-stack apps'
+    ],
+    gettingStarted: `// render.yaml configuration
+services:
+  - type: web
+    name: api-server
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mydb
+          property: connectionString
+
+databases:
+  - name: mydb
+    databaseName: myapp
+    user: myapp
+
+// Node.js Express example
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello from Render!' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(\`Server on port \${PORT}\`);
+});
+
+// Cron job service
+# render.yaml
+services:
+  - type: cron
+    name: daily-job
+    env: node
+    schedule: "0 0 * * *"
+    buildCommand: npm install
+    startCommand: node scripts/daily-task.js`,
+    proTips: [
+      'Free tier web services sleep after 15 min inactivity',
+      'First request after sleep takes ~30 seconds',
+      'Use paid tier to keep services always running',
+      'Great for PostgreSQL with automatic backups',
+      'Deploy via Git push or Docker',
+      'Background workers for long tasks'
+    ],
+    bestFor: ['Side projects', 'APIs', 'Full-stack apps'],
+    officialDocs: 'https://render.com/docs',
+    tutorial: 'https://render.com/docs/deploy-node-express-app'
+  },
+
+  {
+    id: 'railway',
+    name: 'Railway',
+    category: 'Cloud & Hosting',
+    icon: '🚂',
+    color: '#0B0D0E',
+    developer: 'Railway',
+    platforms: ['Cloud'],
+    pricing: 'Free ($5 credit/month) / Hobby ($5/month) / Pro ($20/month)',
+    description: 'Modern app hosting with limited monthly credits - instant deploys, no config.',
+    features: [
+      'Git-based deployments',
+      'Instant rollbacks',
+      'PostgreSQL, MySQL, Redis',
+      'Private networking',
+      'Automatic SSL',
+      'Environment variables',
+      'Monorepo support',
+      'Usage-based pricing',
+      'Deploy from GitHub/GitLab',
+      'Docker support',
+      'Cron jobs',
+      'Observability tools'
+    ],
+    useCases: [
+      'Node.js apps',
+      'Python backends',
+      'Go services',
+      'Full-stack projects',
+      'Microservices',
+      'Databases'
+    ],
+    gettingStarted: `// Deploy from GitHub
+// 1. Connect GitHub repo in Railway dashboard
+// 2. Railway auto-detects framework
+// 3. Click Deploy
+
+// railway.json configuration
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "npm run build"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+
+// CLI deployment
+npm install -g @railway/cli
+railway login
+railway init
+railway up
+
+// Add database
+railway add postgresql
+
+// Environment variables
+railway variables set API_KEY=xxx
+
+// Link to database
+DATABASE_URL will be auto-added`,
+    proTips: [
+      'Free tier gives $5 credit/month (not much)',
+      'Great developer experience',
+      'Usage-based billing (pay for what you use)',
+      'Perfect for prototypes and demos',
+      'Automatic environment variables for databases',
+      'Private networking between services'
+    ],
+    bestFor: ['Prototypes', 'Small apps', 'Modern deployment'],
+    officialDocs: 'https://docs.railway.app/',
+    tutorial: 'https://docs.railway.app/quick-start'
+  },
+
+  {
+    id: 'cyclic',
+    name: 'Cyclic.sh',
+    category: 'Cloud & Hosting',
+    icon: '♻️',
+    color: '#6366F1',
+    developer: 'Cyclic',
+    platforms: ['Cloud'],
+    pricing: 'Free / Pro ($10/month)',
+    description: 'Free Node.js and full-stack hosting with serverless architecture.',
+    features: [
+      'Serverless Node.js hosting',
+      'Automatic deployments',
+      'Custom domains',
+      'Free SSL',
+      'Environment variables',
+      'DynamoDB integration',
+      'S3 storage',
+      'Logs and analytics',
+      'Zero cold starts',
+      'No sleep on free tier',
+      'GitHub integration'
+    ],
+    useCases: [
+      'Node.js APIs',
+      'Express apps',
+      'Full-stack apps',
+      'Serverless backends',
+      'REST APIs',
+      'GraphQL servers'
+    ],
+    gettingStarted: `// Deploy from GitHub
+// 1. Go to cyclic.sh
+// 2. Connect GitHub repository
+// 3. Select branch to deploy
+// 4. Click Deploy
+
+// package.json (ensure start script exists)
+{
+  "scripts": {
+    "start": "node server.js"
+  }
+}
+
+// Express.js example
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello from Cyclic!' });
+});
+
+// Use process.env.PORT for serverless
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(\`Running on port \${PORT}\`);
+});
+
+// Environment variables
+// Set in Cyclic dashboard under Variables
+
+// Database (DynamoDB automatically available)
+const db = require('@cyclic.sh/dynamodb');
+await db.collection('users').set('123', { name: 'John' });`,
+    proTips: [
+      'No cold starts unlike other serverless',
+      'DynamoDB included for free',
+      'Great for Express.js apps',
+      'No credit card required for free tier',
+      'Apps don\'t sleep on free tier',
+      'Perfect for side projects'
+    ],
+    bestFor: ['Node.js apps', 'Express APIs', 'Serverless'],
+    officialDocs: 'https://docs.cyclic.sh/',
+    tutorial: 'https://docs.cyclic.sh/overview/getting-started'
+  },
+
+  {
+    id: 'replit',
+    name: 'Replit',
+    category: 'Cloud & Hosting',
+    icon: '⚡',
+    color: '#F26207',
+    developer: 'Replit',
+    platforms: ['Web', 'Cloud'],
+    pricing: 'Free / Hacker ($7/month) / Pro ($20/month)',
+    description: 'Online IDE and hosting - Free tier but apps sleep when inactive.',
+    features: [
+      'Online IDE',
+      'Collaborative coding',
+      'Multiple languages',
+      'Version control',
+      'Packages manager',
+      'Database (Replit DB)',
+      'Custom domains (paid)',
+      'Always-on (paid)',
+      'Private Repls (paid)',
+      'Multiplayer',
+      'Unit tests',
+      'Deployment'
+    ],
+    useCases: [
+      'Learning to code',
+      'Quick prototypes',
+      'Collaborative projects',
+      'Teaching',
+      'Code interviews',
+      'Small apps'
+    ],
+    gettingStarted: `// Create new Repl
+// 1. Go to replit.com
+// 2. Click "Create Repl"
+// 3. Choose language/template
+// 4. Start coding
+
+// Node.js example
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello from Replit!');
+});
+
+app.listen(3000, () => {
+  console.log('Server started');
+});
+
+// Replit Database
+const Database = require('@replit/database');
+const db = new Database();
+
+// Set value
+await db.set('key', 'value');
+
+// Get value
+const value = await db.get('key');
+
+// Always-on (paid feature)
+// Keeps your app running 24/7
+
+// Custom domain (paid)
+// Add domain in Repl settings`,
+    proTips: [
+      'Perfect for learning and prototyping',
+      'Free tier Repls sleep when inactive',
+      'Hacker plan for always-on hosting',
+      'Great for hackathons',
+      'Multiplayer for pair programming',
+      'Not recommended for production',
+      'Good for code interviews'
+    ],
+    bestFor: ['Learning', 'Prototypes', 'Education'],
+    officialDocs: 'https://docs.replit.com/',
+    tutorial: 'https://docs.replit.com/getting-started/intro-replit'
+  },
+
+  {
+    id: 'flyio',
+    name: 'Fly.io',
+    category: 'Cloud & Hosting',
+    icon: '🪰',
+    color: '#7C3AED',
+    developer: 'Fly.io',
+    platforms: ['Cloud'],
+    pricing: 'Free (3 small VMs) / Pay as you go',
+    description: 'Run apps globally on small free VMs close to users with Firecracker microVMs.',
+    features: [
+      'Global deployment',
+      'Automatic SSL',
+      'Anycast routing',
+      'Firecracker VMs',
+      'Docker-based',
+      'PostgreSQL (managed)',
+      'Redis',
+      'Metrics & logging',
+      'Private networking',
+      'Load balancing',
+      'Multi-region',
+      'Fast deploys'
+    ],
+    useCases: [
+      'Global applications',
+      'Low-latency apps',
+      'Docker apps',
+      'Microservices',
+      'WebSocket apps',
+      'Edge computing'
+    ],
+    gettingStarted: `// Install flyctl
+curl -L https://fly.io/install.sh | sh
+
+// Login
+flyctl auth login
+
+// Initialize app
+flyctl launch
+
+// fly.toml generated
+app = "my-app"
+
+[build]
+  image = "node:18"
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+// Deploy
+flyctl deploy
+
+// Scale globally
+flyctl regions add iad lhr syd
+
+// PostgreSQL
+flyctl postgres create
+flyctl postgres attach my-postgres
+
+// Secrets
+flyctl secrets set API_KEY=xxx`,
+    proTips: [
+      'Free tier includes 3 shared CPU VMs',
+      'Apps in multiple regions for low latency',
+      'Docker-based deployment',
+      'Great for WebSocket apps',
+      'Persistent volumes available',
+      'Monitor with flyctl status'
+    ],
+    bestFor: ['Global apps', 'Low latency', 'Docker'],
+    officialDocs: 'https://fly.io/docs/',
+    tutorial: 'https://fly.io/docs/hands-on/'
+  },
+
+  {
+    id: 'deta-space',
+    name: 'Deta Space',
+    category: 'Cloud & Hosting',
+    icon: '🛸',
+    color: '#E91E63',
+    developer: 'Deta',
+    platforms: ['Cloud'],
+    pricing: 'Free',
+    description: 'Simple backend hosting with built-in NoSQL DB and file storage - completely free.',
+    features: [
+      'Free hosting',
+      'Deta Base (NoSQL)',
+      'Deta Drive (file storage)',
+      'Scheduled actions',
+      'Python & Node.js',
+      'No credit card required',
+      'Instant deploys',
+      'HTTPS included',
+      'Environment variables',
+      'Simple CLI'
+    ],
+    useCases: [
+      'Simple backends',
+      'REST APIs',
+      'Webhooks',
+      'Scheduled tasks',
+      'Data storage',
+      'File hosting'
+    ],
+    gettingStarted: `// Install Deta CLI
+curl -fsSL https://get.deta.dev/cli.sh | sh
+
+// Login
+deta login
+
+// Create new app
+deta new my-app
+
+// Node.js example (index.js)
+const express = require('express');
+const { Deta } = require('deta');
+const app = express();
+
+const deta = Deta();
+const db = deta.Base('users');
+const drive = deta.Drive('files');
+
+app.get('/users', async (req, res) => {
+  const { items } = await db.fetch();
+  res.json(items);
+});
+
+app.listen(3000);
+
+// Deploy
+deta deploy
+
+// Environment variables
+deta update -e API_KEY=xxx
+
+// Scheduled action (.deta/cron.json)
+[
+  {
+    "action": "my-cron-function",
+    "schedule": "0 0 * * *"
+  }
+]`,
+    proTips: [
+      'Completely free with no credit card',
+      'Built-in NoSQL database',
+      'File storage included',
+      'Perfect for simple backends',
+      'No cold starts',
+      'Great for webhooks and APIs',
+      'Limited to Python and Node.js'
+    ],
+    bestFor: ['Simple backends', 'Free hosting', 'APIs'],
+    officialDocs: 'https://deta.space/docs',
+    tutorial: 'https://deta.space/docs/en/introduction/start'
+  },
+
+  {
+    id: 'koyeb',
+    name: 'Koyeb',
+    category: 'Cloud & Hosting',
+    icon: '☁️',
+    color: '#121212',
+    developer: 'Koyeb',
+    platforms: ['Cloud'],
+    pricing: 'Free / Starter ($5.50/month) / Pro',
+    description: 'Serverless platform for deploying apps globally with free tier.',
+    features: [
+      'Global edge network',
+      'Auto-scaling',
+      'Git-based deployment',
+      'Docker support',
+      'Free SSL',
+      'Multiple instances',
+      'Health checks',
+      'Private networking',
+      'Observability',
+      'CLI & API',
+      'Zero-downtime deploys'
+    ],
+    useCases: [
+      'Web applications',
+      'APIs',
+      'Microservices',
+      'Containerized apps',
+      'Stateless apps',
+      'Global deployment'
+    ],
+    gettingStarted: `// Deploy from Git
+// 1. Connect GitHub repo in Koyeb dashboard
+// 2. Configure build settings
+// 3. Deploy
+
+// Deploy via Docker
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 8000
+CMD ["npm", "start"]
+
+// koyeb.yaml
+services:
+  - name: api
+    type: web
+    instance_type: nano
+    regions:
+      - was
+      - par
+    env:
+      - PORT=8000
+    ports:
+      - port: 8000
+        protocol: http
+
+// CLI deployment
+npm install -g @koyeb/cli
+koyeb login
+koyeb app create my-app
+koyeb service create my-service --git github.com/user/repo`,
+    proTips: [
+      'Free tier includes 1 web service',
+      'Global deployment across regions',
+      'Auto-scaling included',
+      'Support Docker and Buildpacks',
+      'Health checks for reliability',
+      'Good for production-ready apps'
+    ],
+    bestFor: ['Global apps', 'Auto-scaling', 'Free tier apps'],
+    officialDocs: 'https://www.koyeb.com/docs',
+    tutorial: 'https://www.koyeb.com/docs/quickstart'
+  },
+
+  {
+    id: 'glitch',
+    name: 'Glitch',
+    category: 'Cloud & Hosting',
+    icon: '🎏',
+    color: '#3333FF',
+    developer: 'Glitch',
+    platforms: ['Web', 'Cloud'],
+    pricing: 'Free / Pro ($8/month)',
+    description: 'Friendly community for building web apps - free but limited and apps sleep.',
+    features: [
+      'Online editor',
+      'Instant deployment',
+      'Collaborative editing',
+      'Community',
+      'Version control',
+      'Custom domains (Pro)',
+      'Always-on (Pro)',
+      'Boosted resources (Pro)',
+      'Private apps (Pro)',
+      'SQLite database'
+    ],
+    useCases: [
+      'Learning projects',
+      'Prototypes',
+      'Bots',
+      'APIs',
+      'Educational projects',
+      'Creative coding'
+    ],
+    gettingStarted: `// Start from template
+// 1. Go to glitch.com
+// 2. Choose template or start from scratch
+// 3. Code in browser
+// 4. App is live immediately
+
+// Express.js example (server.js)
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello from Glitch!');
+});
+
+const listener = app.listen(process.env.PORT, () => {
+  console.log('Your app is listening on port ' + listener.address().port);
+});
+
+// SQLite database
+const sqlite3 = require('sqlite3');
+const db = new sqlite3.Database('.data/database.db');
+
+// Keep alive script (for free tier)
+const http = require('http');
+setInterval(() => {
+  http.get('http://your-app.glitch.me');
+}, 5 * 60 * 1000); // Every 5 minutes
+
+// glitch.json configuration
+{
+  "install": "npm install",
+  "start": "node server.js",
+  "watch": {
+    "ignore": [
+      "\\\\.git",
+      "node_modules"
+    ]
+  }
+}`,
+    proTips: [
+      'Free apps sleep after 5 minutes of inactivity',
+      'Great community for help',
+      'Perfect for learning and fun projects',
+      'Remix others\' projects to learn',
+      'Use Pro for always-on apps',
+      'Good for Discord bots',
+      'Has asset CDN built-in'
+    ],
+    bestFor: ['Learning', 'Fun projects', 'Community'],
+    officialDocs: 'https://glitch.happyfox.com/kb',
+    tutorial: 'https://glitch.com/about'
   },
 
   {
@@ -2400,6 +3547,79 @@ docker exec -it myapp sh      # Access container shell`,
     ],
     officialDocs: 'https://docs.docker.com',
     tutorials: 'https://docs.docker.com/get-started/'
+  },
+
+  {
+    id: 'clerk',
+    name: 'Clerk',
+    category: 'API Development',
+    description: 'Complete user management and authentication platform for modern applications',
+    icon: '🔐',
+    color: '#6C47FF',
+    platforms: ['Web', 'iOS', 'Android'],
+    pricing: 'Free / Pro ($25/month) / Enterprise',
+    features: [
+      'User authentication',
+      'Social login (Google, GitHub, etc.)',
+      'Multi-factor authentication',
+      'User management dashboard',
+      'Session management',
+      'Email & SMS verification',
+      'OAuth integrations',
+      'Webhooks',
+      'Organizations & teams',
+      'Customizable UI components',
+      'SDK for multiple frameworks',
+      'Built-in user profiles'
+    ],
+    useCases: [
+      'User authentication',
+      'Multi-tenant applications',
+      'SaaS applications',
+      'User management',
+      'Team collaboration apps',
+      'Secure authentication flows'
+    ],
+    gettingStarted: `// Install Clerk
+npm install @clerk/nextjs
+
+// Setup Provider (Next.js App Router)
+import { ClerkProvider } from '@clerk/nextjs';
+
+export default function RootLayout({ children }) {
+  return (
+    <ClerkProvider>
+      {children}
+    </ClerkProvider>
+  );
+}
+
+// Protected route
+import { auth } from '@clerk/nextjs';
+
+export default async function Dashboard() {
+  const { userId } = auth();
+  if (!userId) redirect('/sign-in');
+  
+  return <div>Protected content</div>;
+}
+
+// Sign in component
+import { SignIn } from '@clerk/nextjs';
+
+export default function SignInPage() {
+  return <SignIn path="/sign-in" routing="path" />;
+}
+
+// User button component
+import { UserButton } from '@clerk/nextjs';
+
+export default function Header() {
+  return <UserButton afterSignOutUrl="/" />;
+}`,
+    bestFor: ['Authentication', 'User management', 'Multi-tenant apps'],
+    officialDocs: 'https://clerk.com/docs',
+    tutorial: 'https://clerk.com/docs/quickstarts'
   },
 
   {

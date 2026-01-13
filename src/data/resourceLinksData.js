@@ -196,8 +196,72 @@ export const resourceLinks = {
         url: 'https://nativebase.io/',
         description: 'Universal components for React Native',
         icon: '📦',
+      },      {
+        name: 'UIverse',
+        url: 'https://uiverse.io/',
+        description: 'Open-source UI elements made with CSS & HTML',
+        icon: '🌌',
       },
-    ],
+      {
+        name: 'Animista',
+        url: 'https://animista.net/',
+        description: 'CSS animation library and generator',
+        icon: '✨',
+      },
+      {
+        name: 'Gradient Hunt',
+        url: 'https://gradienthunt.com/',
+        description: 'Free gradient color palettes and generator',
+        icon: '🎨',
+      },
+      {
+        name: 'CodeMyUI',
+        url: 'https://codemyui.com/',
+        description: 'Web design & UI inspiration with code snippets',
+        icon: '💡',
+      },
+      {
+        name: 'CSS Scan',
+        url: 'https://getcssscan.com/css-box-shadow-examples',
+        description: 'Beautiful CSS box-shadow examples',
+        icon: '🎭',
+      },
+      {
+        name: 'Evenlabs UI',
+        url: 'https://ui.aceternity.com/',
+        description: 'Copy-paste React and Tailwind CSS components',
+        icon: '⚡',
+      },
+      {
+        name: 'Aether CSS',
+        url: 'https://aether.design/',
+        description: 'Modern CSS framework with beautiful components',
+        icon: '🌟',
+      },
+      {
+        name: 'Line Icons',
+        url: 'https://lineicons.com/',
+        description: '5000+ line icons for modern UI design',
+        icon: '📏',
+      },
+      {
+        name: 'shadcn Themes',
+        url: 'https://ui.shadcn.com/themes',
+        description: 'Beautiful themes for shadcn/ui components',
+        icon: '🎨',
+      },
+      {
+        name: 'Framer',
+        url: 'https://www.framer.com/',
+        description: 'Interactive design and prototyping tool',
+        icon: '🖼️',
+      },
+      {
+        name: 'Spline.design',
+        url: 'https://spline.design/',
+        description: '3D design tool for web - create interactive 3D experiences',
+        icon: '🎲',
+      },    ],
   },
 
   mobile: {

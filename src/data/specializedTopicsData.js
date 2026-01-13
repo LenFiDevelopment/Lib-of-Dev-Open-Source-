@@ -2198,6 +2198,612 @@ test('increments counter on button click', () => {
         name: 'Hardware & Setup',
         items: [
           {
+            title: 'How to Build a Complete Server',
+            code: `# Professional Server Building Guide
+# Step-by-step server infrastructure setup
+
+## 1. UPS (Uninterruptible Power Supply)
+Purpose: Protect against power outages and surges
+Recommendation:
+  - Entry: APC Back-UPS 1500VA (~$200)
+  - Pro: APC Smart-UPS 3000VA (~$800)
+  - Enterprise: Eaton 9PX 6000VA (~$2000+)
+Setup:
+  • Connect UPS to wall outlet
+  • Plug server, switch, router into UPS
+  • Install monitoring software (apcupsd, NUT)
+  • Configure automatic shutdown on low battery
+
+## 2. Energy Considerations
+Power Draw Calculation:
+  • Server: 100-300W (idle) to 400-800W (load)
+  • Network Switch: 10-50W
+  • Router/Firewall: 10-30W
+  • Total: ~150-900W continuous
+
+Cost Calculation:
+  300W × 24h × 30 days = 216 kWh/month
+  At $0.12/kWh = $25.92/month
+  Annual cost: ~$311
+
+Tips:
+  ✓ Use 80+ Gold/Platinum power supplies
+  ✓ Enable CPU C-states for idle power savings
+  ✓ Use SSD over HDD (lower power)
+  ✓ Proper cooling prevents thermal throttling
+
+## 3. Server Hardware
+Components:
+  CPU: Xeon/EPYC (server) or Ryzen/Core i7 (workstation)
+  RAM: 32GB+ ECC RAM (error correction)
+  Storage:
+    • OS: 2× SSD in RAID 1 (redundancy)
+    • Data: 4-8× HDD in RAID 5/6 or ZFS
+  Network: Dual gigabit NICs (redundancy/bonding)
+  Case: Rack-mount (4U) or Tower with good airflow
+
+## 4. Storage Configuration
+Options:
+  a) Hardware RAID Controller
+     - Dedicated RAID card (e.g., LSI MegaRAID)
+     - Battery backup for cache
+     - Hot-swap capability
+
+  b) Software RAID (mdadm)
+     - Flexible, no proprietary hardware
+     - CPU handles parity calculations
+
+  c) ZFS / Btrfs
+     - Advanced filesystem features
+     - Snapshots, compression, deduplication
+     - Better data integrity
+
+RAID Levels:
+  RAID 0: No redundancy, max performance
+  RAID 1: Mirroring (50% usable space)
+  RAID 5: Single drive failure tolerance
+  RAID 6: Dual drive failure tolerance
+  RAID 10: Mirror + Stripe (best performance)
+
+## 5. Patch Panel
+Purpose: Organize network cables centrally
+Setup:
+  • 24-port patch panel mounted in rack
+  • Cables from rooms connected to back
+  • Front connects to network switch
+  • Label each port clearly
+  • Cable management: Use velcro ties, cable trays
+
+## 6. Network Switch
+Types:
+  a) Unmanaged: Simple plug-and-play
+  b) Managed: VLANs, QoS, port mirroring
+  
+Recommendations:
+  • 24-port Gigabit switch minimum
+  • PoE+ for cameras, access points
+  • 10G uplinks for server connections
+  
+Popular Models:
+  - Netgear GS724T (budget managed)
+  - Ubiquiti UniFi Switch 24 PoE
+  - Cisco Catalyst 2960 (enterprise)
+
+Configuration:
+  • Create VLANs (IoT, Guest, Management)
+  • Enable IGMP snooping for multicast
+  • Configure link aggregation (LACP)
+  • Set up port security
+
+## 7. Firewall / Router
+Options:
+  a) All-in-one Router (Consumer)
+     - Simple setup, limited features
+     - Example: Ubiquiti Dream Machine
+
+  b) Dedicated Firewall (pfSense/OPNsense)
+     - Full control, advanced features
+     - Hardware: Netgate, Protectli, DIY
+
+  c) Enterprise Firewall
+     - Cisco ASA, Fortinet FortiGate
+     - Advanced threat protection
+
+pfSense Setup:
+  • Dedicated box with 2+ NICs
+  • WAN port to modem
+  • LAN port to switch
+  • Configure NAT, firewall rules
+  • Enable IDS/IPS (Snort/Suricata)
+  • Set up VPN (OpenVPN/WireGuard)
+
+## 8. Router (if separate)
+When to use separate router:
+  • Very high-speed internet (>1Gbps)
+  • Need advanced routing (BGP, OSPF)
+  • ISP-provided modem/router combo insufficient
+
+Setup:
+  Modem → Router (WAN) → Firewall → Switch → Devices
+
+## 9. Complete Network Topology
+
+Internet
+  ↓
+[Modem]
+  ↓
+[Router/Firewall] ← UPS powered
+  ↓
+[Network Switch] ← PoE enabled, UPS powered
+  ↓ ↓ ↓ ↓
+  Patch Panel connections to:
+  ├─ [Server] - Static IP, dual NIC bonding
+  ├─ [NAS] - Storage, RAID configured
+  ├─ [Access Points] - PoE powered
+  ├─ [Workstations] - VLAN tagged
+  └─ [IoT VLAN] - Isolated network
+
+## 10. Cable Management
+Best Practices:
+  ✓ Use appropriate cable lengths
+  ✓ Velcro ties (reusable)
+  ✓ Cable trays in rack
+  ✓ Label both ends of cables
+  ✓ Color coding by function:
+      - Blue: Internet/WAN
+      - Yellow: Servers
+      - Red: Management
+      - Green: User workstations
+
+## 11. Monitoring & Management
+Essential Tools:
+  • UPS monitoring (NUT, apcupsd)
+  • Network monitoring (PRTG, Zabbix)
+  • Server monitoring (Prometheus + Grafana)
+  • Log aggregation (Graylog, ELK stack)
+  • Remote management (IPMI, iDRAC, iLO)
+
+## 12. Redundancy Checklist
+□ Dual power supplies in server (if supported)
+□ UPS with sufficient runtime (15-30 min)
+□ RAID for storage redundancy
+□ Backup solution (3-2-1 rule)
+□ Dual NICs with bonding/teaming
+□ Spare hardware (PSU, HDD, cables)
+□ Documented configurations
+□ Off-site backup
+
+## 13. Security Layers
+Physical:
+  • Locked server rack/room
+  • Environmental monitoring (temp, humidity)
+  • Surveillance cameras
+
+Network:
+  • Firewall with IDS/IPS
+  • VLANs for network segregation
+  • Regular firmware updates
+  • Strong passwords + 2FA
+
+System:
+  • OS hardening
+  • Regular patching
+  • Fail2ban for brute force protection
+  • Encrypted storage (LUKS)
+
+## Cost Breakdown (Mid-Range Setup)
+Server (DIY): $800-1500
+UPS (1500VA): $200-400
+Switch (24-port PoE): $200-400
+Patch Panel: $30-60
+Cables & Accessories: $100-200
+Firewall (pfSense box): $200-500
+Router (if needed): $100-300
+Storage (4× 4TB HDD): $400-600
+---
+Total: ~$2,030-3,960
+
+## Monthly Operating Costs
+Electricity (300W avg): $26
+Internet (Business line): $80-150
+Cloud backup: $10-30
+---
+Total: ~$116-206/month`,
+            description: 'Complete guide to building a professional server infrastructure with all components explained',
+            usage: 'Use this comprehensive guide when setting up a home lab, small business server, or data center infrastructure. Covers power, networking, storage, security, and redundancy.',
+            technologies: ['Server Hardware', 'UPS', 'Networking', 'RAID', 'Patch Panel', 'Switch', 'Firewall', 'Router'],
+            bestPractices: [
+              'Always use UPS for power protection',
+              'Implement redundancy at every layer',
+              'Proper cable management from day one',
+              'Document your entire setup',
+              'Use VLANs for network segmentation',
+              'Regular backups with 3-2-1 rule',
+              'Monitor everything (power, temperature, network)',
+              'Plan for expansion (extra ports, bays)',
+              'Calculate ongoing power costs',
+              'Physical security matters'
+            ],
+            estimatedCost: '$2,000-4,000 initial + $116-206/month',
+            estimatedTime: '2-3 days for complete setup'
+          },
+          {
+            title: 'Computer Ports & Connectors Guide',
+            code: `# Complete Guide to Computer Ports and Connectors
+
+## DATA PORTS
+
+### USB (Universal Serial Bus)
+USB-A (Traditional rectangular):
+  • USB 2.0: 480 Mbps (black)
+  • USB 3.0/3.1 Gen 1: 5 Gbps (blue)
+  • USB 3.1 Gen 2: 10 Gbps (teal)
+  Uses: Keyboards, mice, flash drives, peripherals
+
+USB-C (Reversible oval):
+  • USB 3.2: Up to 20 Gbps
+  • USB4: Up to 40 Gbps
+  • Thunderbolt 3/4: 40 Gbps
+  • Power Delivery: Up to 240W
+  Uses: Modern devices, charging, displays, docking
+
+USB-B (Square with beveled corners):
+  • USB 2.0 Type-B: Printers, scanners
+  • USB 3.0 Type-B: External HDDs
+  • Mini-USB: Older cameras, phones
+  • Micro-USB: Android phones (older), accessories
+
+### Thunderbolt
+Thunderbolt 2 (Mini DisplayPort):
+  • 20 Gbps
+  • Daisy-chain up to 6 devices
+  • Mac-centric
+
+Thunderbolt 3/4 (USB-C shape):
+  • 40 Gbps bidirectional
+  • 100W power delivery
+  • External GPUs, fast storage
+  • Daisy-chain displays
+
+### Serial & Legacy
+RS-232 (Serial, DB-9):
+  • 9-pin connector
+  • Uses: Industrial equipment, routers, switches
+  • Management/console ports
+
+Parallel (DB-25):
+  • 25-pin connector
+  • Legacy printers (obsolete)
+
+PS/2 (Mini-DIN):
+  • 6-pin circular
+  • Purple: Keyboard
+  • Green: Mouse
+  • Legacy, but reliable for gaming
+
+## VIDEO PORTS
+
+### HDMI (High-Definition Multimedia Interface)
+Types:
+  • Type-A: Standard (TVs, monitors)
+  • Type-C (Mini): Cameras, tablets
+  • Type-D (Micro): Smartphones
+
+Versions:
+  • HDMI 1.4: 4K@30Hz
+  • HDMI 2.0: 4K@60Hz
+  • HDMI 2.1: 8K@60Hz, 4K@120Hz
+  Features: Audio + video, ARC/eARC, CEC
+
+### DisplayPort (DP)
+Types:
+  • Full size
+  • Mini DisplayPort (Thunderbolt 2)
+  
+Versions:
+  • DP 1.2: 4K@60Hz
+  • DP 1.4: 8K@60Hz, 4K@120Hz, HDR
+  • DP 2.0: 16K@60Hz, 10K@60Hz
+  
+Benefits: Daisy-chaining, higher bandwidth than HDMI
+Uses: PC monitors, professional displays
+
+### DVI (Digital Visual Interface)
+Types:
+  • DVI-D: Digital only
+  • DVI-I: Digital + analog
+  • DVI-A: Analog only (rare)
+  • Single Link: 1920×1200@60Hz
+  • Dual Link: 2560×1600@60Hz
+Status: Legacy, being phased out
+
+### VGA (Video Graphics Array)
+  • 15-pin D-sub connector
+  • Analog signal
+  • Up to 2048×1536 (theoretically)
+  • Blue colored
+Status: Obsolete, legacy support only
+
+## AUDIO PORTS
+
+### 3.5mm (1/8") Audio Jack
+Types:
+  • TRS: 3 contacts (stereo headphones)
+  • TRRS: 4 contacts (headset with mic)
+
+Color Coding:
+  • Green: Line out / Headphones
+  • Blue: Line in
+  • Pink: Microphone
+  • Orange: Subwoofer / Center
+  • Black: Rear speakers
+  • Gray: Side speakers
+
+### Optical Audio (TOSLINK / SPDIF)
+  • Square connector with cover
+  • Red LED light when active
+  • Digital audio
+  • Up to 7.1 surround
+  • No electrical interference
+
+### 6.35mm (1/4") Jack
+  • Professional audio equipment
+  • Electric guitars, studio monitors
+  • TRS balanced or unbalanced
+
+## NETWORK PORTS
+
+### Ethernet (RJ-45)
+Standards:
+  • 10 Mbps: 10BASE-T (Cat3)
+  • 100 Mbps: 100BASE-TX (Cat5)
+  • 1 Gbps: 1000BASE-T (Cat5e)
+  • 2.5 Gbps: 2.5GBASE-T (Cat5e/6)
+  • 5 Gbps: 5GBASE-T (Cat6)
+  • 10 Gbps: 10GBASE-T (Cat6a/7)
+  • 40 Gbps: 40GBASE-T (Cat8)
+
+LED Indicators:
+  • Green/Link: Connection active
+  • Orange/Activity: Data transfer
+  • Blinking: Network traffic
+
+### SFP / SFP+ (Small Form-factor Pluggable)
+  • Hot-swappable transceiver
+  • Fiber optic connections
+  • SFP: 1 Gbps
+  • SFP+: 10 Gbps
+  • QSFP: 40 Gbps
+  • QSFP28: 100 Gbps
+  Uses: Switches, routers, servers
+
+## STORAGE PORTS
+
+### SATA (Serial ATA)
+Versions:
+  • SATA I: 1.5 Gbps
+  • SATA II: 3 Gbps
+  • SATA III: 6 Gbps
+  • eSATA: External SATA
+
+Connectors:
+  • Data: 7-pin L-shaped
+  • Power: 15-pin flat
+  Uses: HDDs, SSDs, optical drives
+
+### M.2 (NGFF - Next Generation Form Factor)
+Keys:
+  • M Key: PCIe NVMe SSDs (most common)
+  • B Key: SATA SSDs
+  • B+M Key: Compatible with both
+
+Sizes: 2230, 2242, 2260, 2280, 22110 (width × length mm)
+
+Interfaces:
+  • SATA: Up to 6 Gbps
+  • PCIe 3.0 x4: ~3,500 MB/s
+  • PCIe 4.0 x4: ~7,000 MB/s
+  • PCIe 5.0 x4: ~14,000 MB/s
+
+### NVMe (PCIe SSD)
+  • Add-in card format
+  • PCIe x4 lanes
+  • Lower latency than SATA
+  • Enterprise storage
+
+### IDE / PATA (Parallel ATA)
+  • 40-pin ribbon cable
+  • Legacy (obsolete)
+  • Master/Slave configuration
+
+## EXPANSION SLOTS
+
+### PCIe (PCI Express)
+Versions & Bandwidth per lane:
+  • PCIe 1.0: 250 MB/s
+  • PCIe 2.0: 500 MB/s
+  • PCIe 3.0: ~1 GB/s
+  • PCIe 4.0: ~2 GB/s
+  • PCIe 5.0: ~4 GB/s
+
+Slot Sizes:
+  • x1: Small (network cards, sound cards)
+  • x4: Medium (NVMe adapters)
+  • x8: Medium-long (RAID cards)
+  • x16: Full length (graphics cards)
+
+Note: x16 physical can run at x8/x4 electrical
+
+### Legacy PCI
+  • 32-bit, 33 MHz
+  • 133 MB/s bandwidth
+  • Obsolete
+
+## POWER CONNECTORS
+
+### ATX Power Supply Connectors
+Main Power:
+  • 24-pin ATX: Motherboard main power
+  • 20+4 pin: Compatible with old 20-pin boards
+
+CPU Power:
+  • 4-pin (P4): Older motherboards
+  • 8-pin (EPS): Modern CPUs
+  • 4+4 pin: Split for compatibility
+
+PCIe Power:
+  • 6-pin: 75W (older GPUs)
+  • 8-pin (6+2): 150W
+  • 12+4 pin (PCIe 5.0): 600W (RTX 4090)
+
+SATA Power:
+  • 15-pin flat connector
+  • 3.3V, 5V, 12V rails
+
+Molex (4-pin):
+  • 5V and 12V
+  • Legacy drives, fans
+  • Being phased out
+
+### DC Power Jacks
+Types:
+  • Barrel jack (2.1mm, 2.5mm, 5.5mm)
+  • USB-C PD (5V-20V)
+  • Laptop proprietary connectors
+
+## SPECIALIZED PORTS
+
+### DIN Connectors
+  • Circular, multiple pins (3-9 pins)
+  • Uses: MIDI, keyboards, older audio
+
+### FireWire (IEEE 1394)
+Types:
+  • FireWire 400: 400 Mbps
+  • FireWire 800: 800 Mbps
+Status: Obsolete (replaced by USB/Thunderbolt)
+Uses: Legacy video cameras, audio interfaces
+
+### eSATA
+  • External SATA
+  • 6 Gbps
+Status: Replaced by USB 3.0+
+
+### SD Card Slots
+Types:
+  • SD (Secure Digital): 32mm × 24mm
+  • microSD: 15mm × 11mm
+  • miniSD: Obsolete
+
+Standards:
+  • SD: Up to 2GB
+  • SDHC: 2GB-32GB
+  • SDXC: 32GB-2TB
+  • SDUC: 2TB-128TB
+
+Speed Classes:
+  • Class 2-10: Old standard
+  • UHS-I/II/III: Up to 624 MB/s
+  • SD Express: Up to 985 MB/s (PCIe)
+
+## MOBILE DEVICE PORTS
+
+### Lightning (Apple)
+  • 8-pin reversible
+  • USB 2.0 speeds (480 Mbps)
+  • iPhones, iPads (older models)
+  • Being replaced by USB-C
+
+### USB-C (Mobile)
+  • Android phones (modern)
+  • iPad Pro
+  • Data + charging
+  • Video out (DisplayPort alt mode)
+
+### Micro-USB
+  • Older Android phones
+  • Budget electronics
+  • USB 2.0: 480 Mbps
+  • USB 3.0 Micro-B: 5 Gbps (wide connector)
+
+## PORT IDENTIFICATION TIPS
+
+Visual Clues:
+  ✓ Color coding (USB blue = 3.0)
+  ✓ Symbols/icons near ports
+  ✓ Physical shape (USB-C reversible)
+  ✓ Size differences
+
+Testing:
+  ✓ Check device manager (Windows)
+  ✓ System Information (Mac)
+  ✓ lsusb / lspci commands (Linux)
+  ✓ Manufacturer documentation
+
+## CABLE QUALITY MATTERS
+
+USB Cables:
+  ⚠ Not all USB-C cables support all features
+  ⚠ Some lack fast charging or video
+  ✓ Check certification (USB-IF)
+  ✓ Thunderbolt cables marked with ⚡ symbol
+
+Ethernet Cables:
+  ✓ Cat5e: Gigabit up to 100m
+  ✓ Cat6: 10G up to 55m
+  ✓ Cat6a: 10G up to 100m
+  ✓ Cat7/8: Shielded, 40G+
+
+## COMMON ADAPTERS
+
+Essential:
+  • USB-C to HDMI/DisplayPort
+  • USB-C to USB-A hub
+  • DisplayPort to HDMI
+  • M.2 to USB enclosure
+  • SATA to USB adapter
+
+Active vs Passive:
+  • Active: Contains electronics (DP to HDMI)
+  • Passive: Simple wire remapping (HDMI to DVI)
+
+## TROUBLESHOOTING TIPS
+
+No Signal:
+  □ Check cable quality
+  □ Try different cable
+  □ Update drivers
+  □ Check port functionality
+  □ Verify power (USB devices)
+
+Slow Speeds:
+  □ USB 3.0 device in 2.0 port?
+  □ Cable quality/length
+  □ Driver issues
+  □ Port negotiation failed
+
+Intermittent Connection:
+  □ Loose cable
+  □ Damaged port
+  □ Power delivery issues
+  □ EMI interference`,
+            description: 'Comprehensive guide to all computer ports, connectors, and interfaces',
+            usage: 'Reference when connecting devices, building PCs, troubleshooting connectivity issues, or identifying unknown ports.',
+            technologies: ['Hardware', 'USB', 'HDMI', 'DisplayPort', 'Ethernet', 'PCIe', 'SATA', 'Thunderbolt'],
+            bestPractices: [
+              'Check cable certifications',
+              'Use correct USB generation',
+              'Match port capabilities to device needs',
+              'Color coding helps identification',
+              'Not all USB-C cables are equal',
+              'Use quality cables for high-speed connections',
+              'Check maximum resolution/bandwidth',
+              'Keep legacy adapters handy',
+              'Label cables for easy identification',
+              'Test ports regularly'
+            ]
+          },
+          {
             title: 'Choosing Hardware',
             code: `# Recommended Home Server Hardware
 
