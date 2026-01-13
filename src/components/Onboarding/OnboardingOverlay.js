@@ -19,7 +19,7 @@ import { onboardingSteps } from '../../data/onboardingData';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 /**
- * OnboardingOverlay - Fully responsive with device-aware scrolling
+ * OnboardingOverlay - Professional scroll and spotlight positioning system
  */
 export default function OnboardingOverlay({
   onComplete,
@@ -28,10 +28,12 @@ export default function OnboardingOverlay({
 }) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const [spotlightReady, setSpotlightReady] = useState(false);
   const spotlightYRef = useRef(0);
   const swipeXRef = useRef(0);
   const [screenDimensions, setScreenDimensions] = useState(getScreenInfo());
   const { screenScrollRefs, onboardingRefs } = useOnboardingContext();
+  const scrollTimeoutRef = useRef(null);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const panResponderRef = useRef(null);
@@ -58,26 +60,43 @@ export default function OnboardingOverlay({
     });
   };
 
-  // Smart scroll to target - measures actual position and scrolls responsively
-  const scrollToTarget = (step) => {
+  // Professional scroll and positioning system with logging
+  const scrollToTargetAndPrepareSpotlight = (step, callback) => {
     try {
-      const { navigationTarget } = step;
-      if (!navigationTarget) return;
+      // Reset spotlight state
+      setSpotlightReady(false);
+
+      const { navigationTarget, id } = step;
+      if (!navigationTarget) {
+        // No scroll needed, spotlight ready immediately
+        setSpotlightReady(true);
+        if (callback) callback();
+        return;
+      }
 
       // Only scroll for steps that have content to scroll to
       const scrollableSteps = ['quick-access', 'programming-languages', 'community', 'ai-response-modes'];
-      if (!scrollableSteps.includes(step.id)) {
-        return; // Don't scroll for steps without specific targets
+      if (!scrollableSteps.includes(id)) {
+        // No scroll needed, spotlight ready immediately
+        setSpotlightReady(true);
+        if (callback) callback();
+        return;
       }
 
       const screenRefs = onboardingRefs[navigationTarget];
       const scrollRef = screenScrollRefs[navigationTarget];
 
-      if (!screenRefs || !scrollRef || !scrollRef.current) return;
+      if (!screenRefs || !scrollRef || !scrollRef.current) {
+        // Missing refs, spotlight ready anyway
+        console.warn(`[Onboarding] Missing refs for ${id}`);
+        setSpotlightReady(true);
+        if (callback) callback();
+        return;
+      }
 
-      // Determine which ref to scroll to based on step id
+      // Determine which ref to scroll to
       let targetKey = null;
-      switch (step.id) {
+      switch (id) {
         case 'quick-access':
           targetKey = 'quickAccess';
           break;
@@ -91,30 +110,60 @@ export default function OnboardingOverlay({
           targetKey = 'responseModes';
           break;
         default:
+          setSpotlightReady(true);
+          if (callback) callback();
           return;
       }
 
-      if (targetKey && screenRefs[targetKey]) {
-        // Measure actual component position on screen
-        screenRefs[targetKey].current.measure((x, y, width, height, pageX, pageY) => {
+      if (targetKey && screenRefs[targetKey] && screenRefs[targetKey].current) {
+        // Use measureInWindow for accurate screen coordinates
+        screenRefs[targetKey].current.measureInWindow((x, y, width, height) => {
           try {
-            // Calculate responsive scroll offset
             const screen = getScreenInfo();
-            const scrollPadding = screen.isSmallPhone ? 60 : screen.isTablet ? 120 : 80;
-            const scrollOffset = Math.max(0, pageY - scrollPadding);
+            const scrollPadding = screen.isSmallPhone ? 80 : screen.isTablet ? 140 : 100;
+            
+            // Calculate how much we need to scroll
+            // y is already relative to window, so we calculate offset from current scroll position
+            const scrollOffset = Math.max(0, y - scrollPadding);
 
-            // Scroll smoothly to this position
+            console.log(`[Onboarding] Step: ${id}`);
+            console.log(`[Onboarding] Target element Y position: ${y.toFixed(2)}`);
+            console.log(`[Onboarding] Scrolling to offset: ${scrollOffset.toFixed(2)}`);
+
+            // Perform the scroll
             scrollRef.current.scrollTo({
               y: scrollOffset,
               animated: true,
             });
+
+            // Wait for scroll animation to complete before enabling spotlight
+            // ScrollView animations typically take 300-500ms
+            if (scrollTimeoutRef.current) {
+              clearTimeout(scrollTimeoutRef.current);
+            }
+
+            scrollTimeoutRef.current = setTimeout(() => {
+              console.log(`[Onboarding] Scroll complete for ${id}, spotlight ready`);
+              setSpotlightReady(true);
+              if (callback) callback();
+            }, 700); // Generous delay for scroll to complete
+
           } catch (error) {
-            console.log('Error calculating scroll position:', error);
+            console.error('[Onboarding] Error calculating scroll position:', error);
+            setSpotlightReady(true);
+            if (callback) callback();
           }
         });
+      } else {
+        // Target ref not available, spotlight ready anyway
+        console.warn(`[Onboarding] Target ref ${targetKey} not available`);
+        setSpotlightReady(true);
+        if (callback) callback();
       }
     } catch (error) {
-      console.log('Error scrolling to target:', error);
+      console.error('[Onboarding] Error in scrollToTargetAndPrepareSpotlight:', error);
+      setSpotlightReady(true);
+      if (callback) callback();
     }
   };
 
@@ -150,12 +199,19 @@ export default function OnboardingOverlay({
   // Initial setup and navigation
   useEffect(() => {
     const currentStep = onboardingSteps[currentStepIndex];
+    
+    console.log(`[Onboarding] Initial step: ${currentStep.id}`);
+    
     if (currentStep.navigationTarget && navigationRef?.current) {
       navigationRef.current.navigate(currentStep.navigationTarget);
-      // Scroll after navigation completes
+      
+      // Wait for navigation to complete before scrolling
       setTimeout(() => {
-        scrollToTarget(currentStep);
-      }, 350);
+        scrollToTargetAndPrepareSpotlight(currentStep);
+      }, 400); // Navigation transition time
+    } else {
+      // No navigation needed, spotlight ready immediately
+      setSpotlightReady(true);
     }
 
     Animated.timing(fadeAnim, {
@@ -163,17 +219,32 @@ export default function OnboardingOverlay({
       duration: 300,
       useNativeDriver: true,
     }).start();
+
+    return () => {
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
   }, []);
 
   // Handle step changes
   useEffect(() => {
+    if (currentStepIndex === 0) return; // Skip initial render (handled above)
+    
     const currentStep = onboardingSteps[currentStepIndex];
+    
+    console.log(`[Onboarding] Step changed to: ${currentStep.id}`);
+    
     if (currentStep.navigationTarget && navigationRef?.current) {
       navigationRef.current.navigate(currentStep.navigationTarget);
-      // Scroll after navigation completes
+      
+      // Wait for navigation to complete before scrolling
       setTimeout(() => {
-        scrollToTarget(currentStep);
-      }, 350);
+        scrollToTargetAndPrepareSpotlight(currentStep);
+      }, 400); // Navigation transition time
+    } else {
+      // No navigation needed, spotlight ready immediately
+      setSpotlightReady(true);
     }
   }, [currentStepIndex]);
 
@@ -236,8 +307,8 @@ export default function OnboardingOverlay({
         }}
       />
 
-      {/* Spotlight - only show when there's a target */}
-      {hasTarget && (
+      {/* Spotlight - only show when ready and there's a target */}
+      {hasTarget && spotlightReady && (
         <OnboardingSpotlight
           targetRef={targetRef}
           radius={70}

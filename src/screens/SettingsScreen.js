@@ -774,6 +774,23 @@ export default function SettingsScreen({ navigation }) {
                     secureTextEntry={false}
                     editable={!isTestingApiKey}
                   />
+                  <TouchableOpacity
+                    style={styles.pasteButton}
+                    onPress={async () => {
+                      try {
+                        const clipboardText = await Clipboard.getStringAsync();
+                        if (clipboardText) {
+                          setApiKeyInput(clipboardText);
+                          setApiKeyValidationError('');
+                        }
+                      } catch (error) {
+                        console.log('Error reading clipboard:', error);
+                      }
+                    }}
+                    disabled={isTestingApiKey}
+                  >
+                    <Text style={styles.pasteButtonText}>📋</Text>
+                  </TouchableOpacity>
                   {apiKeyInput.trim().length > 0 && (
                     <Text style={styles.keyLengthIndicator}>
                       {apiKeyInput.trim().length} {t('settings.characters')}
@@ -1251,16 +1268,33 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: '100%',
+    position: 'relative',
   },
   modalInput: {
     backgroundColor: colors.background,
     borderRadius: borderRadius.md,
     padding: spacing.sm,
+    paddingRight: 48,
     color: colors.text,
     fontSize: 16,
     borderWidth: 1,
     borderColor: colors.border,
     marginBottom: spacing.xs,
+  },
+  pasteButton: {
+    position: 'absolute',
+    right: 8,
+    top: 8,
+    width: 36,
+    height: 36,
+    backgroundColor: colors.primary,
+    borderRadius: borderRadius.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...shadows.small,
+  },
+  pasteButtonText: {
+    fontSize: 18,
   },
   modalInputError: {
     borderColor: '#FF4444',

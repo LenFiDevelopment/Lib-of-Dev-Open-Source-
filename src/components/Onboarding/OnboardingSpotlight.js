@@ -20,33 +20,51 @@ export default function OnboardingSpotlight({
   const pulseAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Calculate spotlight position from ref
+    // Calculate spotlight position from ref using measureInWindow for accuracy
     if (targetRef && targetRef.current) {
-      targetRef.current.measure((x, y, width, height, pageX, pageY) => {
-        const centerX = pageX + width / 2;
-        const centerY = pageY + height / 2;
+      // Small delay to ensure element is fully rendered in final position
+      setTimeout(() => {
+        if (targetRef.current) {
+          // measureInWindow gives coordinates relative to the device window
+          targetRef.current.measureInWindow((x, y, width, height) => {
+            console.log(`[Spotlight] Element measured at:`, {
+              x: x.toFixed(2),
+              y: y.toFixed(2),
+              width: width.toFixed(2),
+              height: height.toFixed(2)
+            });
 
-        Animated.parallel([
-          Animated.timing(spotlightX, {
-            toValue: centerX,
-            duration: 400,
-            useNativeDriver: false,
-          }),
-          Animated.timing(spotlightY, {
-            toValue: centerY,
-            duration: 400,
-            useNativeDriver: false,
-          }),
-          Animated.timing(scaleAnim, {
-            toValue: 1,
-            duration: 400,
-            useNativeDriver: false,
-          }),
-        ]).start();
+            const centerX = x + width / 2;
+            const centerY = y + height / 2;
 
-        // Start pulse animation
-        startPulse();
-      });
+            console.log(`[Spotlight] Spotlight center:`, {
+              centerX: centerX.toFixed(2),
+              centerY: centerY.toFixed(2)
+            });
+
+            Animated.parallel([
+              Animated.timing(spotlightX, {
+                toValue: centerX,
+                duration: 400,
+                useNativeDriver: false,
+              }),
+              Animated.timing(spotlightY, {
+                toValue: centerY,
+                duration: 400,
+                useNativeDriver: false,
+              }),
+              Animated.timing(scaleAnim, {
+                toValue: 1,
+                duration: 400,
+                useNativeDriver: false,
+              }),
+            ]).start();
+
+            // Start pulse animation
+            startPulse();
+          });
+        }
+      }, 200); // Small delay for final positioning
     } else {
       // Center spotlight if no target
       Animated.parallel([
