@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as StoreReview from 'expo-store-review';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import { useOnboardingContext } from '../context/OnboardingContext';
 
 // Try to import InterstitialAd from AdMob
 let InterstitialAd, AdEventType, TestIds;
@@ -47,8 +48,9 @@ const LANGUAGES = [
   { code: 'de', name: 'German', nativeName: 'Deutsch' },
 ];
 
-export default function SettingsScreen() {
+export default function SettingsScreen({ navigation }) {
   const { t, i18n } = useTranslation();
+  const { restartOnboarding, screenScrollRefs } = useOnboardingContext();
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -511,6 +513,55 @@ export default function SettingsScreen() {
               <Text style={styles.linkTitle}>{t('settings.rateThisApp')}</Text>
               <Text style={styles.linkDescription}>
                 {t('settings.loveApp')}
+              </Text>
+            </View>
+            <Text style={styles.arrow}>›</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.linkCard}
+            onPress={() => {
+              Alert.alert(
+                '🎓 Tutorial',
+                'Restart the app tutorial to learn about all features?',
+                [
+                  { text: 'Cancel', style: 'cancel' },
+                  {
+                    text: 'Start Tutorial',
+                    onPress: async () => {
+                      // Navigate to Browse tab first
+                      navigation.navigate('Browse');
+                      
+                      // Wait a moment for navigation to complete
+                      setTimeout(() => {
+                        // Scroll HomeScreen to top
+                        const browseScrollRef = screenScrollRefs['Browse'];
+                        if (browseScrollRef?.current?.scrollTo) {
+                          browseScrollRef.current.scrollTo({ y: 0, animated: true });
+                        }
+                        
+                        // Then restart onboarding
+                        restartOnboarding();
+                      }, 300);
+                      
+                      // Show message that tutorial is starting
+                      Alert.alert(
+                        'Tutorial Restarted',
+                        'The tutorial is starting now!',
+                      );
+                    },
+                  },
+                ]
+              );
+            }}
+          >
+            <View style={styles.linkIcon}>
+              <Text style={styles.linkIconText}>🎓</Text>
+            </View>
+            <View style={styles.linkContent}>
+              <Text style={styles.linkTitle}>Restart Tutorial</Text>
+              <Text style={styles.linkDescription}>
+                Learn about app features again
               </Text>
             </View>
             <Text style={styles.arrow}>›</Text>

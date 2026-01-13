@@ -1,11 +1,13 @@
-import React from 'react';
-import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import React, { useRef, useState, useEffect } from 'react';
+import { NavigationContainer, DarkTheme, useNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { colors } from '../constants/theme';
+import OnboardingOverlay from '../components/Onboarding/OnboardingOverlay';
+import { OnboardingProvider, useOnboardingContext } from '../context/OnboardingContext';
 
 // Import screens
 import HomeScreen from '../screens/HomeScreen';
@@ -184,7 +186,12 @@ function BrowseStack() {
 }
 
 // Main Tab Navigator
-function TabNavigator() {
+function TabNavigator({
+  homeTabBarRef,
+  searchTabBarRef,
+  favoritesTabBarRef,
+  settingsTabBarRef,
+}) {
   const { t } = useTranslation();
   return (
     <Tab.Navigator
@@ -202,10 +209,22 @@ function TabNavigator() {
       <Tab.Screen 
         name="Browse" 
         component={BrowseStack}
+        listeners={({ navigation }) => ({
+          tabPress: () => {
+            // Set ref for onboarding targeting
+            setTimeout(() => {
+              homeTabBarRef.current?.measure?.((x, y, width, height, pageX, pageY) => {
+                // Measurements available for onboarding
+              });
+            }, 0);
+          },
+        })}
         options={({ route }) => ({
           tabBarLabel: t('navigation.home'),
           tabBarIcon: ({ color, size = 24 }) => (
-            <Text style={{ fontSize: size, color }}>📚</Text>
+            <View ref={homeTabBarRef}>
+              <Text style={{ fontSize: size, color }}>📚</Text>
+            </View>
           ),
           tabBarStyle: ((route) => {
             const routeName = route.state
@@ -227,7 +246,9 @@ function TabNavigator() {
         options={{
           tabBarLabel: t('navigation.search'),
           tabBarIcon: ({ color, size = 24 }) => (
-            <Text style={{ fontSize: size, color }}>🔍</Text>
+            <View ref={searchTabBarRef}>
+              <Text style={{ fontSize: size, color }}>🔍</Text>
+            </View>
           ),
           headerShown: true,
           headerTitle: `🔍 ${t('search.title')}`,
@@ -255,7 +276,9 @@ function TabNavigator() {
         options={{
           tabBarLabel: t('navigation.favorites'),
           tabBarIcon: ({ color, size = 24 }) => (
-            <Text style={{ fontSize: size, color }}>⭐</Text>
+            <View ref={favoritesTabBarRef}>
+              <Text style={{ fontSize: size, color }}>⭐</Text>
+            </View>
           ),
           headerShown: true,
           headerTitle: `⭐ ${t('favorites.title')}`,
@@ -272,7 +295,9 @@ function TabNavigator() {
         options={{
           tabBarLabel: t('navigation.settings'),
           tabBarIcon: ({ color, size = 24 }) => (
-            <Text style={{ fontSize: size, color }}>⚙️</Text>
+            <View ref={settingsTabBarRef}>
+              <Text style={{ fontSize: size, color }}>⚙️</Text>
+            </View>
           ),
           headerShown: true,
           headerTitle: `⚙️ ${t('settings.title')}`,
@@ -287,13 +312,94 @@ function TabNavigator() {
   );
 }
 
-// Root Navigator
-export default function AppNavigator() {
+// Inner Navigator Component (uses onboarding context)
+function AppNavigatorContent() {
+  const {
+    showOnboarding,
+    isLoading,
+    completeOnboarding,
+    onboardingRefs,
+  } = useOnboardingContext();
+
+  // Navigation ref for programmatic navigation
+  const navigationRef = useNavigationContainerRef();
+
+  // Refs for targeting components in onboarding
+  const homeTabBarRef = useRef(null);
+  const searchTabBarRef = useRef(null);
+  const favoritesTabBarRef = useRef(null);
+  const settingsTabBarRef = useRef(null);
+
+  const handleOnboardingComplete = () => {
+    completeOnboarding();
+  };
+
+  // Build merged targetRefs from tab bars + screen content refs
+  const buildTargetRefs = () => {
+    const baseRefs = {
+      homeTabBar: homeTabBarRef,
+      searchTabBar: searchTabBarRef,
+      favoritesTabBar: favoritesTabBarRef,
+      settingsTabBar: settingsTabBarRef,
+    };
+
+    // Add content refs from screens stored in context
+    if (onboardingRefs?.Browse) {
+      baseRefs.quickAccess = onboardingRefs.Browse.quickAccess;
+      baseRefs.languages = onboardingRefs.Browse.languages;
+      baseRefs.community = onboardingRefs.Browse.community;
+    }
+    if (onboardingRefs?.AskAI) {
+      baseRefs.aiResponseModes = onboardingRefs.AskAI.responseModes;
+    }
+
+    return baseRefs;
+  };
+
+  // Show loading state while checking onboarding status
+  if (isLoading) {
+    return (
+      <SafeAreaProvider>
+        <NavigationContainer ref={navigationRef} theme={CustomDarkTheme}>
+          <TabNavigator
+            homeTabBarRef={homeTabBarRef}
+            searchTabBarRef={searchTabBarRef}
+            favoritesTabBarRef={favoritesTabBarRef}
+            settingsTabBarRef={settingsTabBarRef}
+          />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    );
+  }
+
   return (
     <SafeAreaProvider>
-      <NavigationContainer theme={CustomDarkTheme}>
-        <TabNavigator />
+      <NavigationContainer ref={navigationRef} theme={CustomDarkTheme}>
+        <View style={{ flex: 1 }}>
+          <TabNavigator
+            homeTabBarRef={homeTabBarRef}
+            searchTabBarRef={searchTabBarRef}
+            favoritesTabBarRef={favoritesTabBarRef}
+            settingsTabBarRef={settingsTabBarRef}
+          />
+          {showOnboarding && (
+            <OnboardingOverlay
+              onComplete={handleOnboardingComplete}
+              navigationRef={navigationRef}
+              targetRefs={buildTargetRefs()}
+            />
+          )}
+        </View>
       </NavigationContainer>
     </SafeAreaProvider>
+  );
+}
+
+// Root Navigator with Provider
+export default function AppNavigator() {
+  return (
+    <OnboardingProvider>
+      <AppNavigatorContent />
+    </OnboardingProvider>
   );
 }

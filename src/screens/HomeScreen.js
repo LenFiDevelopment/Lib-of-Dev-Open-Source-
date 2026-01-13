@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,12 +15,30 @@ import { colors, spacing, borderRadius, shadows } from '../constants/theme';
 import { LanguageCard } from '../components/Card';
 import { quickTips } from '../data/developerHintsData';
 import AdBanner from '../components/AdBanner';
+import { useOnboardingContext } from '../context/OnboardingContext';
 
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const languages = useMemo(() => getAllLanguages(), []);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLanguages, setFilteredLanguages] = useState(languages);
+
+  // Refs for onboarding
+  const scrollViewRef = useRef(null);
+  const quickAccessRef = useRef(null);
+  const languagesRef = useRef(null);
+  const communityRef = useRef(null);
+
+  // Store refs in context for onboarding
+  const { setScreenScrollRef, setOnboardingRefs } = useOnboardingContext();
+  useEffect(() => {
+    setScreenScrollRef('Browse', scrollViewRef);
+    setOnboardingRefs('Browse', {
+      quickAccess: quickAccessRef,
+      languages: languagesRef,
+      community: communityRef,
+    });
+  }, [setScreenScrollRef, setOnboardingRefs]);
 
   // Survey time window: 08.01.2026 00:01 CET to 14.01.2026 23:29 CET
   const isSurveyActive = () => {
@@ -54,6 +72,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView 
+        ref={scrollViewRef}
         style={styles.scrollView}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
@@ -127,7 +146,7 @@ export default function HomeScreen({ navigation }) {
         )}
 
         {/* Quick Access Cards */}
-        <View style={styles.quickAccessContainer}>
+        <View ref={quickAccessRef} style={styles.quickAccessContainer}>
           <Text style={styles.sectionTitle}>⚡ {t('home.quickAccess')}</Text>
           <View style={styles.quickAccessGrid}>
             <TouchableOpacity
@@ -262,7 +281,7 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         {/* Languages List */}
-        <View style={styles.languagesContainer}>
+        <View ref={languagesRef} style={styles.languagesContainer}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>📚 {t('home.languages')}</Text>
             <Text style={styles.sectionCount}>{filteredLanguages.length} {t('home.languagesCount')}</Text>
@@ -300,7 +319,7 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         {/* Get Involved Section - Prominent Placement */}
-        <View style={styles.getInvolvedContainer}>
+        <View ref={communityRef} style={styles.getInvolvedContainer}>
           <View style={styles.getInvolvedHeader}>
             <Text style={styles.getInvolvedBadge}>🌟 CONTRIBUTE</Text>
             <Text style={styles.sectionTitle}>🤝 Join Our Community</Text>

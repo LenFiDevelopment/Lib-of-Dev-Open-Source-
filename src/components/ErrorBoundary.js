@@ -75,7 +75,7 @@ class ErrorBoundary extends React.Component {
             </TouchableOpacity>
 
             <Text style={styles.hint}>
-              If the problem persists, please restart the app
+              If the problem persists, make sure you downloaded the newest version of the app. Still having issues? Then please create an issue on our GitHub repository.
             </Text>
           </ScrollView>
         </View>

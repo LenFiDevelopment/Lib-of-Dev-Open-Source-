@@ -17,6 +17,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Clipboard from 'expo-clipboard';
 import { colors, spacing, borderRadius, shadows } from '../constants/theme';
+import { useOnboardingContext } from '../context/OnboardingContext';
 import AdBanner from '../components/AdBanner';
 
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
@@ -32,11 +33,20 @@ export default function AskAIScreen({ navigation }) {
   const [apiKey, setApiKey] = useState('');
   const [responseMode, setResponseMode] = useState('normal'); // short, normal, detailed
   const scrollViewRef = useRef();
+  const responseModeRef = useRef(null);
+
+  const { setScreenScrollRef, setOnboardingRefs } = useOnboardingContext();
 
   useEffect(() => {
     loadChatHistory();
     loadApiKey();
-  }, []);
+
+    // Register scroll ref for onboarding
+    setScreenScrollRef('AskAI', scrollViewRef);
+    setOnboardingRefs('AskAI', {
+      responseModes: responseModeRef,
+    });
+  }, [setScreenScrollRef, setOnboardingRefs]);
 
   // Reload API key when screen comes into focus
   useFocusEffect(
@@ -267,7 +277,7 @@ export default function AskAIScreen({ navigation }) {
         </View>
 
         {/* Response Mode Selector */}
-        <View style={styles.modeContainer}>
+        <View ref={responseModeRef} style={styles.modeContainer}>
           <TouchableOpacity
             style={[styles.modeButton, responseMode === 'short' && styles.modeButtonActive]}
             onPress={() => setResponseMode('short')}
