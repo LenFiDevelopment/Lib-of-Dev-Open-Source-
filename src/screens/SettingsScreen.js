@@ -94,14 +94,6 @@ export default function SettingsScreen({ navigation }) {
     css: false,
   });
 
-  // Survey time window: 08.01.2026 00:01 CET to 14.01.2026 23:29 CET
-  const isSurveyActive = () => {
-    const now = new Date();
-    const startDate = new Date('2026-01-08T00:01:00+01:00'); // CET
-    const endDate = new Date('2026-01-14T23:29:00+01:00'); // CET
-    return now >= startDate && now <= endDate;
-  };
-
   useEffect(() => {
     loadPreferences();
     loadApiKey();
@@ -529,25 +521,6 @@ export default function SettingsScreen({ navigation }) {
             </View>
             <Text style={styles.arrow}>›</Text>
           </TouchableOpacity>
-
-          {/* Survey Link - Only visible during survey period */}
-          {isSurveyActive() && (
-            <TouchableOpacity 
-              style={[styles.linkCard, styles.surveyCard]} 
-              onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSeWI4_male0pU0zrKWldLKkygoih6AKAZ1mWA-O4EvsApg8Gg/viewform?usp=header')}
-            >
-              <View style={styles.linkIcon}>
-                <Text style={styles.linkIconText}>📋</Text>
-              </View>
-              <View style={styles.linkContent}>
-                <Text style={styles.linkTitle}>{t('settings.surveyTitle')}</Text>
-                <Text style={styles.linkDescription}>
-                  {t('settings.surveyDescription')}
-                </Text>
-              </View>
-              <Text style={styles.arrow}>›</Text>
-            </TouchableOpacity>
-          )}
 
           <TouchableOpacity 
             style={styles.linkCard} 

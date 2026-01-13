@@ -22,6 +22,7 @@ export default function HomeScreen({ navigation }) {
   const languages = useMemo(() => getAllLanguages(), []);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredLanguages, setFilteredLanguages] = useState(languages);
+  const [isImprovementsExpanded, setIsImprovementsExpanded] = useState(false);
 
   // Refs for onboarding
   const scrollViewRef = useRef(null);
@@ -39,14 +40,6 @@ export default function HomeScreen({ navigation }) {
       community: communityRef,
     });
   }, [setScreenScrollRef, setOnboardingRefs]);
-
-  // Survey time window: 08.01.2026 00:01 CET to 14.01.2026 23:29 CET
-  const isSurveyActive = () => {
-    const now = new Date();
-    const startDate = new Date('2026-01-08T00:01:00+01:00'); // CET
-    const endDate = new Date('2026-01-14T23:29:00+01:00'); // CET
-    return now >= startDate && now <= endDate;
-  };
 
   const handleSearch = useCallback((query) => {
     setSearchQuery(query);
@@ -130,25 +123,53 @@ export default function HomeScreen({ navigation }) {
           </Text>
         </View>
 
-        {/* Survey Banner - Only visible during survey period */}
-        {isSurveyActive() && (
-          <TouchableOpacity
-            style={styles.surveyBanner}
-            onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSeWI4_male0pU0zrKWldLKkygoih6AKAZ1mWA-O4EvsApg8Gg/viewform?usp=header')}
-            accessible={true}
-            accessibilityLabel={t('home.surveyTitle')}
-            accessibilityRole="button"
+        {/* Community Improvements Banner */}
+        <View style={styles.improvementsBanner}>
+          <TouchableOpacity 
+            style={styles.improvementsHeader}
+            onPress={() => setIsImprovementsExpanded(!isImprovementsExpanded)}
+            activeOpacity={0.7}
           >
-            <View style={styles.surveyContent}>
-              <Text style={styles.surveyIcon}>📋</Text>
-              <View style={styles.surveyTextContainer}>
-                <Text style={styles.surveyTitle}>{t('home.surveyTitle')}</Text>
-                <Text style={styles.surveyDescription}>{t('home.surveyDescription')}</Text>
-              </View>
-              <Text style={styles.surveyArrow}>›</Text>
-            </View>
+            <Text style={styles.improvementsIcon}>🎉</Text>
+            <Text style={styles.improvementsTitle}>{t('home.improvementsTitle')}</Text>
+            <Text style={styles.expandIcon}>{isImprovementsExpanded ? '▼' : '▶'}</Text>
           </TouchableOpacity>
-        )}
+          
+          <Text style={styles.improvementsSubtitle}>{t('home.improvementsSubtitle')}</Text>
+          
+          {isImprovementsExpanded && (
+            <>
+              <View style={styles.improvementsList}>
+                <View style={styles.improvementCategory}>
+                  <Text style={styles.improvementCategoryTitle}>🤖 {t('home.improvement1Title')}</Text>
+                  <Text style={styles.improvementText}>{t('home.improvement1Text')}</Text>
+                </View>
+                
+                <View style={styles.improvementCategory}>
+                  <Text style={styles.improvementCategoryTitle}>🔑 {t('home.improvement2Title')}</Text>
+                  <Text style={styles.improvementText}>{t('home.improvement2Text')}</Text>
+                </View>
+                
+                <View style={styles.improvementCategory}>
+                  <Text style={styles.improvementCategoryTitle}>🔒 {t('home.improvement3Title')}</Text>
+                  <Text style={styles.improvementText}>{t('home.improvement3Text')}</Text>
+                </View>
+                
+                <View style={styles.improvementCategory}>
+                  <Text style={styles.improvementCategoryTitle}>📚 {t('home.improvement4Title')}</Text>
+                  <Text style={styles.improvementText}>{t('home.improvement4Text')}</Text>
+                </View>
+                
+                <View style={styles.improvementCategory}>
+                  <Text style={styles.improvementCategoryTitle}>🎨 {t('home.improvement5Title')}</Text>
+                  <Text style={styles.improvementText}>{t('home.improvement5Text')}</Text>
+                </View>
+              </View>
+              
+              <Text style={styles.improvementsFooter}>{t('home.improvementsFooter')}</Text>
+            </>
+          )}
+        </View>
 
         {/* Quick Access Cards */}
         <View ref={quickAccessRef} style={styles.quickAccessContainer}>
@@ -478,7 +499,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xl,
     paddingHorizontal: spacing.lg,
     borderBottomWidth: 2,
-    borderBottomColor: colors.primary + '20',
+    borderBottomColor: colors.primaryAlpha,
   },
   headerContent: {
     flexDirection: 'row',
@@ -731,7 +752,7 @@ const styles = StyleSheet.create({
   infoBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.primary + '15',
+    backgroundColor: colors.primaryAlpha,
     borderRadius: borderRadius.lg,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.md,
@@ -768,8 +789,97 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.lg,
     borderWidth: 2,
     borderColor: colors.primary,
-    overflow: 'hidden',
+    padding: spacing.md,
     ...shadows.medium,
+  },
+  surveyContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  surveyIcon: {
+    fontSize: 28,
+    marginRight: spacing.sm,
+  },
+  surveyTextContainer: {
+    flex: 1,
+  },
+  surveyTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 4,
+  },
+  surveyDescription: {
+    fontSize: 14,
+    color: colors.textSecondary,
+  },
+  surveyArrow: {
+    fontSize: 32,
+    color: colors.primary,
+  },
+  improvementsBanner: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.md,
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: borderRadius.lg,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    padding: spacing.lg,
+    ...shadows.medium,
+  },
+  improvementsHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+  improvementsIcon: {
+    fontSize: 24,
+    marginRight: spacing.sm,
+  },
+  improvementsTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.text,
+    flex: 1,
+  },
+  expandIcon: {
+    fontSize: 16,
+    color: colors.primary,
+    fontWeight: 'bold',
+  },
+  improvementsSubtitle: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: spacing.md,
+    lineHeight: 20,
+  },
+  improvementsList: {
+    gap: spacing.sm,
+  },
+  improvementCategory: {
+    backgroundColor: colors.backgroundCard,
+    borderRadius: borderRadius.md,
+    padding: spacing.sm,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary,
+  },
+  improvementCategoryTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+  improvementText: {
+    fontSize: 13,
+    color: colors.textSecondary,
+    lineHeight: 18,
+  },
+  improvementsFooter: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: colors.primary,
+    marginTop: spacing.md,
+    textAlign: 'center',
   },
   surveyContent: {
     flexDirection: 'row',
@@ -803,7 +913,7 @@ const styles = StyleSheet.create({
     marginHorizontal: spacing.md,
     marginVertical: spacing.lg,
     padding: spacing.lg,
-    backgroundColor: colors.primary + '15',
+    backgroundColor: colors.primaryAlpha,
     borderRadius: borderRadius.lg,
     borderWidth: 2,
     borderColor: colors.primary,
@@ -873,7 +983,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     borderRadius: borderRadius.md,
     borderWidth: 1,
-    borderColor: colors.primary + '30',
+    borderColor: colors.primaryAlpha,
     alignItems: 'center',
   },
   contributionEmoji: {

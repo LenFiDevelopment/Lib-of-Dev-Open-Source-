@@ -37,7 +37,20 @@
     "exploreLanguage": "Sprache erkunden",
     "surveyTitle": "📋 Hilf uns zu verbessern!",
     "surveyDescription": "Teile dein Feedback in unserer kurzen Umfrage (2 Min)",
-    "takeSurvey": "Zur Umfrage"
+    "takeSurvey": "Zur Umfrage",
+    "improvementsTitle": "Community-gesteuerte Verbesserungen",
+    "improvementsSubtitle": "Danke für dein Feedback! Basierend auf den Umfrageergebnissen haben wir umfangreiche Updates implementiert:",
+    "improvement1Title": "Verbessertes Groq AI",
+    "improvement1Text": "Optimierte Prompts für bessere Antworten, Hinweise zu Einschränkungen und Schnellaktionen für häufige Aufgaben (Code erklären, Bugs finden, optimieren, konvertieren, Kommentare, Tests).",
+    "improvement2Title": "Bessere API-Schlüssel-Eingabe",
+    "improvement2Text": "Schritt-für-Schritt-Anleitung, Echtzeit-Validierung, Format-Prüfung, Live-API-Test und klarere Fehlermeldungen.",
+    "improvement3Title": "Datenschutz & Sicherheit",
+    "improvement3Text": "Eigener Bereich erklärt Offline-first-Ansatz, keine Tracker, lokale API-Speicherung, Code-Review-Prozess und Open-Source-Transparenz.",
+    "improvement4Title": "Erweiterte Inhalte",
+    "improvement4Text": "RAG, KI-Agenten, MLOps, Evaluierungs-Frameworks, KI-Sicherheit/Leitplanken und Kostenoptimierung in spezialisierten Bereichen hinzugefügt.",
+    "improvement5Title": "Transparente Monetarisierung",
+    "improvement5Text": "Klare Erklärung für Ads, echte Einnahmen-Daten (500 Nutzer = 2,76 USD/Woche), Bestätigung: Ads decken nur Kosten—kein Entwickler-Gehalt.",
+    "improvementsFooter": "🚀 Alle wichtigen Feedback-Punkte umgesetzt. Danke, dass du diese App mitgestaltest!"
   },
   "navigation": {
     "home": "Start",
