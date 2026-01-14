@@ -171,6 +171,42 @@ export default function HomeScreen({ navigation }) {
           )}
         </View>
 
+        {/* Quick Tips Section */}
+        <View style={styles.quickTipsContainer}>
+          <Text style={styles.sectionTitle}>💡 {t('home.quickTips')}</Text>
+          <Text style={styles.sectionSubtitle}>
+            {t('home.quickTipsSubtitle')}
+          </Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.tipsScroll}
+          >
+            {quickTips.slice(0, 6).map((tip) => (
+              <TouchableOpacity
+                key={tip.id}
+                style={styles.tipCard}
+                onPress={() => navigation.navigate('Hints')}
+              >
+                <Text style={styles.tipIcon}>{tip.icon}</Text>
+                <Text style={styles.tipTitle}>{tip.title}</Text>
+                <Text style={styles.tipAnswer}>{tip.answer}</Text>
+                <View style={styles.tipBadge}>
+                  <Text style={styles.tipBadgeText}>{tip.category}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity
+              style={[styles.tipCard, styles.viewAllCard]}
+              onPress={() => navigation.navigate('Hints')}
+            >
+              <Text style={styles.viewAllIcon}>👉</Text>
+              <Text style={styles.viewAllText}>{t('home.viewAllHints')}</Text>
+              <Text style={styles.viewAllSubtext}>50+ {t('home.scenariosCovered')}</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+
         {/* Quick Access Cards */}
         <View ref={quickAccessRef} style={styles.quickAccessContainer}>
           <Text style={styles.sectionTitle}>⚡ {t('home.quickAccess')}</Text>
@@ -263,42 +299,6 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.quickAccessText}>Certifications</Text>
             </TouchableOpacity>
           </View>
-        </View>
-
-        {/* Quick Tips Section */}
-        <View style={styles.quickTipsContainer}>
-          <Text style={styles.sectionTitle}>💡 {t('home.quickTips')}</Text>
-          <Text style={styles.sectionSubtitle}>
-            {t('home.quickTipsSubtitle')}
-          </Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.tipsScroll}
-          >
-            {quickTips.slice(0, 6).map((tip) => (
-              <TouchableOpacity
-                key={tip.id}
-                style={styles.tipCard}
-                onPress={() => navigation.navigate('Hints')}
-              >
-                <Text style={styles.tipIcon}>{tip.icon}</Text>
-                <Text style={styles.tipTitle}>{tip.title}</Text>
-                <Text style={styles.tipAnswer}>{tip.answer}</Text>
-                <View style={styles.tipBadge}>
-                  <Text style={styles.tipBadgeText}>{tip.category}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-            <TouchableOpacity
-              style={[styles.tipCard, styles.viewAllCard]}
-              onPress={() => navigation.navigate('Hints')}
-            >
-              <Text style={styles.viewAllIcon}>👉</Text>
-              <Text style={styles.viewAllText}>{t('home.viewAllHints')}</Text>
-              <Text style={styles.viewAllSubtext}>50+ {t('home.scenariosCovered')}</Text>
-            </TouchableOpacity>
-          </ScrollView>
         </View>
 
         {/* AdMob Banner */}
@@ -564,7 +564,8 @@ const styles = StyleSheet.create({
   quickAccessContainer: {
     paddingHorizontal: spacing.md,
     paddingTop: spacing.lg,
-    paddingBottom: spacing.md,
+    paddingBottom: spacing.lg,
+    marginBottom: spacing.md,
   },
   quickAccessGrid: {
     flexDirection: 'row',
@@ -680,7 +681,7 @@ const styles = StyleSheet.create({
   quickTipsContainer: {
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.lg,
-    marginBottom: spacing.md,
+    marginBottom: spacing.xl,
   },
   tipsScroll: {
     marginTop: spacing.md,
